@@ -1,0 +1,40 @@
+[
+    {
+        "displayName": "AWS(Claude 3.7 Sonnet)",
+        "value": "AWS(Claude 3.7 Sonnet)",
+        "accuracy": "😍良い",
+        "limitInfo": "30回/日",
+        "recommended": true,
+        "features": "文書生成が強力！処理が早い"
+    },
+    {
+        "displayName": "Google(Gemini 2.5 Pro)",
+        "value": "Google(Gemini 2.0 Flash)",
+        "accuracy": "☺️普通",
+        "limitInfo": "30回/日",
+        "recommended": false,
+        "features": "処理に時間が掛かるが、より詳細なレビューが可能"
+    },
+    {
+        "displayName": "Google(Gemini 2.0 Flash)",
+        "accuracy": "😵悪い",
+        "limitInfo": "100回/日",
+        "recommended": false,
+        "features": "処理が高速！精度は低い"
+    },
+    {
+        "displayName": "Azure(GPT4o-mini)",
+        "value": "Azure(GPT4o-mini)",
+        "accuracy": "😵悪い",
+        "limitInfo": "なし",
+        "recommended": false,
+        "features": "指示が無視されることが多い（テスト用）"
+    },
+    {
+        "displayName": "最後に選択したAIモデルを利用する",
+        "value": "LastSelected",
+        "limitInfo": "",
+        "recommended": false,
+        "features": ""
+    }
+]
