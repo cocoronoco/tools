@@ -1,4 +1,4 @@
-// modal_settings.js
+// modal_settings.js (GitHubに配置するファイル)
 
 function createModal(AI_MODELS, createAIModelOption, createTabMenu, createTextareaContainer, createButtonContainer, closeModal, updateModalHeight) {
     console.log('[AIレビュー] モーダルを作成します。');
@@ -77,4 +77,6 @@ function createModal(AI_MODELS, createAIModelOption, createTabMenu, createTextar
 
     // モーダルのリサイズイベントにリスナーを追加
     window.addEventListener('resize', updateModalHeight);
+
+    return modal; // モーダルを返す
 }
