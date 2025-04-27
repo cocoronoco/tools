@@ -155,7 +155,7 @@
             }
         });
     };
-    
+
     // モーダルを開く関数をグローバルスコープに追加
     window.openModal = function() {
         console.log('[AIレビュー] モーダルを開きます。');
@@ -170,13 +170,13 @@
 
         window.updateTextareaContent();
         window.updateTabStyles();
-        populateModalWithStoredValues();
+        window.populateModalWithStoredValues(); // 関数名修正
 
         console.log('[AIレビュー] モーダルの内容を更新しました。');
     };
-    
+
     // モーダルに保存された値を設定する関数
-    function populateModalWithStoredValues() {
+    window.populateModalWithStoredValues = function() { // 関数名修正
         console.log('[AIレビュー] モーダルに保存された値を設定します。');
         const radioButtons = document.querySelectorAll('input[name="aiModel"]');
         const contentArea = document.getElementById('reviewPointTextarea');
@@ -193,7 +193,7 @@
             radio.checked = (radio.value === window.selectedAIModel);
         });
         console.log('[AIレビュー] 保存されたAIモデルの値を設定しました。');
-    }
+    };
 
     console.log('[AIレビュー] modal_settings.js: 関数を定義しました。');
 
