@@ -6,66 +6,22 @@
     console.log('[AIレビュー] selection_event_handlers.js をロードしました。');
 
     // グローバル変数 (Tampermonkeyスクリプトと共有)
-    // tampermonkey-ai-review-button, tampermonkey-ai-settings-button
     let reviewButton = null;
     let settingsButton = null;
     let isButtonMouseDown = false;
-    // let currentSelectedText = ''; // 選択されたテキストを保持（今回は使用しない）
-
-    // reviewPoint_01, reviewPoint_02, selectedAIModel, currentTab を定義
-    window.reviewPoint_01 = localStorage.getItem('reviewPoint_01') || window.DEFAULT_VALUES[`DEFAULT_REVIEW_POINT_01`];
-    window.reviewPoint_02 = localStorage.getItem('reviewPoint_02') || window.DEFAULT_VALUES[`DEFAULT_REVIEW_POINT_02`];
-    window.selectedAIModel = localStorage.getItem('selectedAIModel') || (window.AI_MODELS.length > 0 ? window.AI_MODELS[0].value : '');
-    window.currentTab = localStorage.getItem('currentTab') || 'documentReview';
-
-    // メインコンテンツを取得する関数 (selection_event_handlers.js に移動)
-    window.saveAIRequest = function() {
-        console.log('[AIレビュー] メインコンテンツを取得します。');
-        const mainContent = document.querySelector('#main-content');
-        if (mainContent) {
-            console.log('[AIレビュー] メインコンテンツを取得しました。');
-            return mainContent.innerHTML;
-        } else {
-            console.error('[AIレビュー] main-contentが見つかりません。');
-            return null;
-        }
-    };
-
-    // モーダルを開く関数 (selection_event_handlers.js に移動)
-    window.openModal = function() {
-        console.log('[AIレビュー] モーダルを開きます。');
-        const modal = document.getElementById('reviewPointModal');
-
-        window.isModalOpen = true;
-        modal.style.display = 'flex';
-
-        window.updateModalHeight();
-
-        window.currentTab = localStorage.getItem('currentTab') || 'documentReview';
-
-        window.updateTextareaContent();
-        window.updateTabStyles();
-        window.populateModalWithStoredValues();
-
-        console.log('[AIレビュー] モーダルの内容を更新しました。');
-    };
 
     /**
      * 選択文字列用に表示された「AIレビュー実行」ボタンがクリックされた時のハンドラ
      */
     window.handleReviewButtonClick_Selection = function() {
         console.log('[AIレビュー] 選択文字列用 AIレビュー実行ボタンがクリックされました。');
-        // スクリプト1の元々の処理（ページ全体レビュー）を呼び出す
-        const contentHTML = window.saveAIRequest(); // ページ全体のHTMLを取得
-        if (contentHTML) {
-            const aiModelToSend = window.selectedAIModel;
-            console.log(`[AIレビュー] 送信するAIモデルの値: '${aiModelToSend}'`);
-            // 現在選択されているタブに基づいてレビュー観点を決定
-            let currentReviewPoint = (window.currentTab === 'documentReview') ? window.reviewPoint_01 : window.reviewPoint_02;
-            window.openAIQueryPage(contentHTML, currentReviewPoint, aiModelToSend); // 既存の関数を呼び出し
-        } else {
-            console.error('[AIレビュー] コンテンツの取得に失敗しました。');
-        }
+        // カスタムイベントを発行
+        const event = new CustomEvent('aiReviewRequest', {
+            detail: {
+                type: 'selection'
+            }
+        });
+        document.dispatchEvent(event);
         window.removeExistingButtons(); // ボタンを削除
     };
 
@@ -74,8 +30,13 @@
      */
     window.handleSettingsButtonClick_Selection = function() {
         console.log('[AIレビュー] 選択文字列用 設定ボタンがクリックされました。');
-        // スクリプト1の元々のモーダル表示処理を呼び出す
-        window.openModal(); // 既存のモーダル表示関数を呼び出し
+        // カスタムイベントを発行
+        const event = new CustomEvent('openAiSettings', {
+            detail: {
+                type: 'selection'
+            }
+        });
+        document.dispatchEvent(event);
         window.removeExistingButtons(); // ボタンを削除
     };
 
@@ -220,5 +181,74 @@
         button.style.left = `${position.x + reviewButtonWidth + 5}px`;
         button.style.top = `${position.y}px`;
         // 必要に応じて追加スタイルをここに記述
+    };
+
+    /**
+     * マウスボタンが押された時のイベントハンドラ
+     */
+    window.handleMouseDown = function(event) {
+        // console.log('[AIレビュー] mousedown'); // デバッグ用
+        // ボタン要素上でmousedownされたかチェック
+        const targetIsButton = (reviewButton && reviewButton.contains(event.target)) ||
+                               (settingsButton && settingsButton.contains(event.target));
+
+        if (targetIsButton) {
+            // console.log('[AIレビュー] ボタン上で mousedown'); // デバッグ用
+            isButtonMouseDown = true; // ボタン上でのmousedownフラグを立てる
+        } else {
+            // ボタン以外でmousedownされた場合
+            // console.log('[AIレビュー] ボタン外で mousedown'); // デバッグ用
+            isButtonMouseDown = false; // フラグをリセット
+            // 既存の選択文字列用ボタンがあれば削除
+            if (reviewButton || settingsButton) {
+                 // console.log('[AIレビュー] 既存の選択文字列ボタンを削除 (mousedown時)'); // デバッグ用
+                 window.removeExistingButtons();
+            }
+        }
+    };
+
+    /**
+     * マウスボタンが離された時のイベントハンドラ
+     */
+    window.handleMouseUp = function(event) {
+        // console.log('[AIレビュー] mouseup'); // デバッグ用
+
+        // ボタン上でmouseupされた場合は、フラグをリセットして即座に終了
+        if (isButtonMouseDown) {
+            // console.log('[AIレビュー] ボタン上で mouseup、フラグリセットして終了'); // デバッグ用
+            isButtonMouseDown = false;
+            return; // 後続のテキスト選択処理を実行しない
+        }
+
+        // --- ボタン外での mouseup (テキスト選択完了) の場合の処理 ---
+        // 少し遅延させて選択範囲の確定を待つ
+        setTimeout(() => {
+            // setTimeoutが実行される前に再度mousedownが発生しisButtonMouseDownがtrueになったら何もしない
+            if (isButtonMouseDown) {
+                 // console.log('[AIレビュー] setTimeout実行前にボタンmousedown発生、処理中断'); // デバッグ用
+                 return;
+            }
+
+            const selection = window.getSelection();
+            const selectedText = selection.toString().trim();
+            // console.log('[AIレビュー] (setTimeout内) 選択テキスト:', selectedText.substring(0, 50) + '...'); // デバッグ用
+
+            // テキストが選択されていればボタン表示
+            if (selectedText.length > 0) {
+                // 既存ボタンがない場合のみ表示
+                if (!reviewButton && !settingsButton) {
+                    // console.log('[AIレビュー] (setTimeout内) テキスト選択あり、ボタン表示開始'); // デバッグ用
+                    // currentSelectedText = selectedText; // 今回は選択テキスト自体は使わない
+                    window.showButtonsNearSelection(selection);
+                } else {
+                    // 予期せずボタンが残っている場合 (通常は mousedown で削除されるはず)
+                    // console.log('[AIレビュー] (setTimeout内) テキスト選択あり、しかしボタンが予期せず存在'); // デバッグ用
+                    window.removeExistingButtons(); // 念のため削除
+                    window.showButtonsNearSelection(selection); // 再表示
+                }
+            }
+            // テキスト選択がない場合は何もしない (ボタンはmousedownで削除されているはず)
+
+        }, 10); // わずかな遅延
     };
 })();
