@@ -232,11 +232,16 @@
      * ドキュメントがクリックされた時のイベントハンドラ
      */
     window.handleDocumentClick = function(event) {
-        // 選択範囲がない場合はボタンを削除
-        const selection = window.getSelection();
-        if (!selection || selection.toString().length === 0) {
-            window.removeExistingButtons();
-        }
+        // タイマーを使って、クリックイベントが先に処理されるようにする
+        setTimeout(() => {
+            const selection = window.getSelection();
+            if (!selection || selection.toString().length === 0) {
+                // ボタンが存在するか確認してから削除
+                if (reviewButton || settingsButton) {
+                    window.removeExistingButtons();
+                }
+            }
+        }, 50); // 50ms遅延
     };
 
     // イベントリスナーを登録 (初期化後)
