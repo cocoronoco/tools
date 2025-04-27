@@ -9,6 +9,7 @@
     let reviewButton = null;
     let settingsButton = null;
     let isButtonMouseDown = false;
+    let selectionChangeTimer = null; // タイマーを追加
 
     // 初期化完了フラグ
     let isInitialized = false;
@@ -248,16 +249,25 @@
      * 選択範囲が変更された時のイベントハンドラ
      */
     window.handleSelectionChange = function() {
-        const selection = window.getSelection();
-        if (!selection) {
-            return;
+        // タイマーが既に設定されている場合は、タイマーをクリア
+        if (selectionChangeTimer) {
+            clearTimeout(selectionChangeTimer);
         }
 
-        if (selection.toString().length > 0) {
-            window.showButtonsNearSelection(selection);
-        } else {
-            window.removeExistingButtons();
-        }
+        // 新しいタイマーを設定
+        selectionChangeTimer = setTimeout(() => {
+            const selection = window.getSelection();
+            if (!selection) {
+                return;
+            }
+
+            if (selection.toString().length > 0) {
+                window.showButtonsNearSelection(selection);
+            } else {
+                window.removeExistingButtons();
+            }
+            selectionChangeTimer = null; // タイマーをクリア
+        }, 100); // 100ms遅延
     };
 
     // イベントリスナーを登録 (初期化後)
