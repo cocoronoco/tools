@@ -29,12 +29,8 @@
         window.handleReviewButtonClick_Selection = function() {
             console.log('[AIレビュー] 選択文字列用 AIレビュー実行ボタンがクリックされました。');
             // カスタムイベントを発行
-            const event = new CustomEvent('aiReviewRequest', {
-                detail: {
-                    type: 'selection'
-                }
-            });
-            document.dispatchEvent(event);
+             const event = new Event('aiReviewRequest');
+             document.dispatchEvent(event);
             window.removeExistingButtons(); // ボタンを削除
         };
 
