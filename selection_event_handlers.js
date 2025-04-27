@@ -232,11 +232,6 @@
      * ドキュメントがクリックされた時のイベントハンドラ
      */
     window.handleDocumentClick = function(event) {
-        // ボタンがクリックされた場合は何もしない
-        if (event.target === reviewButton || event.target === settingsButton) {
-            return;
-        }
-
         // 選択範囲がない場合はボタンを削除
         const selection = window.getSelection();
         if (!selection || selection.toString().length === 0) {
