@@ -155,6 +155,45 @@
             }
         });
     };
+    
+    // モーダルを開く関数をグローバルスコープに追加
+    window.openModal = function() {
+        console.log('[AIレビュー] モーダルを開きます。');
+        const modal = document.getElementById('reviewPointModal');
+
+        window.isModalOpen = true;
+        modal.style.display = 'flex';
+
+        window.updateModalHeight();
+
+        window.currentTab = localStorage.getItem('currentTab') || 'documentReview';
+
+        window.updateTextareaContent();
+        window.updateTabStyles();
+        populateModalWithStoredValues();
+
+        console.log('[AIレビュー] モーダルの内容を更新しました。');
+    };
+    
+    // モーダルに保存された値を設定する関数
+    function populateModalWithStoredValues() {
+        console.log('[AIレビュー] モーダルに保存された値を設定します。');
+        const radioButtons = document.querySelectorAll('input[name="aiModel"]');
+        const contentArea = document.getElementById('reviewPointTextarea');
+
+        window.reviewPoint_01 = localStorage.getItem('reviewPoint_01') || window.DEFAULT_VALUES[`DEFAULT_REVIEW_POINT_01`];
+        window.reviewPoint_02 = localStorage.getItem('reviewPoint_02') || window.DEFAULT_VALUES[`DEFAULT_REVIEW_POINT_02`];
+
+        window.updateTextareaContent();
+
+        window.selectedAIModel = localStorage.getItem('selectedAIModel') || (window.AI_MODELS.length > 0 ? window.AI_MODELS[0].value : '');
+
+        // ラジオボタンの選択状態を更新
+        radioButtons.forEach(radio => {
+            radio.checked = (radio.value === window.selectedAIModel);
+        });
+        console.log('[AIレビュー] 保存されたAIモデルの値を設定しました。');
+    }
 
     console.log('[AIレビュー] modal_settings.js: 関数を定義しました。');
 
