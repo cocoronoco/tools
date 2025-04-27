@@ -17,10 +17,10 @@
     document.addEventListener('aiReviewInitialized', () => {
         console.log('[AIレビュー] selection_event_handlers.js: 初期化完了イベントを受信しました。');
         isInitialized = true;
-        initializeEventHandlers();
+        window.initializeEventHandlers();
     });
 
-    function initializeEventHandlers() {
+    window.initializeEventHandlers = function() {
         console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを初期化します。');
 
         /**
@@ -195,74 +195,41 @@
             button.style.top = `${position.y}px`;
             // 必要に応じて追加スタイルをここに記述
         };
+    };
 
-        /**
-         * マウスボタンが押された時のイベントハンドラ
-         */
-        window.handleMouseDown = function(event) {
-            // console.log('[AIレビュー] mousedown'); // デバッグ用
-            // ボタン要素上でmousedownされたかチェック
-            const targetIsButton = (reviewButton && reviewButton.contains(event.target)) ||
-                                   (settingsButton && settingsButton.contains(event.target));
+    /**
+     * マウスが押された時のイベントハンドラ
+     */
+    window.handleMouseDown = function(event) {
+        isButtonMouseDown = (event.target === reviewButton || event.target === settingsButton);
+    };
 
-            if (targetIsButton) {
-                // console.log('[AIレビュー] ボタン上で mousedown'); // デバッグ用
-                isButtonMouseDown = true; // ボタン上でのmousedownフラグを立てる
-            } else {
-                // ボタン以外でmousedownされた場合
-                // console.log('[AIレビュー] ボタン外で mousedown'); // デバッグ用
-                isButtonMouseDown = false; // フラグをリセット
-                // 既存の選択文字列用ボタンがあれば削除
-                if (reviewButton || settingsButton) {
-                     // console.log('[AIレビュー] 既存の選択文字列ボタンを削除 (mousedown時)'); // デバッグ用
-                     window.removeExistingButtons();
-                }
-            }
-        };
+    /**
+     * マウスが離された時のイベントハンドラ
+     */
+    window.handleMouseUp = function(event) {
+        if (isButtonMouseDown) {
+            isButtonMouseDown = false;
+            return;
+        }
 
-        /**
-         * マウスボタンが離された時のイベントハンドラ
-         */
-        window.handleMouseUp = function(event) {
-            // console.log('[AIレビュー] mouseup'); // デバッグ用
+        const selection = window.getSelection();
+        if (!selection) {
+            return;
+        }
 
-            // ボタン上でmouseupされた場合は、フラグをリセットして即座に終了
-            if (isButtonMouseDown) {
-                // console.log('[AIレビュー] ボタン上で mouseup、フラグリセットして終了'); // デバッグ用
-                isButtonMouseDown = false;
-                return; // 後続のテキスト選択処理を実行しない
-            }
+        // console.log('[AIレビュー] マウスアップイベント発生、選択範囲:', selection.toString()); // デバッグ用
+        if (selection.toString().length > 0) {
+            window.showButtonsNearSelection(selection);
+        } else {
+            window.removeExistingButtons();
+        }
+    };
 
-            // --- ボタン外での mouseup (テキスト選択完了) の場合の処理 ---
-            // 少し遅延させて選択範囲の確定を待つ
-            setTimeout(() => {
-                // setTimeoutが実行される前に再度mousedownが発生しisButtonMouseDownがtrueになったら何もしない
-                if (isButtonMouseDown) {
-                     // console.log('[AIレビュー] setTimeout実行前にボタンmousedown発生、処理中断'); // デバッグ用
-                     return;
-                }
+    // イベントリスナーを登録 (初期化後)
+    document.addEventListener('mouseup', window.handleMouseUp);
+    document.addEventListener('mousedown', window.handleMouseDown);
 
-                const selection = window.getSelection();
-                const selectedText = selection.toString().trim();
-                // console.log('[AIレビュー] (setTimeout内) 選択テキスト:', selectedText.substring(0, 50) + '...'); // デバッグ用
+    console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを設定しました。');
 
-                // テキストが選択されていればボタン表示
-                if (selectedText.length > 0) {
-                    // 既存ボタンがない場合のみ表示
-                    if (!reviewButton && !settingsButton) {
-                        // console.log('[AIレビュー] (setTimeout内) テキスト選択あり、ボタン表示開始'); // デバッグ用
-                        // currentSelectedText = selectedText; // 今回は選択テキスト自体は使わない
-                        window.showButtonsNearSelection(selection);
-                    } else {
-                        // 予期せずボタンが残っている場合 (通常は mousedown で削除されるはず)
-                        // console.log('[AIレビュー] (setTimeout内) テキスト選択あり、しかしボタンが予期せず存在'); // デバッグ用
-                        window.removeExistingButtons(); // 念のため削除
-                        window.showButtonsNearSelection(selection); // 再表示
-                    }
-                }
-                // テキスト選択がない場合は何もしない (ボタンはmousedownで削除されているはず)
-
-            }, 10); // わずかな遅延
-        };
-    }
 })();
