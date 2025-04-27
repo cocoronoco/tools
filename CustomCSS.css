@@ -1,0 +1,296 @@
+/* --- ローディングアニメーション --- */
+.loading-container {
+    text-align: center;
+    padding: 24px 0;
+    position: absolute;
+    top: 50%;
+    left: 75%; /* Mergelyの右側に表示するため */
+    transform: translate(-50%, -50%);
+    z-index: 10001; /* Mergelyモーダルより手前に表示 */
+}
+.loading-svg {
+    fill: none;
+    stroke: dodgerblue;
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 230 230; /* 円周に近い値 */
+    animation: loader 1.4s infinite cubic-bezier(.4,0,.3,1), loading 1.2s infinite linear;
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+}
+@keyframes loader {
+    from { stroke-dashoffset: 230; }
+    to { stroke-dashoffset: -230; }
+}
+@keyframes loading {
+    from { transform: none; }
+    to { transform: rotate(360deg); }
+}
+
+/* --- MergelyカスタムCSS --- */
+/* jQuery UIダイアログのデフォルト閉じるボタンを非表示 */
+.ui-dialog-titlebar-close {
+    display: none !important;
+}
+/* カスタム閉じるボタン */
+.custom-close-button {
+    cursor: pointer;
+    font-size: 20px;
+    float: right;
+    margin-left: 10px;
+    z-index: 1001; /* タイトルより手前 */
+}
+/* jQuery UIダイアログヘッダーのスタイル調整 */
+.ui-widget-header {
+    border: none !important;
+    background: none !important;
+}
+.ui-dialog-titlebar {
+    padding: 10px !important;
+    position: relative;
+}
+/* Mergely本体のスタイル */
+#mergely {
+    height: 100%;
+    min-height: 300px; /* 最小高さを確保 */
+    overflow: auto; /* コンテンツが多い場合にスクロール */
+}
+/* Mergelyモーダルダイアログのスタイル */
+.ui-dialog#mergelyModal {
+    padding: 0;
+    overflow: hidden; /* ダイアログ自体のスクロールは不要 */
+    z-index: 10000 !important; /* 他の要素より手前に表示 */
+}
+/* ダイアログのオーバーレイ */
+.ui-widget-overlay {
+    z-index: 9999 !important; /* モーダルよりは背面 */
+}
+/* Mergelyモーダルのコンテンツ領域 */
+#mergelyModal .ui-dialog-content {
+    padding-right: 20px !important; /* 右側のパディング調整 */
+    height: 100%; /* コンテンツの高さを100%に */
+    overflow: hidden; /* コンテンツ領域のスクロールは不要 */
+}
+/* ダイアログタイトル */
+.ui-dialog-title {
+    float: left;
+    margin: 0.1em 0;
+    white-space: nowrap;
+    width: 90%; /* 幅を制限 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* はみ出したテキストを省略記号で表示 */
+    font-size: 20px;
+}
+/* Mergely比較コンテナ */
+.compare-container {
+    height: calc(100% - 60px); /* ヘッダーを除いた高さいっぱいに */
+    overflow: hidden; /* コンテナ自体のスクロールは不要 */
+    position: relative;
+}
+/* Mergely差分表示エリア */
+.diffs {
+    height: 100%;
+    overflow: hidden;
+}
+/* Mergelyエディタ全体 */
+.demo-editor {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+/* ラベル（左右ペインのタイトル） */
+.labels {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 0px;
+    font-size: 20px;
+}
+/* Mergelyヘッダー */
+.diffs header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0px;
+}
+/* Mergely初期表示のスプラッシュを非表示 */
+.mergely-splash {
+    display: none !important;
+}
+/* CodeMirror行番号を中央揃え */
+.CodeMirror-linenumber {
+    text-align: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+/* CodeMirrorスクロール領域の高さを調整 */
+.CodeMirror-scroll {
+    height: 100% !important; /* モーダル画面の高さに揃える */
+}
+/* CodeMirror行の左パディング（行番号と重ならないように） */
+.CodeMirror-line {
+    padding-left: 30px !important; /* テキストが隠れないようにpaddingを追加 */
+}
+
+/* --- 設定モーダルCSS --- */
+#reviewCriteriaModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 10010; /* Mergelyモーダルよりさらに手前 */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 1100px; /* 幅を指定 */
+    max-width: 90%; /* 画面幅に対する最大幅 */
+    max-height: 80vh; /* 画面高さに対する最大高さ */
+    display: flex;
+    flex-direction: column; /* コンテンツを縦に並べる */
+    box-sizing: border-box;
+}
+/* モーダルタイトル */
+#reviewCriteriaModal h2 {
+    margin-top: 0;
+    flex: 0 0 auto; /* 高さを固定 */
+}
+/* モーダル閉じるボタン */
+#reviewCriteriaModal .settings-modal-close-button {
+    cursor: pointer;
+    font-size: 20px;
+    float: right;
+    margin-left: 10px;
+}
+/* モーダル内のラベル */
+#reviewCriteriaModal > label {
+    margin-bottom: 10px;
+    flex: 0 0 auto;
+    display: block;
+}
+/* AIモデル選択肢コンテナ */
+#reviewCriteriaModal .model-options-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    flex: 0 0 auto;
+    border: 1px solid #eee;
+    max-height: 200px; /* 高さを制限してスクロール可能に */
+    overflow-y: auto;
+}
+/* AIモデル選択肢ラベル */
+#reviewCriteriaModal .model-options-container label {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 0; /* labelデフォルトのマージンを打ち消し */
+}
+/* AIモデル選択肢ラジオボタン */
+#reviewCriteriaModal .model-options-container input[type="radio"] {
+    margin-right: 10px;
+}
+/* AIモデル選択肢内のコンテンツコンテナ */
+#reviewCriteriaModal .model-content-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+/* AIモデル名 */
+#reviewCriteriaModal .model-name {
+    flex: 0 0 250px; /* 幅を固定 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* AIモデル精度情報 (もしあれば) */
+#reviewCriteriaModal .model-accuracy {
+    margin-left: 10px;
+    flex: 0 0 80px; /* 幅を固定 */
+}
+/* AIモデル制限情報 */
+#reviewCriteriaModal .model-limit {
+    margin-left: 10px;
+    flex: 0 0 150px; /* 幅を固定 */
+    white-space: nowrap;
+}
+/* AIモデル推奨マーク */
+#reviewCriteriaModal .model-recommended {
+    color: #d9534f; /* 赤系の色 */
+    font-weight: bold;
+    margin-left: 10px;
+    flex: 0 0 auto; /* 幅はコンテンツに合わせる */
+}
+/* AIモデル特徴 */
+#reviewCriteriaModal .model-features {
+    margin-left: 10px;
+    flex: 1 1 auto; /* 残りの幅を埋める */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* テキストエリアコンテナ */
+#reviewCriteriaModal .textarea-container {
+    flex: 1 1 auto; /* 残りの高さを埋める */
+    display: flex;
+    flex-direction: column;
+    min-height: 150px; /* 最小高さを確保 */
+}
+/* テキストエリア */
+#reviewCriteriaModal textarea {
+    border: 1px solid #ccc;
+    resize: vertical; /* 縦方向のリサイズのみ許可 */
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Meiryo, "メイリオ", sans-serif; /* 日本語フォント指定 */
+    flex: 1 1 auto; /* 残りの高さを埋める */
+    margin-bottom: 10px;
+    padding: 5px;
+}
+/* ボタンコンテナ */
+#reviewCriteriaModal .button-container {
+    display: flex;
+    margin-top: auto; /* コンテナを下部に配置 */
+    flex: 0 0 auto; /* 高さを固定 */
+    justify-content: flex-end; /* ボタンを右寄せ */
+}
+/* ボタン共通スタイル */
+#reviewCriteriaModal .button-container button {
+    margin-left: 10px;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+/* プライマリボタン（保存など） */
+#reviewCriteriaModal .button-container button.primary {
+    background-color: #4285F4; /* Googleブルー */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+/* デフォルトボタン（キャンセルなど） */
+#reviewCriteriaModal .button-container button.default {
+    background-color: #eee;
+    color: #333;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* 設定モーダル内のタブボタン */
+.ai-review-tab-button {
+    margin-right: 10px;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: normal; /* 通常の太さ */
+    background-color: #f0f0f0; /* 非アクティブ時の背景色 */
+    border-bottom: 2px solid transparent; /* 下線を非表示に */
+}
+/* アクティブなタブボタン */
+.ai-review-tab-button.active {
+    font-weight: bold; /* 太字にする */
+    background-color: #fff; /* アクティブ時の背景色 */
+    border-bottom: 2px solid #4285F4; /* 下線を表示 */
+}
