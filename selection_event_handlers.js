@@ -8,9 +8,6 @@
     // グローバル変数 (Tampermonkeyスクリプトと共有)
     let reviewButton = null;
     let settingsButton = null;
-    let isButtonMouseDown = false;
-    let selectionChangeTimer = null; // タイマーを追加
-    let isDragging = false; // ドラッグ操作中かどうかを判定するフラグを追加
 
     // 初期化完了フラグ
     let isInitialized = false;
@@ -202,34 +199,23 @@
     };
 
     /**
-     * マウスが押された時のイベントハンドラ
-     */
-    window.handleMouseDown = function(event) {
-        isButtonMouseDown = (event.target === reviewButton || event.target === settingsButton);
-        isDragging = true; // ドラッグ開始
-    };
-
-    /**
      * マウスが離された時のイベントハンドラ
      */
     window.handleMouseUp = function(event) {
-        if (isButtonMouseDown) {
-            isButtonMouseDown = false;
-            return;
-        }
+        // 0.1秒後に選択範囲を確認し、ボタンを表示または削除する
+        setTimeout(() => {
+            const selection = window.getSelection();
 
-        const selection = window.getSelection();
-        if (!selection) {
-            return;
-        }
+            // 選択範囲が存在しない場合は、ボタンを削除
+            if (!selection || selection.toString().length === 0) {
+                window.removeExistingButtons();
+                return;
+            }
 
-        // console.log('[AIレビュー] マウスアップイベント発生、選択範囲:', selection.toString()); // デバッグ用
-        if (selection.toString().length > 0) {
-            window.showButtonsNearSelection(selection);
-        } else {
-            window.removeExistingButtons();
-        }
-        isDragging = false; // ドラッグ終了
+            // 選択範囲が存在する場合は、ボタンを表示
+            window.removeExistingButtons(); // 既存のボタンを削除
+            window.showButtonsNearSelection(selection); // ボタンを表示
+        }, 100);
     };
 
     /**
@@ -248,45 +234,9 @@
         }, 50); // 50ms遅延
     };
 
-    /**
-     * 選択範囲が変更された時のイベントハンドラ
-     */
-    window.handleSelectionChange = function() {
-        // タイマーが既に設定されている場合は、タイマーをクリア
-        if (selectionChangeTimer) {
-            clearTimeout(selectionChangeTimer);
-        }
-
-        // 新しいタイマーを設定
-        selectionChangeTimer = setTimeout(() => {
-            const selection = window.getSelection();
-             // ドラッグ操作が完了した時点でのみボタンの表示処理を行う
-            if (isDragging) {
-                return;
-            }
-
-            if (!selection) {
-                return;
-            }
-
-            // 選択範囲が存在しない場合は、ボタンを削除
-            if (selection.toString().length === 0) {
-                window.removeExistingButtons();
-                return;
-            }
-           
-            window.removeExistingButtons(); // 既存のボタンを削除
-            window.showButtonsNearSelection(selection); // ボタンを表示
-            
-            selectionChangeTimer = null; // タイマーをクリア
-        }, 100); // 100ms遅延
-    };
-
     // イベントリスナーを登録 (初期化後)
     document.addEventListener('mouseup', window.handleMouseUp);
-    document.addEventListener('mousedown', window.handleMouseDown);
     document.addEventListener('click', window.handleDocumentClick); // ドキュメント全体のクリックを監視
-    document.addEventListener('selectionchange', window.handleSelectionChange); // 選択範囲の変更を監視
 
     console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを設定しました。');
 
