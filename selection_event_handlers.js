@@ -164,7 +164,7 @@
             button.style.position = 'absolute';
             button.style.left = `${position.x}px`;
             button.style.top = `${position.y}px`;
-            button.style.zIndex = '2147483646';
+            button.style.zIndex = '2147483645';
             button.style.padding = '6px 12px';
             button.style.border = 'none';
             button.style.backgroundColor = '#4285F4';
@@ -184,7 +184,7 @@
             button.style.position = 'absolute';
             button.style.left = `${position.x + reviewButtonWidth + 5}px`;
             button.style.top = `${position.y}px`;
-            button.style.zIndex = '2147483647';
+            button.style.zIndex = '2147483646';
             button.style.padding = '6px 8px';
             button.style.border = 'none';
             button.style.backgroundColor = '#f0f0f0';
@@ -228,9 +228,26 @@
         }
     };
 
+    /**
+     * ドキュメントがクリックされた時のイベントハンドラ
+     */
+    window.handleDocumentClick = function(event) {
+        // ボタンがクリックされた場合は何もしない
+        if (event.target === reviewButton || event.target === settingsButton) {
+            return;
+        }
+
+        // 選択範囲がない場合はボタンを削除
+        const selection = window.getSelection();
+        if (!selection || selection.toString().length === 0) {
+            window.removeExistingButtons();
+        }
+    };
+
     // イベントリスナーを登録 (初期化後)
     document.addEventListener('mouseup', window.handleMouseUp);
     document.addEventListener('mousedown', window.handleMouseDown);
+    document.addEventListener('click', window.handleDocumentClick); // ドキュメント全体のクリックを監視
 
     console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを設定しました。');
 
