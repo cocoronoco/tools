@@ -10,6 +10,7 @@
     let settingsButton = null;
     let isButtonMouseDown = false;
     let selectionChangeTimer = null; // タイマーを追加
+    let isDragging = false; // ドラッグ操作中かどうかを判定するフラグを追加
 
     // 初期化完了フラグ
     let isInitialized = false;
@@ -205,6 +206,7 @@
      */
     window.handleMouseDown = function(event) {
         isButtonMouseDown = (event.target === reviewButton || event.target === settingsButton);
+        isDragging = true; // ドラッグ開始
     };
 
     /**
@@ -227,6 +229,7 @@
         } else {
             window.removeExistingButtons();
         }
+        isDragging = false; // ドラッグ終了
     };
 
     /**
@@ -257,15 +260,24 @@
         // 新しいタイマーを設定
         selectionChangeTimer = setTimeout(() => {
             const selection = window.getSelection();
+             // ドラッグ操作が完了した時点でのみボタンの表示処理を行う
+            if (isDragging) {
+                return;
+            }
+
             if (!selection) {
                 return;
             }
 
-            if (selection.toString().length > 0) {
-                window.showButtonsNearSelection(selection);
-            } else {
+            // 選択範囲が存在しない場合は、ボタンを削除
+            if (selection.toString().length === 0) {
                 window.removeExistingButtons();
+                return;
             }
+           
+            window.removeExistingButtons(); // 既存のボタンを削除
+            window.showButtonsNearSelection(selection); // ボタンを表示
+            
             selectionChangeTimer = null; // タイマーをクリア
         }, 100); // 100ms遅延
     };
