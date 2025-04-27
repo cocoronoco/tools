@@ -1,4 +1,88 @@
 (function() {
+
+    // AIモデルのオプションを作成する関数
+    window.createAIModelOption = function(model) {
+        const optionLabel = document.createElement('label');
+        optionLabel.style.display = 'flex';
+        optionLabel.style.alignItems = 'center';
+        optionLabel.style.padding = '5px';
+        optionLabel.style.cursor = 'pointer';
+        optionLabel.style.borderBottom = '1px solid #ccc';
+
+        const radioInput = document.createElement('input');
+        radioInput.type = 'radio';
+        radioInput.name = 'aiModel';
+        radioInput.value = model.value;
+        radioInput.style.marginRight = '10px';
+        radioInput.checked = (selectedAIModel === model.value);
+
+        radioInput.addEventListener('change', () => {
+            selectedAIModel = model.value;
+            console.log(`[AIレビュー] 選択されたAIモデルが変更されました: '${selectedAIModel}'`);
+        });
+
+        const contentContainer = document.createElement('div');
+        contentContainer.style.display = 'flex';
+        contentContainer.style.alignItems = 'center';
+        contentContainer.style.width = '100%';
+
+        const modelNameSpan = document.createElement('span');
+        modelNameSpan.textContent = model.displayName;
+        modelNameSpan.style.flex = '0 0 250px';
+        modelNameSpan.style.whiteSpace = 'nowrap';
+        modelNameSpan.style.overflow = 'hidden';
+        modelNameSpan.style.textOverflow = 'ellipsis';
+
+        const accuracySpan = document.createElement('span');
+        accuracySpan.textContent = model.accuracy;
+        accuracySpan.style.marginLeft = '10px';
+        accuracySpan.style.flex = '0 0 80px';
+
+        const limitInfoSpan = document.createElement('span');
+        if (model.limitInfo) {
+            limitInfoSpan.textContent = 'ℹ️ 上限：' + model.limitInfo;
+            limitInfoSpan.style.marginLeft = '10px';
+            limitInfoSpan.style.flex = '0 0 150px';
+            limitInfoSpan.style.whiteSpace = 'nowrap';
+        }
+
+        const recommendedSpan = document.createElement('span');
+        if (model.recommended) {
+            recommendedSpan.textContent = '【💡おすすめ】';
+            recommendedSpan.style.color = '#d9534f';
+            recommendedSpan.style.fontWeight = 'bold';
+            recommendedSpan.style.marginLeft = '10px';
+            recommendedSpan.style.flex = '0 0 auto';
+        }
+
+        const featuresSpan = document.createElement('span');
+        if (model.features) {
+            featuresSpan.textContent = model.features;
+            featuresSpan.style.marginLeft = '10px';
+            featuresSpan.style.flex = '1 1 auto';
+            featuresSpan.style.whiteSpace = 'nowrap';
+            featuresSpan.style.overflow = 'hidden';
+            featuresSpan.style.textOverflow = 'ellipsis';
+        } else {
+            featuresSpan.style.flex = '1 1 auto';
+        }
+
+        contentContainer.appendChild(modelNameSpan);
+        contentContainer.appendChild(accuracySpan);
+        contentContainer.appendChild(limitInfoSpan);
+        if (model.recommended) {
+            contentContainer.appendChild(recommendedSpan);
+        }
+        if (model.features) {
+            contentContainer.appendChild(featuresSpan);
+        }
+
+        optionLabel.appendChild(radioInput);
+        optionLabel.appendChild(contentContainer);
+
+        return optionLabel;
+    };
+
     // タブメニューを作成する関数
     window.createTabMenu = function() {
         const tabMenu = document.createElement('div');
@@ -83,89 +167,6 @@
         contentArea.style.marginBottom = '10px';
         textareaContainer.appendChild(contentArea);
         return textareaContainer;
-    };
-
-    // AIモデルのオプションを作成する関数
-    window.createAIModelOption = function(model) {
-        const optionLabel = document.createElement('label');
-        optionLabel.style.display = 'flex';
-        optionLabel.style.alignItems = 'center';
-        optionLabel.style.padding = '5px';
-        optionLabel.style.cursor = 'pointer';
-        optionLabel.style.borderBottom = '1px solid #ccc';
-
-        const radioInput = document.createElement('input');
-        radioInput.type = 'radio';
-        radioInput.name = 'aiModel';
-        radioInput.value = model.value;
-        radioInput.style.marginRight = '10px';
-        radioInput.checked = (selectedAIModel === model.value);
-
-        radioInput.addEventListener('change', () => {
-            selectedAIModel = model.value;
-            console.log(`[AIレビュー] 選択されたAIモデルが変更されました: '${selectedAIModel}'`);
-        });
-
-        const contentContainer = document.createElement('div');
-        contentContainer.style.display = 'flex';
-        contentContainer.style.alignItems = 'center';
-        contentContainer.style.width = '100%';
-
-        const modelNameSpan = document.createElement('span');
-        modelNameSpan.textContent = model.displayName;
-        modelNameSpan.style.flex = '0 0 250px';
-        modelNameSpan.style.whiteSpace = 'nowrap';
-        modelNameSpan.style.overflow = 'hidden';
-        modelNameSpan.style.textOverflow = 'ellipsis';
-
-        const accuracySpan = document.createElement('span');
-        accuracySpan.textContent = model.accuracy;
-        accuracySpan.style.marginLeft = '10px';
-        accuracySpan.style.flex = '0 0 80px';
-
-        const limitInfoSpan = document.createElement('span');
-        if (model.limitInfo) {
-            limitInfoSpan.textContent = 'ℹ️ 上限：' + model.limitInfo;
-            limitInfoSpan.style.marginLeft = '10px';
-            limitInfoSpan.style.flex = '0 0 150px';
-            limitInfoSpan.style.whiteSpace = 'nowrap';
-        }
-
-        const recommendedSpan = document.createElement('span');
-        if (model.recommended) {
-            recommendedSpan.textContent = '【💡おすすめ】';
-            recommendedSpan.style.color = '#d9534f';
-            recommendedSpan.style.fontWeight = 'bold';
-            recommendedSpan.style.marginLeft = '10px';
-            recommendedSpan.style.flex = '0 0 auto';
-        }
-
-        const featuresSpan = document.createElement('span');
-        if (model.features) {
-            featuresSpan.textContent = model.features;
-            featuresSpan.style.marginLeft = '10px';
-            featuresSpan.style.flex = '1 1 auto';
-            featuresSpan.style.whiteSpace = 'nowrap';
-            featuresSpan.style.overflow = 'hidden';
-            featuresSpan.style.textOverflow = 'ellipsis';
-        } else {
-            featuresSpan.style.flex = '1 1 auto';
-        }
-
-        contentContainer.appendChild(modelNameSpan);
-        contentContainer.appendChild(accuracySpan);
-        contentContainer.appendChild(limitInfoSpan);
-        if (model.recommended) {
-            contentContainer.appendChild(recommendedSpan);
-        }
-        if (model.features) {
-            contentContainer.appendChild(featuresSpan);
-        }
-
-        optionLabel.appendChild(radioInput);
-        optionLabel.appendChild(contentContainer);
-
-        return optionLabel;
     };
 
     // ボタンコンテナを作成する関数
