@@ -244,10 +244,27 @@
         }, 50); // 50ms遅延
     };
 
+    /**
+     * 選択範囲が変更された時のイベントハンドラ
+     */
+    window.handleSelectionChange = function() {
+        const selection = window.getSelection();
+        if (!selection) {
+            return;
+        }
+
+        if (selection.toString().length > 0) {
+            window.showButtonsNearSelection(selection);
+        } else {
+            window.removeExistingButtons();
+        }
+    };
+
     // イベントリスナーを登録 (初期化後)
     document.addEventListener('mouseup', window.handleMouseUp);
     document.addEventListener('mousedown', window.handleMouseDown);
     document.addEventListener('click', window.handleDocumentClick); // ドキュメント全体のクリックを監視
+    document.addEventListener('selectionchange', window.handleSelectionChange); // 選択範囲の変更を監視
 
     console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを設定しました。');
 
