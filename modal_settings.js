@@ -1,4 +1,142 @@
 (function() {
+    
+    // 設定を保存する関数
+    function saveSettings() {
+        const contentArea = document.getElementById('reviewPointTextarea');
+        if (currentTab === 'documentReview') {
+            reviewPoint_01 = contentArea.value;
+            localStorage.setItem('reviewPoint_01', reviewPoint_01);
+        } else if (currentTab === 'answerReview') {
+            reviewPoint_02 = contentArea.value;
+            localStorage.setItem('reviewPoint_02', reviewPoint_02);
+        }
+        console.log(`[AIレビュー] レビュー観点(${currentTab})が保存されました。`);
+
+        localStorage.setItem('selectedAIModel', selectedAIModel);
+        localStorage.setItem('currentTab', currentTab);
+        console.log(`[AIレビュー] 選択されたAIモデル '${selectedAIModel}' が保存されました。`);
+
+        closeModal();
+    }
+
+    // 設定をデフォルトに戻す関数
+    function resetSettings() {
+        localStorage.removeItem('reviewPoint_01');
+        localStorage.removeItem('reviewPoint_02');
+        localStorage.removeItem('selectedAIModel');
+        localStorage.removeItem('currentTab');
+        reviewPoint_01 = DEFAULT_VALUES[`DEFAULT_REVIEW_POINT_01`];
+        reviewPoint_02 = DEFAULT_VALUES[`DEFAULT_REVIEW_POINT_02`];
+        selectedAIModel = AI_MODELS.length > 0 ? AI_MODELS[0].value : '';
+        currentTab = 'documentReview';
+        updateTextareaContent();
+        window.updateTabStyles();
+
+        // ラジオボタンの選択状態を更新
+        const radioButtons = document.querySelectorAll('input[name="aiModel"]');
+        radioButtons.forEach(radio => {
+            radio.checked = (radio.value === selectedAIModel);
+        });
+
+        console.log('[AIレビュー] 設定がデフォルトにリセットされました。');
+    }
+
+    // タブを切り替える関数
+    function switchTab(tabName) {
+        console.log(`[AIレビュー] タブを切り替えます: ${tabName}`);
+        currentTab = tabName;
+        updateTextareaContent();
+        window.updateTabStyles();
+    }
+
+    // テキストエリアの内容を更新する関数
+    function updateTextareaContent() {
+        console.log('[AIレビュー] テキストエリアの内容を更新します。');
+        const contentArea = document.getElementById('reviewPointTextarea');
+        if (currentTab === 'documentReview') {
+            contentArea.value = reviewPoint_01;
+        } else if (currentTab === 'answerReview') {
+            contentArea.value = reviewPoint_02;
+        }
+        console.log('[AIレビュー] テキストエリアの内容を更新しました。');
+    }
+
+    // モーダルの高さを更新する関数
+    function updateModalHeight() {
+        try {
+            const modal = document.getElementById('reviewPointModal');
+            if (modal && isModalOpen) {
+                const newHeight = window.innerHeight * 0.8;
+                modal.style.maxHeight = `${newHeight}px`;
+                modal.style.height = `${newHeight}px`;
+                console.log(`[AIレビュー] モーダルの高さを${newHeight}pxに更新しました。`);
+            } else {
+                console.log('[AIレビュー] モーダルが開いていません。高さを更新しません。');
+            }
+        } catch (error) {
+            console.error('[AIレビュー] リサイズ処理中にエラーが発生しました:', error);
+        }
+    }
+
+    // モーダルを開く関数
+    function openModal() {
+        console.log('[AIレビュー] モーダルを開きます。');
+        const modal = document.getElementById('reviewPointModal');
+
+        isModalOpen = true;
+        modal.style.display = 'flex';
+
+        updateModalHeight();
+
+        currentTab = localStorage.getItem('currentTab') || 'documentReview';
+
+        updateTextareaContent();
+        window.updateTabStyles();
+        populateModalWithStoredValues();
+
+        console.log('[AIレビュー] モーダルの内容を更新しました。');
+    }
+
+    // モーダルに保存された値を設定する関数
+    function populateModalWithStoredValues() {
+        console.log('[AIレビュー] モーダルに保存された値を設定します。');
+        const radioButtons = document.querySelectorAll('input[name="aiModel"]');
+        const contentArea = document.getElementById('reviewPointTextarea');
+
+        reviewPoint_01 = localStorage.getItem('reviewPoint_01') || DEFAULT_VALUES[`DEFAULT_REVIEW_POINT_01`];
+        reviewPoint_02 = localStorage.getItem('reviewPoint_02') || DEFAULT_VALUES[`DEFAULT_REVIEW_POINT_02`];
+
+        updateTextareaContent();
+
+        selectedAIModel = localStorage.getItem('selectedAIModel') || (AI_MODELS.length > 0 ? AI_MODELS[0].value : '');
+
+        // ラジオボタンの選択状態を更新
+        radioButtons.forEach(radio => {
+            radio.checked = (radio.value === selectedAIModel);
+        });
+        console.log('[AIレビュー] 保存されたAIモデルの値を設定しました。');
+    }
+
+    // モーダルを閉じる関数
+    function closeModal() {
+        console.log('[AIレビュー] モーダルを閉じます。');
+        const modal = document.getElementById('reviewPointModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+        isModalOpen = false;
+
+        resetModalSize();
+    }
+
+    // モーダルのサイズをリセットする関数
+    function resetModalSize() {
+        const modal = document.getElementById('reviewPointModal');
+        if (modal) {
+            modal.style.maxHeight = '80vh';
+            modal.style.height = 'auto';
+        }
+    }
 
     // AIモデルのオプションを作成する関数
     window.createAIModelOption = function(model) {
