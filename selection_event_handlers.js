@@ -12,75 +12,42 @@
     let isButtonMouseDown = false;
     // let currentSelectedText = ''; // 選択されたテキストを保持（今回は使用しない）
 
-    // イベントハンドラ関数 (Tampermonkeyスクリプトで定義された関数に依存)
+    // reviewPoint_01, reviewPoint_02, selectedAIModel, currentTab を定義
+    window.reviewPoint_01 = localStorage.getItem('reviewPoint_01') || window.DEFAULT_VALUES[`DEFAULT_REVIEW_POINT_01`];
+    window.reviewPoint_02 = localStorage.getItem('reviewPoint_02') || window.DEFAULT_VALUES[`DEFAULT_REVIEW_POINT_02`];
+    window.selectedAIModel = localStorage.getItem('selectedAIModel') || (window.AI_MODELS.length > 0 ? window.AI_MODELS[0].value : '');
+    window.currentTab = localStorage.getItem('currentTab') || 'documentReview';
 
-    /**
-     * マウスボタンが押された時のイベントハンドラ
-     */
-    window.handleMouseDown = function(event) {
-        // console.log('[AIレビュー] mousedown'); // デバッグ用
-        // ボタン要素上でmousedownされたかチェック
-        const targetIsButton = (reviewButton && reviewButton.contains(event.target)) ||
-                               (settingsButton && settingsButton.contains(event.target));
-
-        if (targetIsButton) {
-            // console.log('[AIレビュー] ボタン上で mousedown'); // デバッグ用
-            isButtonMouseDown = true; // ボタン上でのmousedownフラグを立てる
+    // メインコンテンツを取得する関数 (selection_event_handlers.js に移動)
+    window.saveAIRequest = function() {
+        console.log('[AIレビュー] メインコンテンツを取得します。');
+        const mainContent = document.querySelector('#main-content');
+        if (mainContent) {
+            console.log('[AIレビュー] メインコンテンツを取得しました。');
+            return mainContent.innerHTML;
         } else {
-            // ボタン以外でmousedownされた場合
-            // console.log('[AIレビュー] ボタン外で mousedown'); // デバッグ用
-            isButtonMouseDown = false; // フラグをリセット
-            // 既存の選択文字列用ボタンがあれば削除
-            if (reviewButton || settingsButton) {
-                 // console.log('[AIレビュー] 既存の選択文字列ボタンを削除 (mousedown時)'); // デバッグ用
-                 window.removeExistingButtons();
-            }
+            console.error('[AIレビュー] main-contentが見つかりません。');
+            return null;
         }
     };
 
-    /**
-     * マウスボタンが離された時のイベントハンドラ
-     */
-    window.handleMouseUp = function(event) {
-        // console.log('[AIレビュー] mouseup'); // デバッグ用
+    // モーダルを開く関数 (selection_event_handlers.js に移動)
+    window.openModal = function() {
+        console.log('[AIレビュー] モーダルを開きます。');
+        const modal = document.getElementById('reviewPointModal');
 
-        // ボタン上でmouseupされた場合は、フラグをリセットして即座に終了
-        if (isButtonMouseDown) {
-            // console.log('[AIレビュー] ボタン上で mouseup、フラグリセットして終了'); // デバッグ用
-            isButtonMouseDown = false;
-            return; // 後続のテキスト選択処理を実行しない
-        }
+        window.isModalOpen = true;
+        modal.style.display = 'flex';
 
-        // --- ボタン外での mouseup (テキスト選択完了) の場合の処理 ---
-        // 少し遅延させて選択範囲の確定を待つ
-        setTimeout(() => {
-            // setTimeoutが実行される前に再度mousedownが発生しisButtonMouseDownがtrueになったら何もしない
-            if (isButtonMouseDown) {
-                 // console.log('[AIレビュー] setTimeout実行前にボタンmousedown発生、処理中断'); // デバッグ用
-                 return;
-            }
+        window.updateModalHeight();
 
-            const selection = window.getSelection();
-            const selectedText = selection.toString().trim();
-            // console.log('[AIレビュー] (setTimeout内) 選択テキスト:', selectedText.substring(0, 50) + '...'); // デバッグ用
+        window.currentTab = localStorage.getItem('currentTab') || 'documentReview';
 
-            // テキストが選択されていればボタン表示
-            if (selectedText.length > 0) {
-                // 既存ボタンがない場合のみ表示
-                if (!reviewButton && !settingsButton) {
-                    // console.log('[AIレビュー] (setTimeout内) テキスト選択あり、ボタン表示開始'); // デバッグ用
-                    // currentSelectedText = selectedText; // 今回は選択テキスト自体は使わない
-                    window.showButtonsNearSelection(selection);
-                } else {
-                    // 予期せずボタンが残っている場合 (通常は mousedown で削除されるはず)
-                    // console.log('[AIレビュー] (setTimeout内) テキスト選択あり、しかしボタンが予期せず存在'); // デバッグ用
-                    window.removeExistingButtons(); // 念のため削除
-                    window.showButtonsNearSelection(selection); // 再表示
-                }
-            }
-            // テキスト選択がない場合は何もしない (ボタンはmousedownで削除されているはず)
+        window.updateTextareaContent();
+        window.updateTabStyles();
+        window.populateModalWithStoredValues();
 
-        }, 10); // わずかな遅延
+        console.log('[AIレビュー] モーダルの内容を更新しました。');
     };
 
     /**
