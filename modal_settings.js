@@ -78,5 +78,5 @@ function createModal(AI_MODELS, createAIModelOption, createTabMenu, createTextar
     // モーダルのリサイズイベントにリスナーを追加
     window.addEventListener('resize', updateModalHeight);
 
-    return modal; // モーダルを返す
+    return modal;
 }
