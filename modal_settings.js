@@ -1,4 +1,13 @@
 (function() {
+    // スコープ内でグローバル変数にアクセスできるように設定
+    const DEFAULT_VALUES = window.DEFAULT_VALUES;
+    const AI_MODELS = window.AI_MODELS;
+    let reviewPoint_01 = "";
+    let reviewPoint_02 = "";
+    let selectedAIModel = "";
+    let currentTab = "documentReview";
+    let isModalOpen = false;
+
     // タブメニューを作成する関数
     window.createTabMenu = function() {
         const tabMenu = document.createElement('div');
