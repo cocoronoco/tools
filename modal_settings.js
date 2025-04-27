@@ -5,7 +5,7 @@
 
     console.log('[AIレビュー] modal_settings.js をロードしました。');
 
-    // モーダルを作成する関数
+    // グローバルスコープに関数を追加
     window.createModal = function() {
         console.log('[AIレビュー] モーダルを作成します。');
         const modal = document.createElement('div');
@@ -85,7 +85,6 @@
         window.addEventListener('resize', window.updateModalHeight);
     };
 
-    // タブメニューを作成する関数
     window.createTabMenu = function() {
         const tabMenu = document.createElement('div');
         tabMenu.className = 'tab-menu';
@@ -108,7 +107,6 @@
         return tabMenu;
     };
 
-    // テキストエリアを格納するコンテナを作成する関数
     window.createTextareaContainer = function() {
         const textareaContainer = document.createElement('div');
         textareaContainer.className = 'textarea-container';
@@ -123,7 +121,6 @@
         return textareaContainer;
     };
 
-    // ボタンを格納するコンテナを作成する関数
     window.createButtonContainer = function() {
         const buttonContainer = document.createElement('div');
         buttonContainer.className = 'button-container';
@@ -144,7 +141,6 @@
         return buttonContainer;
     };
 
-    // タブのスタイルを更新する関数
     window.updateTabStyles = function() {
         const tabButtons = document.querySelectorAll('.tab-button');
         tabButtons.forEach(button => {
