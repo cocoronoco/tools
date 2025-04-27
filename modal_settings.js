@@ -25,12 +25,14 @@
         modal.style.height = '80vh';
         modal.style.flexDirection = 'column';
         modal.style.boxSizing = 'border-box';
+        modal.style.fontFamily = 'Arial, sans-serif'; // フォント指定
 
         // モーダルのタイトル
         const modalTitle = document.createElement('h2');
         modalTitle.textContent = 'AIレビュー設定';
         modalTitle.style.marginTop = '0';
         modalTitle.style.flex = '0 0 auto';
+        modalTitle.style.marginBottom = '10px'; // 調整
         modal.appendChild(modalTitle);
 
         // 閉じるボタンを作成
@@ -40,14 +42,13 @@
         closeModalButton.style.fontSize = '20px';
         closeModalButton.style.float = 'right';
         closeModalButton.style.marginLeft = '10px';
-
         closeModalButton.addEventListener('click', window.closeModal);
         modalTitle.appendChild(closeModalButton);
 
         // AIモデルセレクトボックスのラベル
         const modelSelectLabel = document.createElement('label');
         modelSelectLabel.textContent = 'AIモデル:';
-        modelSelectLabel.style.marginBottom = '10px';
+        modelSelectLabel.style.marginBottom = '5px';
         modal.appendChild(modelSelectLabel);
 
         // AIモデルオプションを格納するコンテナ
@@ -89,6 +90,8 @@
         const tabMenu = document.createElement('div');
         tabMenu.className = 'tab-menu';
         tabMenu.style.marginBottom = '10px';
+        tabMenu.style.display = 'flex'; // Flexbox を使用
+        tabMenu.style.gap = '10px'; // タブ間の間隔
 
         const documentTab = document.createElement('button');
         documentTab.textContent = 'ドキュメントレビュー';
@@ -116,6 +119,7 @@
         textarea.style.width = '100%';
         textarea.style.height = '200px';
         textarea.style.marginBottom = '10px';
+        textarea.style.boxSizing = 'border-box'; // padding, border を含めたサイズにする
         textareaContainer.appendChild(textarea);
 
         return textareaContainer;
@@ -125,6 +129,7 @@
         const buttonContainer = document.createElement('div');
         buttonContainer.className = 'button-container';
         buttonContainer.style.textAlign = 'right';
+        buttonContainer.style.marginTop = '20px'; // ボタンの上にスペースを追加
 
         const saveButton = document.createElement('button');
         saveButton.textContent = '保存';
@@ -135,6 +140,7 @@
         const resetButton = document.createElement('button');
         resetButton.textContent = 'リセット';
         resetButton.className = 'aui-button aui-button-link';
+        resetButton.style.marginLeft = '10px'; // ボタン間のスペース
         resetButton.addEventListener('click', window.resetSettings);
         buttonContainer.appendChild(resetButton);
 
