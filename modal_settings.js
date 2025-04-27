@@ -83,6 +83,72 @@
         return optionLabel;
     };
 
+    // レビュー方法ボタンを作成する関数
+    window.createReviewMethodButtons = function() {
+        const container = document.createElement('div');
+        container.style.marginBottom = '10px';
+
+        // レビュー方法ボタンのスタイル
+        const buttonStyle = `
+            padding: 6px 12px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 13px;
+            line-height: 1.4;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            margin-right: 5px;
+        `;
+
+        const createButton = (methodName) => {
+            const button = document.createElement('button');
+            button.textContent = methodName;
+            button.id = `reviewMethod_${methodName.replace(/[^a-zA-Z0-9]/g, '')}`; // IDを設定（空白と記号を削除）
+            button.style.cssText = buttonStyle; // スタイルを適用
+            button.addEventListener('click', () => {
+                // ボタンクリック時に reviewMethod を更新してボタンの状態を更新
+                window.reviewMethod = methodName;
+                window.updateReviewMethodButtons();
+            });
+            return button;
+        };
+
+        const fixDiffButton = createButton('修正＆差分比較');
+        const listSuggestButton = createButton('指摘&一覧表示');
+
+        container.appendChild(fixDiffButton);
+        container.appendChild(listSuggestButton);
+
+        // 初期状態で「修正＆差分比較」を有効にする
+        window.reviewMethod = '修正＆差分比較';
+        window.updateReviewMethodButtons();
+
+        return container;
+    };
+
+    // レビュー方法ボタンの状態を更新する関数
+    window.updateReviewMethodButtons = function() {
+        const fixDiffButton = document.getElementById('reviewMethod_修正差分比較');
+        const listSuggestButton = document.getElementById('reviewMethod_指摘一覧表示');
+
+        if (fixDiffButton && listSuggestButton) {
+            // デフォルトで「修正＆差分比較」を有効化
+            const isFixDiffSelected = window.reviewMethod === '修正＆差分比較';
+            const isListSuggestSelected = window.reviewMethod === '指摘&一覧表示';
+
+            // 「修正＆差分比較」ボタンの状態を更新
+            fixDiffButton.style.backgroundColor = isFixDiffSelected ? '#4285F4' : '#f0f0f0';
+            fixDiffButton.style.color = isFixDiffSelected ? 'white' : '#333';
+            fixDiffButton.textContent = isFixDiffSelected ? '✔修正＆差分比較' : '修正＆差分比較';
+
+            // 「指摘&一覧表示」ボタンの状態を更新
+            listSuggestButton.style.backgroundColor = isListSuggestSelected ? '#4285F4' : '#f0f0f0';
+            listSuggestButton.style.color = isListSuggestSelected ? 'white' : '#333';
+            listSuggestButton.textContent = isListSuggestSelected ? '✔指摘&一覧表示' : '指摘&一覧表示';
+        }
+    };
+
     // タブメニューを作成する関数
     window.createTabMenu = function() {
         const tabMenu = document.createElement('div');
