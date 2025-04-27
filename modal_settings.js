@@ -195,6 +195,23 @@
         console.log('[AIレビュー] 保存されたAIモデルの値を設定しました。');
     };
 
+    // モーダルの高さを更新する関数
+    window.updateModalHeight = function() {
+        try {
+            const modal = document.getElementById('reviewPointModal');
+            if (modal && window.isModalOpen) {
+                const newHeight = window.innerHeight * 0.8;
+                modal.style.maxHeight = `${newHeight}px`;
+                modal.style.height = `${newHeight}px`;
+                console.log(`[AIレビュー] モーダルの高さを${newHeight}pxに更新しました。`);
+            } else {
+                console.log('[AIレビュー] モーダルが開いていません。高さを更新しません。');
+            }
+        } catch (error) {
+            console.error('[AIレビュー] リサイズ処理中にエラーが発生しました:', error);
+        }
+    };
+
     console.log('[AIレビュー] modal_settings.js: 関数を定義しました。');
 
 })();
