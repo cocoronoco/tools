@@ -133,11 +133,11 @@
 }
 
 /* --- 赤・青文字の太字化（追加）--- */
-.mergely-editor .mergely.ch.ind.lhs,
-.mergely-editor .mergely.ch.d.lhs {
+.mergely.ch.ind.lhs,
+.mergely.ch.d.lhs {
   font-weight: bold !important;
 }
 
-.mergely-editor .mergely.ch.ina.rhs {
+.mergely.ch.ina.rhs {
   font-weight: bold !important;
 }
