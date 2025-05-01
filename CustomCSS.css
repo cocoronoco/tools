@@ -132,12 +132,14 @@
     padding-left: 30px !important; /* テキストが隠れないようにpaddingを追加 */
 }
 
-/* --- 赤・青文字の太字化（追加）--- */
-.mergely.ch.ind.lhs,
-.mergely.ch.d.lhs {
+/* --- 赤・青文字の太字化（修正版）--- */
+.mergely-editor .CodeMirror-line .mergely.ch.d.lhs {
+  text-decoration: line-through !important;
+  color: #ff0000 !important;
   font-weight: bold !important;
 }
 
-.mergely.ch.ina.rhs {
+.mergely-editor .CodeMirror-line .mergely.ch.ina.rhs {
+  color: #0000ff !important;
   font-weight: bold !important;
 }
