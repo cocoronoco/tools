@@ -133,13 +133,13 @@
 }
 
 /* --- 赤・青文字の太字化（再修正版）--- */
-.mergely-editor span.mergely.ch.d.lhs {
+.mergely-editor .mergely.ch.d.lhs {
   text-decoration: line-through !important;
   color: #ff0000 !important;
   font-weight: bold !important;
 }
 
-.mergely-editor span.mergely.ch.ina.rhs {
+.mergely-editor .mergely.ch.ina.rhs {
   color: #0000ff !important;
   font-weight: bold !important;
 }
