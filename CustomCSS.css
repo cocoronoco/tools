@@ -131,8 +131,3 @@
 .CodeMirror-line {
     padding-left: 30px !important; /* テキストが隠れないようにpaddingを追加 */
 }
-
-/* 太字にするCSS */
-.mergely .ch.ina.rhs.cid-0 {
-    font-weight: bold !important;
-}
