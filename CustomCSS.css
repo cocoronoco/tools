@@ -131,12 +131,3 @@
 .CodeMirror-line {
     padding-left: 30px !important; /* テキストが隠れないようにpaddingを追加 */
 }
-
-/* --- 赤・青文字の太字化（再修正版）--- */
-.mergely-editor .mergely.ch.d.lhs {
-  display: none !important;
-}
-
-.mergely-editor .mergely.ch.ina.rhs {
-  display: none !important;
-}
