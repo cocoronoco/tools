@@ -162,125 +162,61 @@
         return optionLabel;
     };
 
-    // タブメニューを作成する関数
+     // タブメニューを作成する関数
     window.createTabMenu = function() {
         const tabMenu = document.createElement('div');
-        tabMenu.style.marginBottom = '0px';
-        tabMenu.style.display = 'flex';
-        tabMenu.style.paddingBottom = '0px';
+        tabMenu.className = 'tab-menu';
+        tabMenu.style.marginBottom = '10px';
 
-        const documentReviewTab = window.createTabButton('documentReview', 'ドキュメントレビュー');
-        tabMenu.appendChild(documentReviewTab);
+        const documentTab = document.createElement('button');
+        documentTab.textContent = 'ドキュメントレビュー';
+        documentTab.className = 'tab-button';
+        documentTab.dataset.tab = 'documentReview';
+        documentTab.addEventListener('click', () => window.switchTab('documentReview'));
+        tabMenu.appendChild(documentTab);
 
-        const answerReviewTab = window.createTabButton('answerReview', '回答文レビュー');
-        tabMenu.appendChild(answerReviewTab);
+        const answerTab = document.createElement('button');
+        answerTab.textContent = '回答レビュー';
+        answerTab.className = 'tab-button';
+        documentTab.dataset.tab = 'answerReview';
+        answerTab.addEventListener('click', () => window.switchTab('answerReview'));
+        tabMenu.appendChild(answerTab);
 
         return tabMenu;
-    };
-
-    // タブボタンを作成する関数
-    window.createTabButton = function(tabName, tabText) {
-        const tabButton = document.createElement('button');
-        tabButton.textContent = tabText;
-        tabButton.className = `ai-review-tab-button aui-button aui-button-subtle`;
-        tabButton.style.marginRight = '10px';
-        tabButton.style.border = 'none';
-        tabButton.style.padding = '5px 10px';
-        tabButton.style.cursor = 'pointer';
-        tabButton.style.fontSize = '14px';
-        tabButton.style.fontWeight = 'normal';
-
-        if (currentTab === tabName) {
-            tabButton.style.backgroundColor = '#0052cc';
-            tabButton.style.color = 'white';
-            tabButton.textContent = '✔ ' + tabText;
-        } else {
-            tabButton.style.backgroundColor = '#f0f0f0';
-            tabButton.style.color = 'black';
-        }
-
-        tabButton.addEventListener('click', () => {
-            switchTab(tabName);
-            updateTextareaContent();
-            window.updateTabStyles();
-        });
-
-        return tabButton;
-    };
-
-    // タブのスタイルを更新する関数
-    window.updateTabStyles = function() {
-        const tabButtons = document.querySelectorAll('.ai-review-tab-button');
-        tabButtons.forEach(tabButton => {
-            const tabName = tabButton.textContent.replace('✔ ', '').trim().replace('ドキュメントレビュー', 'documentReview').replace('回答文レビュー', 'answerReview');
-            if (currentTab === tabName) {
-                tabButton.style.backgroundColor = '#0052cc';
-                tabButton.style.color = 'white';
-                tabButton.textContent = '✔ ' + tabButton.textContent.replace('✔ ', '');
-            } else {
-                tabButton.style.backgroundColor = '#f0f0f0';
-                tabButton.style.color = 'black';
-                tabButton.textContent = tabButton.textContent.replace('✔ ', '');
-            }
-        });
     };
 
     // テキストエリアコンテナを作成する関数
     window.createTextareaContainer = function() {
         const textareaContainer = document.createElement('div');
-        textareaContainer.style.flex = '1 1 auto';
-        textareaContainer.style.display = 'flex';
-        textareaContainer.style.flexDirection = 'column';
+        textareaContainer.className = 'textarea-container';
 
-        const contentArea = document.createElement('textarea');
-        contentArea.id = 'reviewPointTextarea';
-        contentArea.rows = 5;
-        contentArea.cols = 40;
-        contentArea.style.border = '2px solid #ccc';
-        contentArea.style.resize = 'none';
-        contentArea.style.width = '100%';
-        contentArea.style.fontSize = '14px';
-        contentArea.style.lineHeight = '1.5';
-        contentArea.style.fontFamily = 'Meiryo, "メイリオ", sans-serif';
-        contentArea.style.flex = '1 1 auto';
-        contentArea.style.marginBottom = '10px';
-        textareaContainer.appendChild(contentArea);
+        const textarea = document.createElement('textarea');
+        textarea.id = 'reviewPointTextarea';
+        textarea.style.width = '100%';
+        textarea.style.height = '200px';
+        textarea.style.marginBottom = '10px';
+        textareaContainer.appendChild(textarea);
+
         return textareaContainer;
     };
 
     // ボタンコンテナを作成する関数
     window.createButtonContainer = function() {
         const buttonContainer = document.createElement('div');
-        buttonContainer.style.display = 'flex';
-        buttonContainer.style.marginTop = 'auto';
-        buttonContainer.style.flex = '0 0 auto';
+        buttonContainer.className = 'button-container';
+        buttonContainer.style.textAlign = 'right';
 
         const saveButton = document.createElement('button');
         saveButton.textContent = '保存';
         saveButton.className = 'aui-button aui-button-primary';
-        saveButton.style.flex = '1';
-        saveButton.style.fontSize = '18px';
-        saveButton.style.marginRight = '10px';
         saveButton.addEventListener('click', saveSettings);
+        buttonContainer.appendChild(saveButton);
 
         const resetButton = document.createElement('button');
-        resetButton.textContent = 'デフォルトに戻す';
-        resetButton.className = 'aui-button';
-        resetButton.style.flex = '1';
-        resetButton.style.fontSize = '18px';
-        resetButton.style.marginRight = '10px';
+        resetButton.textContent = 'リセット';
+        resetButton.className = 'aui-button aui-button-link';
         resetButton.addEventListener('click', resetSettings);
-
-        const closeButton = document.createElement('button');
-        closeButton.textContent = '閉じる';
-        closeButton.className = 'aui-button';
-        closeButton.style.flex = '1';
-        closeButton.style.fontSize = '18px';
-        closeButton.addEventListener('click', closeModal);
-
-        buttonContainer.appendChild(saveButton);
         buttonContainer.appendChild(resetButton);
-        buttonContainer.appendChild(closeButton);
 
         return buttonContainer;
     };
