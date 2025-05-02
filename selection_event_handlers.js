@@ -171,9 +171,9 @@
             button.style.fontSize = '13px';
             button.style.cursor = 'pointer';
             button.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
-            button.style.borderRadius = '15px';
+            button.style.borderRadius = '15px'; /* 丸みを帯びた角 */
             button.style.lineHeight = '1.4';
-            button.style.whiteSpace = 'nowrap';
+            button.style.whiteSpace = 'nowrap'; /* ボタンテキストが折り返さないように */
         };
 
         /**
@@ -186,15 +186,15 @@
             button.style.zIndex = '2147483646';
             button.style.padding = '6px 8px';
             button.style.border = 'none';
-            button.style.backgroundColor = '#f0f0f0';
+            button.style.backgroundColor = '#f0f0f0'; /* 薄いグレー */
             button.style.color = '#333';
             button.style.fontSize = '13px';
             button.style.cursor = 'pointer';
             button.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
-            button.style.borderRadius = '50%';
-            button.style.lineHeight = '1';
-            button.style.minWidth = '28px';
-            button.style.textAlign = 'center';
+            button.style.borderRadius = '50%'; /* 円形にする */
+            button.style.lineHeight = '1'; /* アイコンが中央に来るように */
+            button.style.minWidth = '28px'; /* 最小幅を確保して円形を維持 */
+            button.style.textAlign = 'center'; /* アイコンを中央揃え */
         };
     };
 
