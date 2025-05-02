@@ -92,11 +92,11 @@
         const buttonStyle = `
             padding: 6px 12px;
             border: none;
-            border-radius: 15px;
+            border-radius: 15px; /* 丸みを帯びた角 */
             cursor: pointer;
-            font-size: 13px;
+            font-size: 23px;
             line-height: 1.4;
-            white-space: nowrap;
+            white-space: nowrap; /* ボタンテキストが折り返さないように */
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             margin-right: 5px;
         `;
