@@ -63,14 +63,14 @@
         modal.appendChild(criteriaLabel);
 
         // メインのタブメニューを作成
-        const mainTabMenu = window.createTabMenu([
+        const mainTabMenu = createTabMenu([
             { name: 'documentReview', text: 'ドキュメントレビュー' },
             { name: 'answerReview', text: '回答文レビュー' }
         ], currentTab, window.switchTab);
         modal.appendChild(mainTabMenu);
 
         // 日本語レビュー用のタブメニューを作成
-        const japaneseReviewTabMenu = window.createTabMenu([
+        const japaneseReviewTabMenu = createTabMenu([
             { name: 'japaneseReview', text: '日本語のレビュー観点' },
             { name: 'englishReview', text: '英語のレビュー観点' }
         ], currentJapaneseTab, window.switchJapaneseTab);
@@ -196,7 +196,7 @@
 
         tabButton.addEventListener('click', () => {
             switchTabFunction(tabName);
-            updateTextareaContent();
+            window.updateTextareaContent();
             updateTabStyles();
         });
 
