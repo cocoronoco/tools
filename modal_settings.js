@@ -444,4 +444,35 @@
         }
         console.log('[AIレビュー] テキストエリアの内容を更新しました。');
     };
+
+    // モーダルを開く関数
+    window.openModal = function() {
+        console.log('[AIレビュー] モーダルを開きます。');
+        const modal = document.getElementById('reviewPointModal');
+
+        if (!modal) {
+            console.error('[AIレビュー] モーダルが見つかりません。');
+            return;
+        }
+
+        isModalOpen = true;
+        modal.style.display = 'flex';
+
+        updateModalHeight();
+
+        currentTab = localStorage.getItem('currentTab') || 'documentReview';
+        currentLanguageTab = localStorage.getItem('currentLanguageTab') || 'japaneseReview';
+        currentMethodTab = localStorage.getItem('currentMethodTab') || 'diffReview';
+
+        window.updateTextareaContent();
+        if (typeof updateTabStyles === 'function') {
+            updateTabStyles();
+        } else {
+            console.warn('[AIレビュー] updateTabStyles が関数として定義されていません。');
+        }
+        populateModalWithStoredValues();
+
+        console.log('[AIレビュー] モーダルの内容を更新しました。');
+    };
+
 })();
