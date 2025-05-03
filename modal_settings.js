@@ -66,14 +66,14 @@
         const mainTabMenu = window.createTabMenu([
             { name: 'documentReview', text: 'ドキュメントレビュー' },
             { name: 'answerReview', text: '回答文レビュー' }
-        ], currentTab, switchTab);
+        ], currentTab, window.switchTab);
         modal.appendChild(mainTabMenu);
 
         // 日本語レビュー用のタブメニューを作成
         const japaneseReviewTabMenu = window.createTabMenu([
             { name: 'japaneseReview', text: '日本語のレビュー観点' },
             { name: 'englishReview', text: '英語のレビュー観点' }
-        ], currentJapaneseTab, switchJapaneseTab);
+        ], currentJapaneseTab, window.switchJapaneseTab);
         modal.appendChild(japaneseReviewTabMenu);
 
         // テキストエリアをコンテナに追加
