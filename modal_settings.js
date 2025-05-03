@@ -116,6 +116,23 @@
         const textareaJapaneseContainer = window.createTextareaContainer('reviewPointTextareaJapanese');
         modal.appendChild(textareaJapaneseContainer);
 
+        // レビュー方法のラベル
+        const methodLabel = document.createElement('label');
+        methodLabel.textContent = 'レビュー方法:';
+        methodLabel.style.marginBottom = '5px';
+        modal.appendChild(methodLabel);
+
+        // レビュー方法のタブメニューを作成
+        const methodTabMenu = createTabMenu([
+            { name: 'diffReview', text: '差分比較レビュー' }, // nameを修正
+            { name: 'confluenceReview', text: 'Confluenceページレビュー' } // nameを修正
+        ], currentTab, window.switchTab); // currentTabのまま
+        modal.appendChild(methodTabMenu);
+
+        // レビュー方法のテキストエリアをコンテナに追加
+        const methodTextareaContainer = window.createTextareaContainer('methodreviewPointTextarea');
+        modal.appendChild(methodTextareaContainer);
+
         // ボタンを作成
         const buttonContainer = window.createButtonContainer();
         modal.appendChild(buttonContainer);
@@ -298,8 +315,15 @@
                 switchTabFunction = window.switchJapaneseTab;
                 currentTabName = currentJapaneseTab;
             } else {
-                switchTabFunction = window.switchTab;
-                currentTabName = currentTab;
+
+               // methodTabMenu に属するかどうかをチェック
+               if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="diffReview"], .ai-review-tab-button[data-tab-name="confluenceReview"]'))) {
+                   switchTabFunction = window.switchTab; // 通常のタブ切り替え関数を使用
+                   currentTabName = currentTab;
+               } else {
+                 switchTabFunction = window.switchTab; // 通常のタブ切り替え関数を使用
+                 currentTabName = currentTab;
+               }
             }
 
             if (currentTabName === tabName) {
