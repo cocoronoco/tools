@@ -1,5 +1,3 @@
-// selection_event_handlers.js
-
 (function() {
     'use strict';
 
@@ -11,6 +9,56 @@
 
     // 初期化完了フラグ
     let isInitialized = false;
+
+    // ConfluenceのページヘッダーにAIレビュー用のボタンと設定アイコンを追加する関数
+    window.addAIReviewButton = function() {
+        console.log('[AIレビュー] AIレビュー用ボタンを追加します。');
+        const bannerList = document.querySelector('.banner');
+
+        if (bannerList) {
+            console.log('[AIレビュー] バナーが見つかりました。');
+            const listItem = document.createElement('li');
+            listItem.className = 'page-metadata-item';
+
+            const button = document.createElement('button');
+            button.textContent = 'AIレビューを実行';
+            button.className = 'aui-button aui-button-primary';
+
+            button.addEventListener('click', () => {
+                console.log('[AIレビュー] AIレビュー実行ボタンがクリックされました。');
+                window.triggerAIReviewButton(saveAIRequest(), 'html');
+            });
+
+            const settingsIcon = document.createElement('span');
+            settingsIcon.className = 'settings-icon';
+            settingsIcon.innerHTML = '⚙️';
+            settingsIcon.style.cursor = 'pointer';
+            settingsIcon.title = '設定';
+            settingsIcon.style.fontSize = '20px';
+            settingsIcon.style.marginLeft = '10px';
+
+            settingsIcon.addEventListener('click', () => {
+                console.log('[AIレビュー] 設定アイコンがクリックされました。');
+                if (typeof window.closeModal === 'function') {
+                    if (isModalOpen) {
+                        window.closeModal();
+                    } else {
+                        window.openModal();
+                    }
+                } else {
+                    console.error('[AIレビュー] 設定画面を閉じられませんでした。');
+                    window.openModal(); // エラーが発生した場合でも、一応モーダルを開く
+                }
+            });
+
+            listItem.appendChild(button);
+            listItem.appendChild(settingsIcon);
+            bannerList.appendChild(listItem);
+            console.log('[AIレビュー] AIレビュー用ボタンと設定アイコンを追加しました。');
+        } else {
+            console.error('[AIレビュー] バナーが見つかりません。');
+        }
+    };
 
     // 初期化完了イベントをリッスン
     document.addEventListener('aiReviewInitialized', () => {
