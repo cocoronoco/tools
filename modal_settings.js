@@ -143,7 +143,7 @@
         window.addEventListener('resize', updateModalHeight);
 
         // 初期コンテンツを設定
-        updateTextareaContent();
+        window.updateTextareaContent();
     };
 
     // AIモデルのオプションを作成する関数
@@ -373,5 +373,75 @@
         buttonContainer.appendChild(closeButton);
 
         return buttonContainer;
+    };
+
+    // タブを切り替える関数
+    window.switchTab = function(tabName) {
+        console.log(`[AIレビュー] タブを切り替えます: ${tabName}`);
+        currentTab = tabName;
+        localStorage.setItem('currentTab', currentTab); // タブの状態を保存
+        window.updateTextareaContent();
+        if (typeof updateTabStyles === 'function') {
+            updateTabStyles();
+        } else {
+            console.warn('[AIレビュー] updateTabStyles が関数として定義されていません。');
+        }
+    };
+
+    // 日本語レビュータブを切り替える関数
+    window.switchLanguageTab = function(tabName) {
+        console.log(`[AIレビュー] 言語レビュータブを切り替えます: ${tabName}`);
+        currentLanguageTab = tabName;
+        localStorage.setItem('currentLanguageTab', currentLanguageTab); // タブの状態を保存
+        window.updateTextareaContent();
+        if (typeof updateTabStyles === 'function') {
+            updateTabStyles();
+        } else {
+            console.warn('[AIレビュー] updateTabStyles が関数として定義されていません。');
+        }
+    };
+
+    // レビュー方法タブを切り替える関数
+    window.switchMethodTab = function(tabName) {
+        console.log(`[AIレビュー] レビュー方法タブを切り替えます: ${tabName}`);
+        currentMethodTab = tabName;
+        localStorage.setItem('currentMethodTab', currentMethodTab); // タブの状態を保存
+        window.updateTextareaContent();
+        if (typeof updateTabStyles === 'function') {
+            updateTabStyles();
+        } else {
+            console.warn('[AIレビュー] updateTabStyles が関数として定義されていません。');
+        }
+    };
+
+    // テキストエリアの内容を更新する関数
+    window.updateTextareaContent = function() {
+        console.log('[AIレビュー] テキストエリアの内容を更新します。');
+        const contentArea = document.getElementById('reviewPointTextarea');
+        const contentAreaLanguage = document.getElementById('reviewPointTextareaLanguage');
+        const contentAreaMethod = document.getElementById('methodreviewPointTextarea'); // レビュー方法のテキストエリア
+
+        if (currentTab === 'documentReview') {
+            contentArea.value = window.reviewPoint_01;
+        } else if (currentTab === 'answerReview') {
+            contentArea.value = window.reviewPoint_02;
+        }
+
+        if (contentAreaLanguage) {
+            if (currentLanguageTab === 'japaneseReview') {
+                contentAreaLanguage.value = window.reviewPoint_japanese;
+            } else if (currentLanguageTab === 'englishReview') {
+                contentAreaLanguage.value = window.reviewPoint_english;
+            }
+        }
+
+        if (contentAreaMethod) {
+            if (currentMethodTab === 'diffReview') {
+                contentAreaMethod.value = window.reviewPoint_diffReview;
+            } else if (currentMethodTab === 'confluenceReview') {
+                contentAreaMethod.value = window.reviewPoint_confluenceReview;
+            }
+        }
+        console.log('[AIレビュー] テキストエリアの内容を更新しました。');
     };
 })();
