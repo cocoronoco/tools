@@ -60,11 +60,11 @@
         }
         modal.appendChild(modelOptionsContainer);
 
-        // レビュー目的テキストエリアのラベル
-        const criteriaLabel = document.createElement('label');
-        criteriaLabel.textContent = 'レビュー目的:';
-        criteriaLabel.style.marginBottom = '5px';
-        modal.appendChild(criteriaLabel);
+        // レビュー役割のラベル
+        const roleLabel = document.createElement('label');
+        roleLabel.textContent = 'レビュー役割:';
+        roleLabel.style.marginBottom = '5px';
+        modal.appendChild(roleLabel);
 
         // メインのタブメニューを作成
         const mainTabMenu = createTabMenu([
@@ -78,10 +78,10 @@
         modal.appendChild(textareaContainer);
         
         // レビュー観点テキストエリアのラベル
-        const criteriaLabel = document.createElement('label');
-        criteriaLabel.textContent = 'レビュー観点:';
-        criteriaLabel.style.marginBottom = '5px';
-        modal.appendChild(criteriaLabel);
+        const pointLabel = document.createElement('label');
+        pointLabel.textContent = 'レビュー観点:';
+        pointLabel.style.marginBottom = '5px';
+        modal.appendChild(pointLabel);
         
         // 日本語レビュー用のタブメニューを作成
         const japaneseReviewTabMenu = createTabMenu([
