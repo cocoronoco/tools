@@ -201,7 +201,11 @@
         tabButton.addEventListener('click', () => {
             switchTabFunction(tabName);
             window.updateTextareaContent();
-            updateTabStyles();
+            if (typeof updateTabStyles === 'function') {
+                updateTabStyles();
+            } else {
+                console.warn('[AIレビュー] updateTabStyles が関数として定義されていません。');
+            }
         });
 
         return tabButton;
@@ -280,5 +284,55 @@
         buttonContainer.appendChild(closeButton);
 
         return buttonContainer;
+    };
+
+      window.updateTabStyles = function() {
+        console.log('[AIレビュー] タブのスタイルを更新します。');
+        const tabButtons = document.querySelectorAll('.ai-review-tab-button');
+
+        tabButtons.forEach(button => {
+            let tabName;
+            let switchTabFunction;
+
+            // 日本語レビュータブの場合
+            if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[onclick*="switchJapaneseTab"]'))) {
+                tabName = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                switchTabFunction = window.switchJapaneseTab; // 日本語レビュー用の切り替え関数
+                if (currentJapaneseTab === tabName) {
+                    button.style.backgroundColor = '#0052cc';
+                    button.style.color = 'white';
+                    button.textContent = '✔ ' + button.textContent.replace('✔ ', '');
+                    if (!button.textContent.startsWith('✔ ')) {
+                        button.textContent = '✔ ' + button.textContent;
+                    }
+                } else {
+                    button.style.backgroundColor = '#f0f0f0';
+                    button.style.color = 'black';
+                    button.textContent = button.textContent.replace('✔ ', '');
+                }
+            }
+            // メインのタブの場合
+            else {
+                tabName = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                switchTabFunction = window.switchTab; // メイン用の切り替え関数
+                 if (currentTab === tabName) {
+                    button.style.backgroundColor = '#0052cc';
+                    button.style.color = 'white';
+                    button.textContent = '✔ ' + button.textContent.replace('✔ ', '');
+                     if (!button.textContent.startsWith('✔ ')) {
+                         button.textContent = '✔ ' + button.textContent;
+                     }
+                } else {
+                    button.style.backgroundColor = '#f0f0f0';
+                    button.style.color = 'black';
+                    button.textContent = button.textContent.replace('✔ ', '');
+                }
+            }
+
+            button.onclick = () => {
+                switchTabFunction(tabName);
+            };
+        });
+        console.log('[AIレビュー] タブのスタイルを更新しました。');
     };
 })();
