@@ -1,5 +1,13 @@
 // modal_settings.js
 (function() {
+
+    // 共通スタイル設定関数
+    function applyCommonStyles(element) {
+        element.style.fontSize = '14px';
+        element.style.lineHeight = '1.5';
+        element.style.fontFamily = 'Meiryo, "メイリオ", sans-serif';
+    }
+
     // モーダルを作成する関数
     window.createModal = function() {
         console.log('[AIレビュー] モーダルを作成します。');
@@ -252,9 +260,7 @@
         contentArea.style.border = '2px solid #ccc';
         contentArea.style.resize = 'none';
         contentArea.style.width = '100%';
-        contentArea.style.fontSize = '14px';
-        contentArea.style.lineHeight = '1.5';
-        contentArea.style.fontFamily = 'Meiryo, "メイリオ", sans-serif';
+        applyCommonStyles(contentArea); // 共通スタイルを適用
         contentArea.style.flex = '1 1 auto';
         contentArea.style.marginBottom = '10px';
         textareaContainer.appendChild(contentArea);
