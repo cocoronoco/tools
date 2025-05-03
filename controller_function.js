@@ -11,7 +11,7 @@
     let isInitialized = false;
 
     // ConfluenceのページヘッダーにAIレビュー用のボタンと設定アイコンを追加する関数
-    window.addAIReviewButton = function() {
+    window.addConfluenceHeaderButton = function() {
         console.log('[AIレビュー] AIレビュー用ボタンを追加します。');
         const bannerList = document.querySelector('.banner');
 
@@ -160,7 +160,7 @@
          */
         window.createSettingsButtonElement = function() {
             const button = document.createElement('button');
-            button.textContent = '❤';
+            button.textContent = '⚙️';
             button.setAttribute('id', 'tampermonkey-ai-settings-button');
             button.setAttribute('title', 'AIレビュー設定');
             button.addEventListener('click', window.handleSettingsButtonClick_Selection);
