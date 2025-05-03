@@ -76,13 +76,13 @@
         // テキストエリアをコンテナに追加
         const textareaContainer = window.createTextareaContainer();
         modal.appendChild(textareaContainer);
-        
+
         // レビュー観点テキストエリアのラベル
         const pointLabel = document.createElement('label');
         pointLabel.textContent = 'レビュー観点:';
         pointLabel.style.marginBottom = '5px';
         modal.appendChild(pointLabel);
-        
+
         // 日本語レビュー用のタブメニューを作成
         const japaneseReviewTabMenu = createTabMenu([
             { name: 'japaneseReview', text: '日本語のレビュー観点' },
@@ -91,7 +91,7 @@
         modal.appendChild(japaneseReviewTabMenu);
 
         // テキストエリアをコンテナに追加
-        const textareaJapaneseContainer = window.createTextareaContainer();
+        const textareaJapaneseContainer = window.createTextareaJapaneseContainer();
         modal.appendChild(textareaJapaneseContainer);
 
         // ボタンを作成
@@ -247,6 +247,29 @@
 
         const contentArea = document.createElement('textarea');
         contentArea.id = 'reviewPointTextarea';
+        contentArea.rows = 5;
+        contentArea.cols = 40;
+        contentArea.style.border = '2px solid #ccc';
+        contentArea.style.resize = 'none';
+        contentArea.style.width = '100%';
+        contentArea.style.fontSize = '14px';
+        contentArea.style.lineHeight = '1.5';
+        contentArea.style.fontFamily = 'Meiryo, "メイリオ", sans-serif';
+        contentArea.style.flex = '1 1 auto';
+        contentArea.style.marginBottom = '10px';
+        textareaContainer.appendChild(contentArea);
+        return textareaContainer;
+    };
+
+    // テキストエリアコンテナを作成する関数（日本語レビュー用）
+    window.createTextareaJapaneseContainer = function() {
+        const textareaContainer = document.createElement('div');
+        textareaContainer.style.flex = '1 1 auto';
+        textareaContainer.style.display = 'flex';
+        textareaContainer.style.flexDirection = 'column';
+
+        const contentArea = document.createElement('textarea');
+        contentArea.id = 'reviewPointTextareaJapanese';
         contentArea.rows = 5;
         contentArea.cols = 40;
         contentArea.style.border = '2px solid #ccc';
