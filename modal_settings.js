@@ -86,10 +86,24 @@
         modal.appendChild(textareaContainer);
 
         // レビュー観点テキストエリアのラベル
+        const pointLabelContainer = document.createElement('div');
+        pointLabelContainer.style.display = 'flex';
+        pointLabelContainer.style.alignItems = 'center';
+        pointLabelContainer.style.marginBottom = '5px';
+
         const pointLabel = document.createElement('label');
         pointLabel.textContent = 'レビュー観点:';
-        pointLabel.style.marginBottom = '5px';
-        modal.appendChild(pointLabel);
+        pointLabelContainer.appendChild(pointLabel);
+
+        const referenceLink = document.createElement('a');
+        referenceLink.href = 'https://helpdesk.aslead.cloud/wiki/pages/viewpage.action?pageId=203030616';
+        referenceLink.textContent = '（💡文章のレビュー観点はこちらを参照）';
+        referenceLink.target = '_blank'; // 新しいタブで開く
+        referenceLink.style.marginLeft = '5px'; // ラベルとの間隔
+        pointLabelContainer.appendChild(referenceLink);
+
+        modal.appendChild(pointLabelContainer);
+
 
         // 日本語レビュー用のタブメニューを作成
         const japaneseReviewTabMenu = createTabMenu([
