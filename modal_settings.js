@@ -50,10 +50,14 @@
         modelOptionsContainer.style.display = 'flex';
         modelOptionsContainer.style.flexDirection = 'column';
         modelOptionsContainer.style.marginBottom = '20px';
-        AI_MODELS.forEach(model => {
-            const optionLabel = window.createAIModelOption(model);
-            modelOptionsContainer.appendChild(optionLabel);
-        });
+        if (Array.isArray(AI_MODELS)) { // AI_MODELS が配列であることを確認
+            AI_MODELS.forEach(model => {
+                const optionLabel = window.createAIModelOption(model);
+                modelOptionsContainer.appendChild(optionLabel);
+            });
+        } else {
+            console.warn('[AIレビュー] AI_MODELS が配列ではありません。AIモデルオプションは表示されません。');
+        }
         modal.appendChild(modelOptionsContainer);
 
         // レビュー観点テキストエリアのラベル
