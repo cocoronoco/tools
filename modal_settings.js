@@ -124,9 +124,9 @@
 
         // レビュー方法のタブメニューを作成
         const methodTabMenu = createTabMenu([
-            { name: 'diffReview', text: '差分比較レビュー' }, // nameを修正
-            { name: 'confluenceReview', text: 'Confluenceページレビュー' } // nameを修正
-        ], currentTab, window.switchTab); // currentTabのまま
+            { name: 'diffReview', text: '差分比較レビュー' },
+            { name: 'confluenceReview', text: 'Confluenceページレビュー' }
+        ], currentMethodTab, window.switchMethodTab);
         modal.appendChild(methodTabMenu);
 
         // レビュー方法のテキストエリアをコンテナに追加
@@ -314,16 +314,12 @@
             if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="japaneseReview"], .ai-review-tab-button[data-tab-name="englishReview"]'))) {
                 switchTabFunction = window.switchJapaneseTab;
                 currentTabName = currentJapaneseTab;
+            } else if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="diffReview"], .ai-review-tab-button[data-tab-name="confluenceReview"]'))) {
+                switchTabFunction = window.switchMethodTab;
+                currentTabName = currentMethodTab;
             } else {
-
-               // methodTabMenu に属するかどうかをチェック
-               if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="diffReview"], .ai-review-tab-button[data-tab-name="confluenceReview"]'))) {
-                   switchTabFunction = window.switchTab; // 通常のタブ切り替え関数を使用
-                   currentTabName = currentTab;
-               } else {
-                 switchTabFunction = window.switchTab; // 通常のタブ切り替え関数を使用
+                 switchTabFunction = window.switchTab;
                  currentTabName = currentTab;
-               }
             }
 
             if (currentTabName === tabName) {
