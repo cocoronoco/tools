@@ -160,7 +160,7 @@
          */
         window.createSettingsButtonElement = function() {
             const button = document.createElement('button');
-            button.textContent = '⚙️';
+            button.textContent = '❤';
             button.setAttribute('id', 'tampermonkey-ai-settings-button');
             button.setAttribute('title', 'AIレビュー設定');
             button.addEventListener('click', window.handleSettingsButtonClick_Selection);
