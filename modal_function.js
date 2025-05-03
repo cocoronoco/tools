@@ -112,7 +112,7 @@
         modal.appendChild(languageReviewTabMenu);
 
         // テキストエリアをコンテナに追加
-        const textareaLanguageContainer = window.createTextareaContainer('reviewPointTextareaLanguage');
+        const textareaLanguageContainer = window.createTextareaContainer('reviewPointLanguageTextarea');
         modal.appendChild(textareaLanguageContainer);
 
         // レビュー方法のラベル
@@ -398,7 +398,7 @@
     window.updateTextareaContent = function() {
         console.log('[AIレビュー] テキストエリアの内容を更新します。');
         const contentArea = document.getElementById('reviewPointTextarea');
-        const contentAreaLanguage = document.getElementById('reviewPointTextareaLanguage');
+        const contentAreaLanguage = document.getElementById('reviewPointLanguageTextarea');
         const contentAreaMethod = document.getElementById('methodreviewPointTextarea'); // レビュー方法のテキストエリア
 
         if (currentTab === 'documentReview') {
