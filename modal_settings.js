@@ -475,4 +475,42 @@
         console.log('[AIレビュー] モーダルの内容を更新しました。');
     };
 
+    // モーダルの高さを更新する関数
+    function updateModalHeight() {
+        try {
+            const modal = document.getElementById('reviewPointModal');
+            if (modal && isModalOpen) {
+                const newHeight = window.innerHeight * 0.8;
+                modal.style.maxHeight = `${newHeight}px`;
+                modal.style.height = `${newHeight}px`;
+                console.log(`[AIレビュー] モーダルの高さを${newHeight}pxに更新しました。`);
+            } else {
+                console.log('[AIレビュー] モーダルが開いていません。高さを更新しません。');
+            }
+        } catch (error) {
+            console.error('[AIレビュー] リサイズ処理中にエラーが発生しました:', error);
+        }
+    }
+
+    // モーダルを閉じる関数
+    function closeModal() {
+        console.log('[AIレビュー] モーダルを閉じます。');
+        const modal = document.getElementById('reviewPointModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+        isModalOpen = false;
+
+        resetModalSize();
+    }
+
+    // モーダルのサイズをリセットする関数
+    function resetModalSize() {
+        const modal = document.getElementById('reviewPointModal');
+        if (modal) {
+            modal.style.maxHeight = '80vh';
+            modal.style.height = 'auto';
+        }
+    }
+
 })();
