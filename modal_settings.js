@@ -110,6 +110,9 @@
 
         // モーダルのリサイズイベントにリスナーを追加
         window.addEventListener('resize', updateModalHeight);
+
+        // 初期コンテンツを設定
+        updateTextareaContent();
     };
 
     // AIモデルのオプションを作成する関数
@@ -220,7 +223,7 @@
         // イベントリスナーを追加
         tabButton.addEventListener('click', function() {
             switchTabFunction(tabName);
-            window.updateTextareaContent();
+            // window.updateTextareaContent(); // ここでupdateTextareaContentを呼び出さない
             if (typeof updateTabStyles === 'function') {
                 updateTabStyles();
             } else {
