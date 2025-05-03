@@ -286,17 +286,17 @@
         textareaContainer.style.display = 'flex';
         textareaContainer.style.flexDirection = 'column';
 
-        const contentArea = document.createElement('textarea');
-        contentArea.id = id;
-        contentArea.rows = 5;
-        contentArea.cols = 40;
-        contentArea.style.border = '2px solid #ccc';
-        contentArea.style.resize = 'none';
-        contentArea.style.width = '100%';
-        applyCommonStyles(contentArea); // 共通スタイルを適用
-        contentArea.style.flex = '1 1 auto';
-        contentArea.style.marginBottom = '10px';
-        textareaContainer.appendChild(contentArea);
+        const contentAreaTemp = document.createElement('textarea');
+        contentAreaTemp.id = id;
+        contentAreaTemp.rows = 5;
+        contentAreaTemp.cols = 40;
+        contentAreaTemp.style.border = '2px solid #ccc';
+        contentAreaTemp.style.resize = 'none';
+        contentAreaTemp.style.width = '100%';
+        applyCommonStyles(contentAreaTemp); // 共通スタイルを適用
+        contentAreaTemp.style.flex = '1 1 auto';
+        contentAreaTemp.style.marginBottom = '10px';
+        textareaContainer.appendChild(contentAreaTemp);
         return textareaContainer;
     };
 
@@ -397,14 +397,14 @@
     // テキストエリアの内容を更新する関数
     window.updateTextareaContent = function() {
         console.log('[AIレビュー] テキストエリアの内容を更新します。');
-        const contentArea = document.getElementById('reviewPointRoleTextarea');
+        const contentAreaRole = document.getElementById('reviewPointRoleTextarea');
         const contentAreaLanguage = document.getElementById('reviewPointLanguageTextarea');
         const contentAreaMethod = document.getElementById('reviewPointMethodTextarea'); // レビュー方法のテキストエリア
 
         if (currentTab === 'documentReview') {
-            contentArea.value = window.reviewPoint_01;
+            contentAreaRole.value = window.reviewPoint_01;
         } else if (currentTab === 'answerReview') {
-            contentArea.value = window.reviewPoint_02;
+            contentAreaRole.value = window.reviewPoint_02;
         }
 
         if (contentAreaLanguage) {
