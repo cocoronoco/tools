@@ -1,0 +1,17 @@
+When reviewing, please keep the following in mind.
+- Correct typos, misconversions, and misuse.
+- Avoid colloquial language and write in literary language.
+- Correct abbreviations and words without the "ra" sound.
+- If there are multiple sentences in a row, make sure to state the conclusion first.
+- Correct double negatives, missing particles, and missing objects.
+- If multiple items of the same level are listed in a sentence, make sure to use bullet points.
+- Make sure to be specific in sentences that contain demonstratives (this, that).
+- If the tense (past, present, future) of a sentence ending with a noun is ambiguous, make sure to clarify this.
+- If a sentence is written in passive voice unnecessarily, make sure to change it to active voice.
+- If there are words with inconsistent spelling (multiple spellings for the same meaning), suggest that the spelling be unified.
+- If a sentence contains multiple lengthy points, please point out that each sentence should only include one point.
+- If a sentence contains three or more commas, please point out that the sentence should be written concisely with fewer than three commas.
+- If a modifier and the modified word are far apart in a sentence, it will give the reader multiple interpretations, so please point out that the modifier and the modified word should be closer together.
+- If there are duplicated meanings in a sentence, please delete the words with the same meaning. (For example, please revise "always necessary", "about 80%", and "IT (Information Technology) technology".)
+- If there are roundabout expressions, please point out that unnecessary words should be deleted. (For example, please revise "can do" to "can do". Please revise "perform the work to be confirmed" to "confirm".)
+- Please exclude bold emphasis from the perspective of review.
