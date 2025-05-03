@@ -78,7 +78,7 @@
         const mainTabMenu = createTabMenu([
             { name: 'documentReview', text: 'ドキュメントレビュー' },
             { name: 'answerReview', text: '回答文レビュー' }
-        ], currentTab, window.switchTab);
+        ], currentTab, (tabName) => window.switchTab(tabName, 'currentTab'));
         modal.appendChild(mainTabMenu);
 
         // テキストエリアをコンテナに追加
@@ -109,7 +109,7 @@
         const languageReviewTabMenu = createTabMenu([
             { name: 'japaneseReview', text: '日本語のレビュー観点' },
             { name: 'englishReview', text: '英語のレビュー観点' }
-        ], currentLanguageTab, window.switchLanguageTab);
+        ], currentLanguageTab, (tabName) => window.switchTab(tabName, 'currentLanguageTab'));
         modal.appendChild(languageReviewTabMenu);
 
         // テキストエリアをコンテナに追加
@@ -126,7 +126,7 @@
         const methodTabMenu = createTabMenu([
             { name: 'diffReview', text: '差分比較レビュー' },
             { name: 'confluenceReview', text: 'Confluenceページレビュー' }
-        ], currentMethodTab, window.switchMethodTab);
+        ], currentMethodTab, (tabName) => window.switchTab(tabName, 'currentMethodTab'));
         modal.appendChild(methodTabMenu);
 
         // レビュー方法のテキストエリアをコンテナに追加
@@ -312,14 +312,14 @@
 
             // どのタブグループに属しているかを判定
             if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="japaneseReview"], .ai-review-tab-button[data-tab-name="englishReview"]'))) {
-                switchTabFunction = window.switchLanguageTab;
+                switchTabFunction = window.switchTab;
                 currentTabName = currentLanguageTab;
             } else if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="diffReview"], .ai-review-tab-button[data-tab-name="confluenceReview"]'))) {
-                switchTabFunction = window.switchMethodTab;
+                switchTabFunction = window.switchTab;
                 currentTabName = currentMethodTab;
             } else {
-                 switchTabFunction = window.switchTab;
-                 currentTabName = currentTab;
+                switchTabFunction = window.switchTab;
+                currentTabName = currentTab;
             }
 
             if (currentTabName === tabName) {
@@ -376,36 +376,17 @@
     };
 
     // タブを切り替える関数
-    window.switchTab = function(tabName) {
-        console.log(`[AIレビュー] タブを切り替えます: ${tabName}`);
-        currentTab = tabName;
-        localStorage.setItem('currentTab', currentTab); // タブの状態を保存
-        window.updateTextareaContent();
-        if (typeof updateTabStyles === 'function') {
-            updateTabStyles();
-        } else {
-            console.warn('[AIレビュー] updateTabStyles が関数として定義されていません。');
+    window.switchTab = function(tabName, storageKey) {
+        console.log(`[AIレビュー] タブを切り替えます: ${tabName} (storageKey: ${storageKey})`);
+        // storageKeyに基づいてcurrentTab変数を更新
+        if (storageKey === 'currentTab') {
+            currentTab = tabName;
+        } else if (storageKey === 'currentLanguageTab') {
+            currentLanguageTab = tabName;
+        } else if (storageKey === 'currentMethodTab') {
+            currentMethodTab = tabName;
         }
-    };
-
-    // 日本語レビュータブを切り替える関数
-    window.switchLanguageTab = function(tabName) {
-        console.log(`[AIレビュー] 言語レビュータブを切り替えます: ${tabName}`);
-        currentLanguageTab = tabName;
-        localStorage.setItem('currentLanguageTab', currentLanguageTab); // タブの状態を保存
-        window.updateTextareaContent();
-        if (typeof updateTabStyles === 'function') {
-            updateTabStyles();
-        } else {
-            console.warn('[AIレビュー] updateTabStyles が関数として定義されていません。');
-        }
-    };
-
-    // レビュー方法タブを切り替える関数
-    window.switchMethodTab = function(tabName) {
-        console.log(`[AIレビュー] レビュー方法タブを切り替えます: ${tabName}`);
-        currentMethodTab = tabName;
-        localStorage.setItem('currentMethodTab', currentMethodTab); // タブの状態を保存
+        localStorage.setItem(storageKey, tabName); // タブの状態を保存
         window.updateTextareaContent();
         if (typeof updateTabStyles === 'function') {
             updateTabStyles();
