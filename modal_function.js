@@ -1,4 +1,3 @@
-// modal_settings.js
 (function() {
 
     // 共通スタイル設定関数
