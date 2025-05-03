@@ -299,7 +299,7 @@
             // 日本語レビュータブの場合
             if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="japaneseReview"], .ai-review-tab-button[data-tab-name="englishReview"]'))) {
                 switchTabFunction = window.switchJapaneseTab; // 日本語レビュー用の切り替え関数
-                 if (currentJapaneseTab === tabName) {
+                if (currentJapaneseTab === tabName) {
                     button.style.backgroundColor = '#0052cc';
                     button.style.color = 'white';
                     button.textContent = '✔ ' + button.textContent.replace('✔ ', '');
