@@ -106,15 +106,15 @@
 
 
         // 日本語レビュー用のタブメニューを作成
-        const japaneseReviewTabMenu = createTabMenu([
+        const languageReviewTabMenu = createTabMenu([
             { name: 'japaneseReview', text: '日本語のレビュー観点' },
             { name: 'englishReview', text: '英語のレビュー観点' }
-        ], currentJapaneseTab, window.switchJapaneseTab);
-        modal.appendChild(japaneseReviewTabMenu);
+        ], currentLanguageTab, window.switchLanguageTab);
+        modal.appendChild(languageReviewTabMenu);
 
         // テキストエリアをコンテナに追加
-        const textareaJapaneseContainer = window.createTextareaContainer('reviewPointTextareaJapanese');
-        modal.appendChild(textareaJapaneseContainer);
+        const textareaLanguageContainer = window.createTextareaContainer('reviewPointTextareaLanguage');
+        modal.appendChild(textareaLanguageContainer);
 
         // レビュー方法のラベル
         const methodLabel = document.createElement('label');
@@ -312,8 +312,8 @@
 
             // どのタブグループに属しているかを判定
             if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="japaneseReview"], .ai-review-tab-button[data-tab-name="englishReview"]'))) {
-                switchTabFunction = window.switchJapaneseTab;
-                currentTabName = currentJapaneseTab;
+                switchTabFunction = window.switchLanguageTab;
+                currentTabName = currentLanguageTab;
             } else if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="diffReview"], .ai-review-tab-button[data-tab-name="confluenceReview"]'))) {
                 switchTabFunction = window.switchMethodTab;
                 currentTabName = currentMethodTab;
