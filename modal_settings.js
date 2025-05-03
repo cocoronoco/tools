@@ -60,9 +60,9 @@
         }
         modal.appendChild(modelOptionsContainer);
 
-        // レビュー観点テキストエリアのラベル
+        // レビュー目的テキストエリアのラベル
         const criteriaLabel = document.createElement('label');
-        criteriaLabel.textContent = 'レビュー観点:';
+        criteriaLabel.textContent = 'レビュー目的:';
         criteriaLabel.style.marginBottom = '5px';
         modal.appendChild(criteriaLabel);
 
@@ -73,16 +73,22 @@
         ], currentTab, window.switchTab);
         modal.appendChild(mainTabMenu);
 
+        // テキストエリアをコンテナに追加
+        const textareaContainer = window.createTextareaContainer();
+        modal.appendChild(textareaContainer);
+        
+        // レビュー観点テキストエリアのラベル
+        const criteriaLabel = document.createElement('label');
+        criteriaLabel.textContent = 'レビュー観点:';
+        criteriaLabel.style.marginBottom = '5px';
+        modal.appendChild(criteriaLabel);
+        
         // 日本語レビュー用のタブメニューを作成
         const japaneseReviewTabMenu = createTabMenu([
             { name: 'japaneseReview', text: '日本語のレビュー観点' },
             { name: 'englishReview', text: '英語のレビュー観点' }
         ], currentJapaneseTab, window.switchJapaneseTab);
         modal.appendChild(japaneseReviewTabMenu);
-
-        // テキストエリアをコンテナに追加
-        const textareaContainer = window.createTextareaContainer();
-        modal.appendChild(textareaContainer);
 
         // ボタンを作成
         const buttonContainer = window.createButtonContainer();
