@@ -1,0 +1,14 @@
+{
+  "role": {
+    "01": "Sample Text for key01",
+    "02": "Sample Text for key02"
+  },
+  "language": {
+    "03": "Sample Text for key03",
+    "04": "Sample Text for key04"
+  },
+  "method": {
+    "05": "Sample Text for key05",
+    "06": "Sample Text for key06"
+  }
+}
