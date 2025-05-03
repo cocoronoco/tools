@@ -1,3 +1,4 @@
+// modal_settings.js
 (function() {
     // モーダルを作成する関数
     window.createModal = function() {
@@ -61,9 +62,19 @@
         criteriaLabel.style.marginBottom = '5px';
         modal.appendChild(criteriaLabel);
 
-        // タブメニューを作成
-        const tabMenu = window.createTabMenu();
-        modal.appendChild(tabMenu);
+        // メインのタブメニューを作成
+        const mainTabMenu = window.createTabMenu([
+            { name: 'documentReview', text: 'ドキュメントレビュー' },
+            { name: 'answerReview', text: '回答文レビュー' }
+        ], currentTab, switchTab);
+        modal.appendChild(mainTabMenu);
+
+        // 日本語レビュー用のタブメニューを作成
+        const japaneseReviewTabMenu = window.createTabMenu([
+            { name: 'japaneseReview', text: '日本語のレビュー観点' },
+            { name: 'englishReview', text: '英語のレビュー観点' }
+        ], currentJapaneseTab, switchJapaneseTab);
+        modal.appendChild(japaneseReviewTabMenu);
 
         // テキストエリアをコンテナに追加
         const textareaContainer = window.createTextareaContainer();
@@ -162,24 +173,8 @@
         return optionLabel;
     };
 
-    // タブメニューを作成する関数
-    window.createTabMenu = function() {
-        const tabMenu = document.createElement('div');
-        tabMenu.style.marginBottom = '0px';
-        tabMenu.style.display = 'flex';
-        tabMenu.style.paddingBottom = '0px';
-
-        const documentReviewTab = window.createTabButton('documentReview', 'ドキュメントレビュー');
-        tabMenu.appendChild(documentReviewTab);
-
-        const answerReviewTab = window.createTabButton('answerReview', '回答文レビュー');
-        tabMenu.appendChild(answerReviewTab);
-
-        return tabMenu;
-    };
-
-    // タブボタンを作成する関数
-    window.createTabButton = function(tabName, tabText) {
+    // タブボタンを作成する関数（共通化）
+    function createTabButton(tabName, tabText, currentTabName, switchTabFunction) {
         const tabButton = document.createElement('button');
         tabButton.textContent = tabText;
         tabButton.className = `ai-review-tab-button aui-button aui-button-subtle`;
@@ -190,7 +185,7 @@
         tabButton.style.fontSize = '14px';
         tabButton.style.fontWeight = 'normal';
 
-        if (currentTab === tabName) {
+        if (currentTabName === tabName) {
             tabButton.style.backgroundColor = '#0052cc';
             tabButton.style.color = 'white';
             tabButton.textContent = '✔ ' + tabText;
@@ -200,30 +195,28 @@
         }
 
         tabButton.addEventListener('click', () => {
-            switchTab(tabName);
+            switchTabFunction(tabName);
             updateTextareaContent();
-            window.updateTabStyles();
+            updateTabStyles();
         });
 
         return tabButton;
-    };
+    }
 
-    // タブのスタイルを更新する関数
-    window.updateTabStyles = function() {
-        const tabButtons = document.querySelectorAll('.ai-review-tab-button');
-        tabButtons.forEach(tabButton => {
-            const tabName = tabButton.textContent.replace('✔ ', '').trim().replace('ドキュメントレビュー', 'documentReview').replace('回答文レビュー', 'answerReview');
-            if (currentTab === tabName) {
-                tabButton.style.backgroundColor = '#0052cc';
-                tabButton.style.color = 'white';
-                tabButton.textContent = '✔ ' + tabButton.textContent.replace('✔ ', '');
-            } else {
-                tabButton.style.backgroundColor = '#f0f0f0';
-                tabButton.style.color = 'black';
-                tabButton.textContent = tabButton.textContent.replace('✔ ', '');
-            }
+    // タブメニューを作成する関数（共通化）
+    function createTabMenu(tabs, currentTabName, switchTabFunction) {
+        const tabMenu = document.createElement('div');
+        tabMenu.style.marginBottom = '0px';
+        tabMenu.style.display = 'flex';
+        tabMenu.style.paddingBottom = '0px';
+
+        tabs.forEach(tab => {
+            const tabButton = createTabButton(tab.name, tab.text, currentTabName, switchTabFunction);
+            tabMenu.appendChild(tabButton);
         });
-    };
+
+        return tabMenu;
+    }
 
     // テキストエリアコンテナを作成する関数
     window.createTextareaContainer = function() {
