@@ -493,7 +493,7 @@
     }
 
     // モーダルを閉じる関数
-    function closeModal() {
+    window.closeModal = function() {
         console.log('[AIレビュー] モーダルを閉じます。');
         const modal = document.getElementById('reviewPointModal');
         if (modal) {
