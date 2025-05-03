@@ -90,6 +90,10 @@
         ], currentJapaneseTab, window.switchJapaneseTab);
         modal.appendChild(japaneseReviewTabMenu);
 
+        // テキストエリアをコンテナに追加
+        const textareaJapaneseContainer = window.createTextareaContainer();
+        modal.appendChild(textareaJapaneseContainer);
+
         // ボタンを作成
         const buttonContainer = window.createButtonContainer();
         modal.appendChild(buttonContainer);
