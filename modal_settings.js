@@ -200,7 +200,7 @@
         }
 
         // イベントリスナーを追加
-        tabButton.addEventListener('click', () => {
+        tabButton.addEventListener('click', function() {
             switchTabFunction(tabName);
             window.updateTextareaContent();
             if (typeof updateTabStyles === 'function') {
@@ -299,7 +299,7 @@
             // 日本語レビュータブの場合
             if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="japaneseReview"], .ai-review-tab-button[data-tab-name="englishReview"]'))) {
                 switchTabFunction = window.switchJapaneseTab; // 日本語レビュー用の切り替え関数
-                if (currentJapaneseTab === tabName) {
+                 if (currentJapaneseTab === tabName) {
                     button.style.backgroundColor = '#0052cc';
                     button.style.color = 'white';
                     button.textContent = '✔ ' + button.textContent.replace('✔ ', '');
@@ -328,13 +328,6 @@
                     button.textContent = button.textContent.replace('✔ ', '');
                 }
             }
-
-             // イベントリスナーを再設定（必要な場合）
-            button.removeEventListener('click', button.clickListener); // 以前のリスナーを削除
-            button.clickListener = () => { // 新しいリスナーを作成
-                switchTabFunction(tabName);
-            };
-            button.addEventListener('click', button.clickListener); // 新しいリスナーを追加
         });
         console.log('[AIレビュー] タブのスタイルを更新しました。');
     };
