@@ -402,9 +402,9 @@
         const contentAreaMethod = document.getElementById('reviewPointMethodTextarea'); // レビュー方法のテキストエリア
 
         if (currentTab === 'documentReview') {
-            contentAreaRole.value = window.reviewPoint_01;
+            contentAreaRole.value = window.reviewPoint_document;
         } else if (currentTab === 'answerReview') {
-            contentAreaRole.value = window.reviewPoint_02;
+            contentAreaRole.value = window.reviewPoint_answer;
         }
 
         if (contentAreaLanguage) {
