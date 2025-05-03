@@ -74,7 +74,7 @@
         modal.appendChild(mainTabMenu);
 
         // テキストエリアをコンテナに追加
-        const textareaContainer = window.createTextareaContainer();
+        const textareaContainer = window.createTextareaContainer('reviewPointTextarea');
         modal.appendChild(textareaContainer);
 
         // レビュー観点テキストエリアのラベル
@@ -91,7 +91,7 @@
         modal.appendChild(japaneseReviewTabMenu);
 
         // テキストエリアをコンテナに追加
-        const textareaJapaneseContainer = window.createTextareaJapaneseContainer();
+        const textareaJapaneseContainer = window.createTextareaContainer('reviewPointTextareaJapanese');
         modal.appendChild(textareaJapaneseContainer);
 
         // ボタンを作成
@@ -239,14 +239,14 @@
     }
 
     // テキストエリアコンテナを作成する関数
-    window.createTextareaContainer = function() {
+    window.createTextareaContainer = function(id) {
         const textareaContainer = document.createElement('div');
         textareaContainer.style.flex = '1 1 auto';
         textareaContainer.style.display = 'flex';
         textareaContainer.style.flexDirection = 'column';
 
         const contentArea = document.createElement('textarea');
-        contentArea.id = 'reviewPointTextarea';
+        contentArea.id = id;
         contentArea.rows = 5;
         contentArea.cols = 40;
         contentArea.style.border = '2px solid #ccc';
@@ -261,27 +261,38 @@
         return textareaContainer;
     };
 
-    // テキストエリアコンテナを作成する関数（日本語レビュー用）
-    window.createTextareaJapaneseContainer = function() {
-        const textareaContainer = document.createElement('div');
-        textareaContainer.style.flex = '1 1 auto';
-        textareaContainer.style.display = 'flex';
-        textareaContainer.style.flexDirection = 'column';
+    window.updateTabStyles = function() {
+        console.log('[AIレビュー] タブのスタイルを更新します。');
+        const tabButtons = document.querySelectorAll('.ai-review-tab-button');
 
-        const contentArea = document.createElement('textarea');
-        contentArea.id = 'reviewPointTextareaJapanese';
-        contentArea.rows = 5;
-        contentArea.cols = 40;
-        contentArea.style.border = '2px solid #ccc';
-        contentArea.style.resize = 'none';
-        contentArea.style.width = '100%';
-        contentArea.style.fontSize = '14px';
-        contentArea.style.lineHeight = '1.5';
-        contentArea.style.fontFamily = 'Meiryo, "メイリオ", sans-serif';
-        contentArea.style.flex = '1 1 auto';
-        contentArea.style.marginBottom = '10px';
-        textareaContainer.appendChild(contentArea);
-        return textareaContainer;
+        tabButtons.forEach(button => {
+            const tabName = button.dataset.tabName; // data-tab-name 属性からタブ名を取得
+            let switchTabFunction;
+            let currentTabName;
+
+            // どのタブグループに属しているかを判定
+            if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="japaneseReview"], .ai-review-tab-button[data-tab-name="englishReview"]'))) {
+                switchTabFunction = window.switchJapaneseTab;
+                currentTabName = currentJapaneseTab;
+            } else {
+                switchTabFunction = window.switchTab;
+                currentTabName = currentTab;
+            }
+
+            if (currentTabName === tabName) {
+                button.style.backgroundColor = '#0052cc';
+                button.style.color = 'white';
+                button.textContent = '✔ ' + button.textContent.replace('✔ ', '');
+                if (!button.textContent.startsWith('✔ ')) {
+                    button.textContent = '✔ ' + button.textContent;
+                }
+            } else {
+                button.style.backgroundColor = '#f0f0f0';
+                button.style.color = 'black';
+                button.textContent = button.textContent.replace('✔ ', '');
+            }
+        });
+        console.log('[AIレビュー] タブのスタイルを更新しました。');
     };
 
     // ボタンコンテナを作成する関数
@@ -319,49 +330,5 @@
         buttonContainer.appendChild(closeButton);
 
         return buttonContainer;
-    };
-
-    window.updateTabStyles = function() {
-        console.log('[AIレビュー] タブのスタイルを更新します。');
-        const tabButtons = document.querySelectorAll('.ai-review-tab-button');
-
-        tabButtons.forEach(button => {
-            const tabName = button.dataset.tabName; // data-tab-name 属性からタブ名を取得
-            let switchTabFunction;
-
-            // 日本語レビュータブの場合
-            if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="japaneseReview"], .ai-review-tab-button[data-tab-name="englishReview"]'))) {
-                switchTabFunction = window.switchJapaneseTab; // 日本語レビュー用の切り替え関数
-                if (currentJapaneseTab === tabName) {
-                    button.style.backgroundColor = '#0052cc';
-                    button.style.color = 'white';
-                    button.textContent = '✔ ' + button.textContent.replace('✔ ', '');
-                    if (!button.textContent.startsWith('✔ ')) {
-                        button.textContent = '✔ ' + button.textContent;
-                    }
-                } else {
-                    button.style.backgroundColor = '#f0f0f0';
-                    button.style.color = 'black';
-                    button.textContent = button.textContent.replace('✔ ', '');
-                }
-            }
-            // メインのタブの場合
-            else {
-                switchTabFunction = window.switchTab; // メイン用の切り替え関数
-                if (currentTab === tabName) {
-                    button.style.backgroundColor = '#0052cc';
-                    button.style.color = 'white';
-                    button.textContent = '✔ ' + button.textContent.replace('✔ ', '');
-                    if (!button.textContent.startsWith('✔ ')) {
-                        button.textContent = '✔ ' + button.textContent;
-                    }
-                } else {
-                    button.style.backgroundColor = '#f0f0f0';
-                    button.style.color = 'black';
-                    button.textContent = button.textContent.replace('✔ ', '');
-                }
-            }
-        });
-        console.log('[AIレビュー] タブのスタイルを更新しました。');
     };
 })();
