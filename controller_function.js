@@ -10,6 +10,7 @@
     let shiftKeyPressed = false;
     let lastSelection = null;
     let isInitialized = false;
+    let shiftKeyDownCount = 0; // Shiftキーが押された回数をカウント
 
     // ConfluenceのページヘッダーにAIレビュー用のボタンと設定アイコンを追加する関数
     window.addConfluenceHeaderButton = function() {
@@ -217,19 +218,29 @@
 
         // Shiftキーが押された時のイベントハンドラ
         const handleKeyDown = (event) => {
-            if (event.key === 'Shift' && !shiftKeyPressed) {
-                shiftKeyPressed = true;
-                console.log('[AIレビュー] Shiftキーが押されました。');
+            if (event.key === 'Shift') {
+                shiftKeyDownCount++;
 
-                if (lastSelection && lastSelection.toString().length > 0) {
-                    removeExistingButtons();
-                    showButtonsNearSelection(lastSelection);
+                if (!shiftKeyPressed) {
+                    // 最初のShiftキー押下
+                    shiftKeyPressed = true;
+                    console.log('[AIレビュー] Shiftキーが押されました。');
 
-                   // Shiftキーが押されたら、currentSelectedText を更新
-                    const selection = window.getSelection();
-                    if (selection) {
-                        window.currentSelectedText = selection.toString().trim();
+                    if (lastSelection && lastSelection.toString().length > 0) {
+                        removeExistingButtons();
+                        showButtonsNearSelection(lastSelection);
+
+                        // Shiftキーが押されたら、currentSelectedText を更新
+                        const selection = window.getSelection();
+                        if (selection) {
+                            window.currentSelectedText = selection.toString().trim();
+                        }
                     }
+                } else if (buttonsVisible && shiftKeyDownCount === 2) {
+                    // 2回目のShiftキー押下 (ボタンが表示されている場合)
+                    console.log('[AIレビュー] Shiftキーが再度押されました。ボタンを非表示にします。');
+                    removeExistingButtons();
+                    shiftKeyDownCount = 0; // カウントをリセット
                 }
             }
         };
@@ -239,6 +250,7 @@
             if (event.key === 'Shift') {
                 shiftKeyPressed = false;
                 console.log('[AIレビュー] Shiftキーが離されました。');
+                shiftKeyDownCount = 0; // カウントをリセット
             }
         };
 
