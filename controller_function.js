@@ -111,7 +111,6 @@
                 settingsButton = null;
                 // console.log('[AIレビュー] 選択文字列用設定ボタン削除完了'); // デバッグ用
             }
-            shiftKeyPressed = false; // Shiftキーの状態をリセット
         };
 
         /**
@@ -126,26 +125,23 @@
             }
             window.currentSelectedText = currentSelectionText;
 
-            // Shiftキーが押されている場合のみボタンを表示
-            if (shiftKeyPressed) {
-                reviewButton = window.createReviewButtonElement();
-                settingsButton = window.createSettingsButtonElement();
+            reviewButton = window.createReviewButtonElement();
+            settingsButton = window.createSettingsButtonElement();
 
-                const position = window.calculateButtonPosition(selection);
-                if (!position) {
-                    reviewButton = null;
-                    settingsButton = null;
-                    window.currentSelectedText = '';
-                    return;
-                }
-
-                document.body.appendChild(reviewButton);
-                window.applyReviewButtonStyle(reviewButton, position);
-                const reviewButtonWidth = reviewButton.offsetWidth;
-
-                document.body.appendChild(settingsButton);
-                window.applySettingsButtonStyle(settingsButton, position, reviewButtonWidth);
+            const position = window.calculateButtonPosition(selection);
+            if (!position) {
+                reviewButton = null;
+                settingsButton = null;
+                window.currentSelectedText = '';
+                return;
             }
+
+            document.body.appendChild(reviewButton);
+            window.applyReviewButtonStyle(reviewButton, position);
+            const reviewButtonWidth = reviewButton.offsetWidth;
+
+            document.body.appendChild(settingsButton);
+            window.applySettingsButtonStyle(settingsButton, position, reviewButtonWidth);
         };
 
         /**
@@ -250,41 +246,26 @@
     };
 
     /**
-     * マウスが離された時のイベントハンドラ
+     * 選択範囲が変更された時の処理
      */
-    window.handleMouseUp = function(event) {
-        // 0.1秒後に選択範囲を確認し、ボタンを表示または削除する
-        setTimeout(() => {
-            const selection = window.getSelection();
+    function handleSelectionChange() {
+        const selection = window.getSelection();
+        if (!selection || selection.toString().length === 0) {
+            // 選択が解除された場合、ボタンを削除
+            window.removeExistingButtons();
+            lastSelection = null;
+            return;
+        }
 
-            // 選択範囲が存在しない場合は、ボタンを削除
-            if (!selection || selection.toString().length === 0) {
-                window.removeExistingButtons();
-                lastSelection = null; // 選択をクリア
-                return;
-            }
+        // 選択範囲を保存
+        lastSelection = selection;
 
-            // 選択範囲を保存
-            lastSelection = selection;
-        }, 100);
-    };
-
-    /**
-     * ドキュメントがクリックされた時のイベントハンドラ
-     */
-    window.handleDocumentClick = function(event) {
-        // タイマーを使って、クリックイベントが先に処理されるようにする
-        setTimeout(() => {
-            const selection = window.getSelection();
-            if (!selection || selection.toString().length === 0) {
-                // ボタンが存在するか確認してから削除
-                if (reviewButton || settingsButton) {
-                    window.removeExistingButtons();
-                }
-                lastSelection = null; // 選択をクリア
-            }
-        }, 50); // 50ms遅延
-    };
+        // Shiftキーが押されている場合のみボタンを表示
+        if (shiftKeyPressed) {
+            window.removeExistingButtons();
+            window.showButtonsNearSelection(selection);
+        }
+    }
 
     /**
      * Shiftキーが押された時のイベントハンドラ
@@ -298,14 +279,6 @@
             if (lastSelection && lastSelection.toString().length > 0) {
                 window.removeExistingButtons();
                 window.showButtonsNearSelection(lastSelection);
-            } else {
-                // 選択がない場合でも、カーソルの位置から選択範囲を取得を試みる
-                const selection = window.getSelection();
-                if (selection && selection.toString().length > 0) {
-                    lastSelection = selection;
-                    window.removeExistingButtons();
-                    window.showButtonsNearSelection(lastSelection);
-                }
             }
         }
     };
@@ -317,6 +290,7 @@
         if (event.key === 'Shift') {
             shiftKeyPressed = false;
             console.log('[AIレビュー] Shiftキーが離されました。');
+            window.removeExistingButtons();
         }
     };
 
@@ -327,8 +301,7 @@
 
         // イベントリスナーを登録
         window.initializeEventHandlers();
-        document.addEventListener('mouseup', window.handleMouseUp);
-        document.addEventListener('click', window.handleDocumentClick); // ドキュメント全体のクリックを監視
+        document.addEventListener('selectionchange', handleSelectionChange); // 選択範囲の変更を監視
         document.addEventListener('keydown', window.handleKeyDown); // Shiftキー押下を監視
         document.addEventListener('keyup', window.handleKeyUp); // Shiftキー解放を監視
     });
