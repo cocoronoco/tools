@@ -266,11 +266,6 @@
 
             // 選択範囲を保存
             lastSelection = selection;
-
-            // Shiftキーが押されている場合のみボタンを表示
-            if (shiftKeyPressed) {
-                window.showButtonsNearSelection(selection);
-            }
         }, 100);
     };
 
@@ -295,7 +290,7 @@
      * Shiftキーが押された時のイベントハンドラ
      */
     window.handleKeyDown = function(event) {
-        if (event.key === 'Shift') {
+        if (event.key === 'Shift' && !shiftKeyPressed) {
             shiftKeyPressed = true;
             console.log('[AIレビュー] Shiftキーが押されました。');
 
@@ -303,6 +298,14 @@
             if (lastSelection && lastSelection.toString().length > 0) {
                 window.removeExistingButtons();
                 window.showButtonsNearSelection(lastSelection);
+            } else {
+                // 選択がない場合でも、カーソルの位置から選択範囲を取得を試みる
+                const selection = window.getSelection();
+                if (selection && selection.toString().length > 0) {
+                    lastSelection = selection;
+                    window.removeExistingButtons();
+                    window.showButtonsNearSelection(lastSelection);
+                }
             }
         }
     };
@@ -317,20 +320,6 @@
         }
     };
 
-    // ページがアクティブになったときの処理
-    function handleVisibilityChange() {
-        if (!document.hidden) {
-            // タブがアクティブになったときにShiftキーの状態をチェック
-            shiftKeyPressed = event.shiftKey;
-
-            // 最後に選択されたテキストがあるか確認し、ボタンを表示
-            if (lastSelection && lastSelection.toString().length > 0 && shiftKeyPressed) {
-                window.removeExistingButtons();
-                window.showButtonsNearSelection(lastSelection);
-            }
-        }
-    }
-
     // 初期化完了イベントをリッスン
     document.addEventListener('aiReviewInitialized', () => {
         console.log('[AIレビュー] controller_function.js: 初期化完了イベントを受信しました。');
@@ -342,7 +331,6 @@
         document.addEventListener('click', window.handleDocumentClick); // ドキュメント全体のクリックを監視
         document.addEventListener('keydown', window.handleKeyDown); // Shiftキー押下を監視
         document.addEventListener('keyup', window.handleKeyUp); // Shiftキー解放を監視
-        document.addEventListener('visibilitychange', handleVisibilityChange); // タブの切り替えを監視
     });
 
     console.log('[AIレビュー] controller_function.js: イベントハンドラを設定しました。');
