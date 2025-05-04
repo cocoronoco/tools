@@ -57,7 +57,13 @@
         // イベントハンドラを定義
         const handleReviewButtonClick = () => {
             console.log('[AIレビュー] 選択文字列用 AIレビュー実行ボタンがクリックされました。');
-            window.triggerAIReviewButton(window.currentSelectedText, 'text');
+            // 最新の選択範囲を取得して送信
+            const selection = window.getSelection();
+            if (selection && selection.toString().length > 0) {
+                window.triggerAIReviewButton(selection.toString(), 'text');
+            } else {
+                console.warn('[AIレビュー] 選択された文字列がありません。');
+            }
             removeExistingButtons();
         };
 
@@ -204,6 +210,8 @@
                 } else {
                     window.updateButtonPosition(selection);
                 }
+                // 選択範囲が変更されたら、currentSelectedText を更新
+                window.currentSelectedText = selection.toString().trim();
             }
         };
 
@@ -216,6 +224,12 @@
                 if (lastSelection && lastSelection.toString().length > 0) {
                     removeExistingButtons();
                     showButtonsNearSelection(lastSelection);
+
+                   // Shiftキーが押されたら、currentSelectedText を更新
+                    const selection = window.getSelection();
+                    if (selection) {
+                        window.currentSelectedText = selection.toString().trim();
+                    }
                 }
             }
         };
