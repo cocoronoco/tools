@@ -128,6 +128,11 @@
             }
             window.currentSelectedText = currentSelectionText;
 
+            // すでにボタンが表示されている場合は何もしない
+            if (buttonsVisible) {
+                return;
+            }
+
             reviewButton = window.createReviewButtonElement();
             settingsButton = window.createSettingsButtonElement();
 
@@ -255,6 +260,7 @@
      */
     function handleSelectionChange(event) {
         const selection = window.getSelection();
+
         if (!selection || selection.toString().length === 0) {
             // 選択が解除された場合、ボタンを削除
             window.removeExistingButtons();
@@ -265,12 +271,12 @@
         // 選択範囲を保存
         lastSelection = selection;
 
-        // Shiftキーが押されているか、またはボタンが既に表示されている場合はボタンを表示
+        // Shiftキーが押されている場合のみボタンを表示
         if (shiftKeyPressed) {
-            window.removeExistingButtons(); // 既存のボタンを削除
-            window.showButtonsNearSelection(selection);
-        } else if (buttonsVisible) {
-            window.removeExistingButtons();
+            if (!buttonsVisible) {
+                window.removeExistingButtons(); // 既存のボタンを削除
+                window.showButtonsNearSelection(selection);
+            }
         }
     }
 
