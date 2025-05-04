@@ -131,3 +131,9 @@
 .CodeMirror-line {
     padding-left: 30px !important; /* テキストが隠れないようにpaddingを追加 */
 }
+
+/* --- Mergelyの差分表示の強調（青色と太字） --- */
+.mergely-editor .mergely.ch.ina.rhs {
+    color: #0000ff;
+    font-weight: bold; /* 太字にする */
+}
