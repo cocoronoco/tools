@@ -149,7 +149,7 @@
         /**
          * ボタンの位置を更新する関数
          */
-        function updateButtonPosition(selection) {
+        window.updateButtonPosition = function(selection) {
             if (!reviewButton || !settingsButton) return; // ボタンが存在しない場合は何もしない
 
             const position = window.calculateButtonPosition(selection);
@@ -158,7 +158,7 @@
                 const reviewButtonWidth = reviewButton.offsetWidth;
                 window.applySettingsButtonStyle(settingsButton, position, reviewButtonWidth);
             }
-        }
+        };
 
         /**
          * 選択文字列用「AIレビューを実行」ボタン要素を作成
@@ -282,7 +282,7 @@
             if (!buttonsVisible) {
                 window.showButtonsNearSelection(selection);
             } else {
-                updateButtonPosition(selection);
+                window.updateButtonPosition(selection); // window. を付けてグローバル関数として呼び出す
             }
         }
     }
