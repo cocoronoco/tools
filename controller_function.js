@@ -10,6 +10,9 @@
     // 初期化完了フラグ
     let isInitialized = false;
 
+    // Shiftキーが押されたかどうかを追跡するフラグ
+    let shiftKeyPressed = false;
+
     // ConfluenceのページヘッダーにAIレビュー用のボタンと設定アイコンを追加する関数
     window.addConfluenceHeaderButton = function() {
         console.log('[AIレビュー] AIレビュー用ボタンを追加します。');
@@ -111,6 +114,7 @@
                 settingsButton = null;
                 // console.log('[AIレビュー] 選択文字列用設定ボタン削除完了'); // デバッグ用
             }
+            shiftKeyPressed = false; // Shiftキーの状態をリセット
         };
 
         /**
@@ -125,23 +129,26 @@
             }
             window.currentSelectedText = currentSelectionText;
 
-            reviewButton = window.createReviewButtonElement();
-            settingsButton = window.createSettingsButtonElement();
+            // Shiftキーが押されている場合のみボタンを表示
+            if (shiftKeyPressed) {
+                reviewButton = window.createReviewButtonElement();
+                settingsButton = window.createSettingsButtonElement();
 
-            const position = window.calculateButtonPosition(selection);
-            if (!position) {
-                reviewButton = null;
-                settingsButton = null;
-                window.currentSelectedText = '';
-                return;
+                const position = window.calculateButtonPosition(selection);
+                if (!position) {
+                    reviewButton = null;
+                    settingsButton = null;
+                    window.currentSelectedText = '';
+                    return;
+                }
+
+                document.body.appendChild(reviewButton);
+                window.applyReviewButtonStyle(reviewButton, position);
+                const reviewButtonWidth = reviewButton.offsetWidth;
+
+                document.body.appendChild(settingsButton);
+                window.applySettingsButtonStyle(settingsButton, position, reviewButtonWidth);
             }
-
-            document.body.appendChild(reviewButton);
-            window.applyReviewButtonStyle(reviewButton, position);
-            const reviewButtonWidth = reviewButton.offsetWidth;
-
-            document.body.appendChild(settingsButton);
-            window.applySettingsButtonStyle(settingsButton, position, reviewButtonWidth);
         };
 
         /**
@@ -281,9 +288,37 @@
         }, 50); // 50ms遅延
     };
 
+    /**
+     * Shiftキーが押された時のイベントハンドラ
+     */
+    window.handleKeyDown = function(event) {
+        if (event.key === 'Shift' && !shiftKeyPressed) {
+            shiftKeyPressed = true;
+            console.log('[AIレビュー] Shiftキーが押されました。');
+            // Shiftキーが押された状態で選択範囲があるか確認し、ボタンを表示
+            const selection = window.getSelection();
+            if (selection && selection.toString().length > 0) {
+                window.removeExistingButtons();
+                window.showButtonsNearSelection(selection);
+            }
+        }
+    };
+
+    /**
+     * Shiftキーが離された時のイベントハンドラ
+     */
+    window.handleKeyUp = function(event) {
+        if (event.key === 'Shift') {
+            shiftKeyPressed = false;
+            console.log('[AIレビュー] Shiftキーが離されました。');
+        }
+    };
+
     // イベントリスナーを登録 (初期化後)
     document.addEventListener('mouseup', window.handleMouseUp);
     document.addEventListener('click', window.handleDocumentClick); // ドキュメント全体のクリックを監視
+    document.addEventListener('keydown', window.handleKeyDown); // Shiftキー押下を監視
+    document.addEventListener('keyup', window.handleKeyUp); // Shiftキー解放を監視
 
     console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを設定しました。');
 
