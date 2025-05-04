@@ -266,11 +266,11 @@
         lastSelection = selection;
 
         // Shiftキーが押されているか、またはボタンが既に表示されている場合はボタンを表示
-        if (shiftKeyPressed || buttonsVisible) {
-            if (!buttonsVisible) {
-                window.removeExistingButtons(); // 既存のボタンを削除
-            }
+        if (shiftKeyPressed) {
+            window.removeExistingButtons(); // 既存のボタンを削除
             window.showButtonsNearSelection(selection);
+        } else if (buttonsVisible) {
+            window.removeExistingButtons();
         }
     }
 
@@ -297,7 +297,6 @@
         if (event.key === 'Shift') {
             shiftKeyPressed = false;
             console.log('[AIレビュー] Shiftキーが離されました。');
-            //window.removeExistingButtons(); // Shiftキーが離されたときはボタンを削除しない
         }
     };
 
