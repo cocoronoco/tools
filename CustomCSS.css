@@ -134,6 +134,6 @@
 
 /* Mergelyの差分表示の強調（青色と太字） */
 .mergely-editor .mergely.ch.ina.rhs {
-    color: #0000ff;
-    font-weight: bold; /* 太字にする */
+    color: #00ff00 !important;
+    font-weight: bold !important; /* 太字にする */
 }
