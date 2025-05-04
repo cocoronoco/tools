@@ -16,6 +16,9 @@
     // 最後に選択されたテキストを保持する変数
     let lastSelection = null;
 
+    // ボタンが表示されている状態を保持するフラグ
+    let buttonsVisible = false;
+
     // ConfluenceのページヘッダーにAIレビュー用のボタンと設定アイコンを追加する関数
     window.addConfluenceHeaderButton = function() {
         console.log('[AIレビュー] AIレビュー用ボタンを追加します。');
@@ -76,7 +79,6 @@
         window.handleReviewButtonClick_Selection = function() {
             console.log('[AIレビュー] 選択文字列用 AIレビュー実行ボタンがクリックされました。');
             window.triggerAIReviewButton(window.currentSelectedText,'text');
-            document.dispatchEvent(event);
             window.removeExistingButtons(); // ボタンを削除
         };
 
@@ -111,6 +113,7 @@
                 settingsButton = null;
                 // console.log('[AIレビュー] 選択文字列用設定ボタン削除完了'); // デバッグ用
             }
+            buttonsVisible = false; // ボタンが表示されている状態をリセット
         };
 
         /**
@@ -142,6 +145,8 @@
 
             document.body.appendChild(settingsButton);
             window.applySettingsButtonStyle(settingsButton, position, reviewButtonWidth);
+
+            buttonsVisible = true; // ボタンが表示されている状態を更新
         };
 
         /**
@@ -248,7 +253,7 @@
     /**
      * 選択範囲が変更された時の処理
      */
-    function handleSelectionChange() {
+    function handleSelectionChange(event) {
         const selection = window.getSelection();
         if (!selection || selection.toString().length === 0) {
             // 選択が解除された場合、ボタンを削除
@@ -260,9 +265,11 @@
         // 選択範囲を保存
         lastSelection = selection;
 
-        // Shiftキーが押されている場合のみボタンを表示
-        if (shiftKeyPressed) {
-            window.removeExistingButtons();
+        // Shiftキーが押されているか、またはボタンが既に表示されている場合はボタンを表示
+        if (shiftKeyPressed || buttonsVisible) {
+            if (!buttonsVisible) {
+                window.removeExistingButtons(); // 既存のボタンを削除
+            }
             window.showButtonsNearSelection(selection);
         }
     }
@@ -277,7 +284,7 @@
 
             // 最後に選択されたテキストがあるか確認し、ボタンを表示
             if (lastSelection && lastSelection.toString().length > 0) {
-                window.removeExistingButtons();
+                window.removeExistingButtons(); // 既存のボタンを削除
                 window.showButtonsNearSelection(lastSelection);
             }
         }
@@ -290,7 +297,7 @@
         if (event.key === 'Shift') {
             shiftKeyPressed = false;
             console.log('[AIレビュー] Shiftキーが離されました。');
-            window.removeExistingButtons();
+            //window.removeExistingButtons(); // Shiftキーが離されたときはボタンを削除しない
         }
     };
 
