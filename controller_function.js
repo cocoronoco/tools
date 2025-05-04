@@ -66,13 +66,7 @@
         }
     };
 
-    // 初期化完了イベントをリッスン
-    document.addEventListener('aiReviewInitialized', () => {
-        console.log('[AIレビュー] selection_event_handlers.js: 初期化完了イベントを受信しました。');
-        isInitialized = true;
-        window.initializeEventHandlers();
-    });
-
+    // イベントハンドラを初期化する関数
     window.initializeEventHandlers = function() {
         console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを初期化します。');
 
@@ -272,6 +266,11 @@
 
             // 選択範囲を保存
             lastSelection = selection;
+
+             // Shiftキーが押されている場合のみボタンを表示
+            if (shiftKeyPressed) {
+                 window.showButtonsNearSelection(selection);
+            }
         }, 100);
     };
 
@@ -318,11 +317,18 @@
         }
     };
 
-    // イベントリスナーを登録 (初期化後)
-    document.addEventListener('mouseup', window.handleMouseUp);
-    document.addEventListener('click', window.handleDocumentClick); // ドキュメント全体のクリックを監視
-    document.addEventListener('keydown', window.handleKeyDown); // Shiftキー押下を監視
-    document.addEventListener('keyup', window.handleKeyUp); // Shiftキー解放を監視
+    // 初期化完了イベントをリッスン
+    document.addEventListener('aiReviewInitialized', () => {
+        console.log('[AIレビュー] selection_event_handlers.js: 初期化完了イベントを受信しました。');
+        isInitialized = true;
+
+        // イベントリスナーを登録
+        window.initializeEventHandlers();
+        document.addEventListener('mouseup', window.handleMouseUp);
+        document.addEventListener('click', window.handleDocumentClick); // ドキュメント全体のクリックを監視
+        document.addEventListener('keydown', window.handleKeyDown); // Shiftキー押下を監視
+        document.addEventListener('keyup', window.handleKeyUp); // Shiftキー解放を監視
+    });
 
     console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを設定しました。');
 
