@@ -13,6 +13,9 @@
     // Shiftキーが押されたかどうかを追跡するフラグ
     let shiftKeyPressed = false;
 
+    // 最後に選択されたテキストを保持する変数
+    let lastSelection = null;
+
     // ConfluenceのページヘッダーにAIレビュー用のボタンと設定アイコンを追加する関数
     window.addConfluenceHeaderButton = function() {
         console.log('[AIレビュー] AIレビュー用ボタンを追加します。');
@@ -263,12 +266,12 @@
             // 選択範囲が存在しない場合は、ボタンを削除
             if (!selection || selection.toString().length === 0) {
                 window.removeExistingButtons();
+                lastSelection = null; // 選択をクリア
                 return;
             }
 
-            // 選択範囲が存在する場合は、ボタンを表示
-           // window.removeExistingButtons(); // 既存のボタンを削除  // ★削除
-           // window.showButtonsNearSelection(selection); // ボタンを表示  // ★削除
+            // 選択範囲を保存
+            lastSelection = selection;
         }, 100);
     };
 
@@ -284,6 +287,7 @@
                 if (reviewButton || settingsButton) {
                     window.removeExistingButtons();
                 }
+                lastSelection = null; // 選択をクリア
             }
         }, 50); // 50ms遅延
     };
@@ -295,11 +299,11 @@
         if (event.key === 'Shift' && !shiftKeyPressed) {
             shiftKeyPressed = true;
             console.log('[AIレビュー] Shiftキーが押されました。');
-            // Shiftキーが押された状態で選択範囲があるか確認し、ボタンを表示
-            const selection = window.getSelection();
-            if (selection && selection.toString().length > 0) {
+
+            // 最後に選択されたテキストがあるか確認し、ボタンを表示
+            if (lastSelection && lastSelection.toString().length > 0) {
                 window.removeExistingButtons();
-                window.showButtonsNearSelection(selection);
+                window.showButtonsNearSelection(lastSelection);
             }
         }
     };
