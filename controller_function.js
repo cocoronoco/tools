@@ -102,35 +102,28 @@
          */
         window.removeExistingButtons = function() {
             if (reviewButton) {
-                reviewButton.removeEventListener('click', window.handleReviewButtonClick_Selection); // リスナー解除
+                reviewButton.removeEventListener('click', window.handleReviewButtonClick_Selection);
                 reviewButton.remove();
                 reviewButton = null;
             }
             if (settingsButton) {
-                settingsButton.removeEventListener('click', window.handleSettingsButtonClick_Selection); // リスナー解除
+                settingsButton.removeEventListener('click', window.handleSettingsButtonClick_Selection);
                 settingsButton.remove();
                 settingsButton = null;
             }
-            buttonsVisible = false; // ボタンが表示されている状態をリセット
+            buttonsVisible = false;
         };
 
         /**
          * 選択範囲の近くにボタンを表示する関数
          */
         window.showButtonsNearSelection = function(selection) {
-            // console.log('[AIレビュー] ボタン表示'); // 必要ならコメントアウト解除
             const currentSelectionText = selection.toString().trim();
             if (!selection || selection.rangeCount === 0 || currentSelectionText.length === 0) {
                 window.currentSelectedText = '';
                 return;
             }
             window.currentSelectedText = currentSelectionText;
-
-            if (buttonsVisible) {
-                // 既にボタンが表示されている場合は、位置を更新して終了
-                updateButtonPosition(selection);
-                return;
-            }
 
             reviewButton = window.createReviewButtonElement();
             settingsButton = window.createSettingsButtonElement();
@@ -150,13 +143,15 @@
             document.body.appendChild(settingsButton);
             window.applySettingsButtonStyle(settingsButton, position, reviewButtonWidth);
 
-            buttonsVisible = true; // ボタンが表示されている状態を更新
+            buttonsVisible = true;
         };
 
         /**
          * ボタンの位置を更新する関数
          */
         function updateButtonPosition(selection) {
+            if (!reviewButton || !settingsButton) return; // ボタンが存在しない場合は何もしない
+
             const position = window.calculateButtonPosition(selection);
             if (position) {
                 window.applyReviewButtonStyle(reviewButton, position);
@@ -216,7 +211,6 @@
                     y = rect.top + window.scrollY - estimatedButtonHeight - 5;
                     if (y < window.scrollY + 5) y = window.scrollY + 5;
                 }
-                // console.log(`[AIレビュー] ボタン位置: x=${x}, y=${y}`); // 必要ならコメントアウト解除
                 return { x: x, y: y };
             } catch (error) {
                 console.error('[AIレビュー] 位置計算エラー:', error);
@@ -239,30 +233,30 @@
             button.style.fontSize = '13px';
             button.style.cursor = 'pointer';
             button.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
-            button.style.borderRadius = '15px'; /* 丸みを帯びた角 */
+            button.style.borderRadius = '15px';
             button.style.lineHeight = '1.4';
-            button.style.whiteSpace = 'nowrap'; /* ボタンテキストが折り返さないように */
+            button.style.whiteSpace = 'nowrap';
         };
 
         /**
          * 選択文字列用設定ボタンのスタイルを適用
          */
-        window.applySettingsButtonStyle = function(button, position) {
+        window.applySettingsButtonStyle = function(button, position, reviewButtonWidth) {
             button.style.position = 'absolute';
             button.style.left = `${position.x + reviewButtonWidth + 5}px`;
             button.style.top = `${position.y}px`;
             button.style.zIndex = '2147483646';
             button.style.padding = '6px 8px';
             button.style.border = 'none';
-            button.style.backgroundColor = '#f0f0f0'; /* 薄いグレー */
+            button.style.backgroundColor = '#f0f0f0';
             button.style.color = '#333';
             button.style.fontSize = '13px';
             button.style.cursor = 'pointer';
             button.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
-            button.style.borderRadius = '50%'; /* 円形にする */
-            button.style.lineHeight = '1'; /* アイコンが中央に来るように */
-            button.style.minWidth = '28px'; /* 最小幅を確保して円形を維持 */
-            button.style.textAlign = 'center'; /* アイコンを中央揃え */
+            button.style.borderRadius = '50%';
+            button.style.lineHeight = '1';
+            button.style.minWidth = '28px';
+            button.style.textAlign = 'center';
         };
     };
 
@@ -326,9 +320,9 @@
 
         // イベントリスナーを登録
         window.initializeEventHandlers();
-        document.addEventListener('selectionchange', handleSelectionChange); // 選択範囲の変更を監視
-        document.addEventListener('keydown', window.handleKeyDown); // Shiftキー押下を監視
-        document.addEventListener('keyup', window.handleKeyUp); // Shiftキー解放を監視
+        document.addEventListener('selectionchange', handleSelectionChange);
+        document.addEventListener('keydown', window.handleKeyDown);
+        document.addEventListener('keyup', window.handleKeyUp);
     });
 
     console.log('[AIレビュー] controller_function.js: イベントハンドラを設定しました。');
