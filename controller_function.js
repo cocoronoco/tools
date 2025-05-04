@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    console.log('[AIレビュー] selection_event_handlers.js をロードしました。');
+    console.log('[AIレビュー] controller_function.js をロードしました。');
 
     // グローバル変数 (Tampermonkeyスクリプトと共有)
     let reviewButton = null;
@@ -68,7 +68,7 @@
 
     // イベントハンドラを初期化する関数
     window.initializeEventHandlers = function() {
-        console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを初期化します。');
+        console.log('[AIレビュー] controller_function.js: イベントハンドラを初期化します。');
 
         /**
          * 選択文字列用に表示された「AIレビューを実行」ボタンがクリックされた時のハンドラ
@@ -319,7 +319,7 @@
 
     // 初期化完了イベントをリッスン
     document.addEventListener('aiReviewInitialized', () => {
-        console.log('[AIレビュー] selection_event_handlers.js: 初期化完了イベントを受信しました。');
+        console.log('[AIレビュー] controller_function.js: 初期化完了イベントを受信しました。');
         isInitialized = true;
 
         // イベントリスナーを登録
@@ -330,6 +330,6 @@
         document.addEventListener('keyup', window.handleKeyUp); // Shiftキー解放を監視
     });
 
-    console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを設定しました。');
+    console.log('[AIレビュー] controller_function.js: イベントハンドラを設定しました。');
 
 })();
