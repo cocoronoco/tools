@@ -10,7 +10,7 @@
     let shiftKeyPressed = false;
     let lastSelection = null;
     let isInitialized = false;
-    let shiftKeyDownCount = 0; // Shiftキーが押された回数をカウント
+    let shiftKeyDownHandled = false; // Shiftキーのkeydownイベントが処理されたかを追跡
 
     // ConfluenceのページヘッダーにAIレビュー用のボタンと設定アイコンを追加する関数
     window.addConfluenceHeaderButton = function() {
@@ -218,11 +218,12 @@
 
         // Shiftキーが押された時のイベントハンドラ
         const handleKeyDown = (event) => {
-            if (event.key === 'Shift') {
-                shiftKeyDownCount++;
-
-                if (!shiftKeyPressed) {
-                    // 最初のShiftキー押下
+            if (event.key === 'Shift' && !shiftKeyDownHandled) {
+                shiftKeyDownHandled = true; // 処理済みフラグを設定
+                if (buttonsVisible) {
+                    console.log('[AIレビュー] Shiftキーが押されました。ボタンを非表示にします。');
+                    removeExistingButtons();
+                } else {
                     shiftKeyPressed = true;
                     console.log('[AIレビュー] Shiftキーが押されました。');
 
@@ -236,11 +237,6 @@
                             window.currentSelectedText = selection.toString().trim();
                         }
                     }
-                } else if (buttonsVisible && shiftKeyDownCount === 2) {
-                    // 2回目のShiftキー押下 (ボタンが表示されている場合)
-                    console.log('[AIレビュー] Shiftキーが再度押されました。ボタンを非表示にします。');
-                    removeExistingButtons();
-                    shiftKeyDownCount = 0; // カウントをリセット
                 }
             }
         };
@@ -249,8 +245,8 @@
         const handleKeyUp = (event) => {
             if (event.key === 'Shift') {
                 shiftKeyPressed = false;
+                shiftKeyDownHandled = false; // 処理済みフラグをリセット
                 console.log('[AIレビュー] Shiftキーが離されました。');
-                shiftKeyDownCount = 0; // カウントをリセット
             }
         };
 
