@@ -499,4 +499,32 @@
         }
     }
 
+     // テキストエリアの内容が変更されたときに一時保存変数に保存する関数
+    window.updateTempTextareaContent = function(textareaId, value) {
+        switch (textareaId) {
+            case 'reviewPointRoleTextarea':
+                if (currentTab === 'documentReview') {
+                    tempReviewPoint_document = value;
+                } else if (currentTab === 'answerReview') {
+                    tempReviewPoint_answer = value;
+                }
+                break;
+            case 'reviewPointLanguageTextarea':
+                if (currentLanguageTab === 'japaneseReview') {
+                    tempReviewPoint_japanese = value;
+                } else if (currentLanguageTab === 'englishReview') {
+                    tempReviewPoint_english = value;
+                }
+                break;
+            case 'reviewPointMethodTextarea':
+                if (currentMethodTab === 'diffReview') {
+                    tempReviewPoint_diffReview = value;
+                } else if (currentMethodTab === 'confluenceReview') {
+                    tempReviewPoint_confluenceReview = value;
+                }
+                break;
+        }
+        console.log(`[AIレビュー] テキストエリア '${textareaId}' の内容を一時保存しました。`);
+    };
+
 })();
