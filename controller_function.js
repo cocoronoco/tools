@@ -105,13 +105,11 @@
                 reviewButton.removeEventListener('click', window.handleReviewButtonClick_Selection); // リスナー解除
                 reviewButton.remove();
                 reviewButton = null;
-                // console.log('[AIレビュー] 選択文字列用レビューボタン削除完了'); // デバッグ用
             }
             if (settingsButton) {
                 settingsButton.removeEventListener('click', window.handleSettingsButtonClick_Selection); // リスナー解除
                 settingsButton.remove();
                 settingsButton = null;
-                // console.log('[AIレビュー] 選択文字列用設定ボタン削除完了'); // デバッグ用
             }
             buttonsVisible = false; // ボタンが表示されている状態をリセット
         };
@@ -127,6 +125,12 @@
                 return;
             }
             window.currentSelectedText = currentSelectionText;
+
+            if (buttonsVisible) {
+                // 既にボタンが表示されている場合は、位置を更新して終了
+                updateButtonPosition(selection);
+                return;
+            }
 
             reviewButton = window.createReviewButtonElement();
             settingsButton = window.createSettingsButtonElement();
@@ -148,6 +152,18 @@
 
             buttonsVisible = true; // ボタンが表示されている状態を更新
         };
+
+        /**
+         * ボタンの位置を更新する関数
+         */
+        function updateButtonPosition(selection) {
+            const position = window.calculateButtonPosition(selection);
+            if (position) {
+                window.applyReviewButtonStyle(reviewButton, position);
+                const reviewButtonWidth = reviewButton.offsetWidth;
+                window.applySettingsButtonStyle(settingsButton, position, reviewButtonWidth);
+            }
+        }
 
         /**
          * 選択文字列用「AIレビューを実行」ボタン要素を作成
@@ -268,16 +284,11 @@
 
         // Shiftキーが押されている場合
         if (shiftKeyPressed) {
-            // ボタンが既に表示されている場合は位置を更新
-            if (buttonsVisible) {
-                const position = window.calculateButtonPosition(selection);
-                if (position) {
-                    window.applyReviewButtonStyle(reviewButton, position);
-                    const reviewButtonWidth = reviewButton.offsetWidth;
-                    window.applySettingsButtonStyle(settingsButton, position, reviewButtonWidth);
-                }
-            } else {
+            // ボタンを表示または位置を更新
+            if (!buttonsVisible) {
                 window.showButtonsNearSelection(selection);
+            } else {
+                updateButtonPosition(selection);
             }
         }
     }
