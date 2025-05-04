@@ -74,7 +74,7 @@
         console.log('[AIレビュー] selection_event_handlers.js: イベントハンドラを初期化します。');
 
         /**
-         * 選択文字列用に表示された「AIレビュー実行」ボタンがクリックされた時のハンドラ
+         * 選択文字列用に表示された「AIレビューを実行」ボタンがクリックされた時のハンドラ
          */
         window.handleReviewButtonClick_Selection = function() {
             console.log('[AIレビュー] 選択文字列用 AIレビュー実行ボタンがクリックされました。');
@@ -267,8 +267,8 @@
             }
 
             // 選択範囲が存在する場合は、ボタンを表示
-            window.removeExistingButtons(); // 既存のボタンを削除
-            window.showButtonsNearSelection(selection); // ボタンを表示
+           // window.removeExistingButtons(); // 既存のボタンを削除  // ★削除
+           // window.showButtonsNearSelection(selection); // ボタンを表示  // ★削除
         }, 100);
     };
 
