@@ -297,6 +297,12 @@
         contentAreaTemp.style.flex = '1 1 auto';
         contentAreaTemp.style.marginBottom = '10px';
         textareaContainer.appendChild(contentAreaTemp);
+
+        // テキストエリアの内容が変更されたときに updateTempTextareaContent を呼び出す
+        contentAreaTemp.addEventListener('input', function() {
+            window.updateTempTextareaContent(id, this.value);
+        });
+
         return textareaContainer;
     };
 
@@ -402,24 +408,24 @@
         const contentAreaMethod = document.getElementById('reviewPointMethodTextarea'); // レビュー方法のテキストエリア
 
         if (currentTab === 'documentReview') {
-            contentAreaRole.value = window.reviewPoint_document;
+            contentAreaRole.value = tempReviewPoint_document;
         } else if (currentTab === 'answerReview') {
-            contentAreaRole.value = window.reviewPoint_answer;
+            contentAreaRole.value = tempReviewPoint_answer;
         }
 
         if (contentAreaLanguage) {
             if (currentLanguageTab === 'japaneseReview') {
-                contentAreaLanguage.value = window.reviewPoint_japanese;
+                contentAreaLanguage.value = tempReviewPoint_japanese;
             } else if (currentLanguageTab === 'englishReview') {
-                contentAreaLanguage.value = window.reviewPoint_english;
+                contentAreaLanguage.value = tempReviewPoint_english;
             }
         }
 
         if (contentAreaMethod) {
             if (currentMethodTab === 'diffReview') {
-                contentAreaMethod.value = window.reviewPoint_diffReview;
+                contentAreaMethod.value = tempReviewPoint_diffReview;
             } else if (currentMethodTab === 'confluenceReview') {
-                contentAreaMethod.value = window.reviewPoint_confluenceReview;
+                contentAreaMethod.value = tempReviewPoint_confluenceReview;
             }
         }
         console.log('[AIレビュー] テキストエリアの内容を更新しました。');
