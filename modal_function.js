@@ -58,7 +58,7 @@
         const modelOptionsContainer = document.createElement('div');
         modelOptionsContainer.style.display = 'flex';
         modelOptionsContainer.style.flexDirection = 'column';
-        modelOptionsContainer.style.marginBottom = '5px';
+        modelOptionsContainer.style.marginBottom = '15px';
         if (Array.isArray(AI_MODELS)) { // AI_MODELS が配列であることを確認
             AI_MODELS.forEach(model => {
                 const optionLabel = window.createAIModelOption(model);
