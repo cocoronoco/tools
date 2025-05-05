@@ -31,7 +31,7 @@
         // モーダルのタイトル
         const modalTitle = document.createElement('h2');
         modalTitle.textContent = 'AIレビュー設定';
-        modalTitle.style.marginTop = '0';
+        modalTitle.style.marginBottom = '10px';
         modalTitle.style.flex = '0 0 auto';
         modal.appendChild(modalTitle);
 
@@ -49,7 +49,6 @@
         // AIモデルセレクトボックスのラベル
         const modelSelectLabel = document.createElement('label');
         modelSelectLabel.textContent = 'AIモデル:';
-        modelSelectLabel.style.marginTop = '10px';
         modelSelectLabel.style.fontSize = '14px';
         modelSelectLabel.style.fontWeight = 'bold';
         modal.appendChild(modelSelectLabel);
