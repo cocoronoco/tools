@@ -77,8 +77,8 @@
 
         // メインのタブメニューを作成
         const mainTabMenu = createTabMenu([
-            { name: 'documentReview', text: 'ドキュメントレビュー' },
-            { name: 'answerReview', text: '回答文レビュー' }
+            { name: 'documentReview', text: '📄ドキュメントレビュー' },
+            { name: 'answerReview', text: '🙋‍♀️回答文レビュー' }
         ], currentRoleTab, (tabName) => window.switchTab(tabName, 'currentRoleTab'));
         modal.appendChild(mainTabMenu);
 
@@ -120,15 +120,15 @@
 
         // レビュー方法のラベル
         const methodLabel = document.createElement('label');
-        methodLabel.textContent = 'レビュー方法:';
+        methodLabel.textContent = 'レビュー方法:（💡自動選択されます）';
         methodLabel.style.fontSize = '14px';
         methodLabel.style.fontWeight = 'bold';
         modal.appendChild(methodLabel);
 
         // レビュー方法のタブメニューを作成
         const methodTabMenu = createTabMenu([
-            { name: 'diffReview', text: '差分比較レビュー' },
-            { name: 'confluenceReview', text: 'Confluenceページレビュー' }
+            { name: 'diffReview', text: '「選択した文字列」をレビューして差分比較する' },
+            { name: 'confluenceReview', text: '「Confluenceページ」をレビューしてコメントに追加する' }
         ], currentMethodTab, (tabName) => window.switchTab(tabName, 'currentMethodTab'));
         modal.appendChild(methodTabMenu);
 
