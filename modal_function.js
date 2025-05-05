@@ -102,7 +102,7 @@
         const referenceLink = document.createElement('a');
         referenceLink.href = 'https://helpdesk.aslead.cloud/wiki/pages/viewpage.action?pageId=203030616';
         referenceLink.textContent = '（💡文章のレビュー観点はこちらを参照）';
-        roleLabel.style.marginTop = '10px';
+        referenceLink.style.marginTop = '10px';
         referenceLink.style.marginLeft = '10px'; // ラベルとの間隔
         referenceLink.target = '_blank'; // 新しいタブで開く
         pointLabelContainer.appendChild(referenceLink);
@@ -123,7 +123,7 @@
         // レビュー方法のラベル
         const methodLabel = document.createElement('label');
         methodLabel.textContent = 'レビュー方法:';
-        roleLabel.style.marginTop = '10px';
+        methodLabel.style.marginTop = '10px';
         methodLabel.style.fontSize = '14px'; // フォントサイズを大きく
         methodLabel.style.fontWeight = 'bold'; // 太字にする
         modal.appendChild(methodLabel);
