@@ -496,7 +496,7 @@
         }
     }
 
-     // テキストエリアの内容が変更されたときに一時保存変数に保存する関数
+    // テキストエリアの内容が変更されたときに一時保存変数に保存する関数
     window.updateTempTextareaContent = function(textareaId, value) {
         switch (textareaId) {
             case 'reviewPointRoleTextarea':
