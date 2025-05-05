@@ -72,7 +72,6 @@
         // レビュー役割のラベル
         const roleLabel = document.createElement('label');
         roleLabel.textContent = 'レビュー役割:';
-        roleLabel.style.marginTop = '10px';
         roleLabel.style.fontSize = '14px';
         roleLabel.style.fontWeight = 'bold';
         modal.appendChild(roleLabel);
@@ -95,7 +94,6 @@
 
         const pointLabel = document.createElement('label');
         pointLabel.textContent = 'レビュー観点:';
-        pointLabel.style.marginTop = '10px';
         pointLabel.style.fontSize = '14px';
         pointLabel.style.fontWeight = 'bold';
         pointLabelContainer.appendChild(pointLabel);
@@ -124,7 +122,6 @@
         // レビュー方法のラベル
         const methodLabel = document.createElement('label');
         methodLabel.textContent = 'レビュー方法:';
-        methodLabel.style.marginTop = '10px';
         methodLabel.style.fontSize = '14px';
         methodLabel.style.fontWeight = 'bold';
         modal.appendChild(methodLabel);
@@ -310,7 +307,7 @@
         contentAreaTemp.style.width = '100%';
         applyCommonStyles(contentAreaTemp); // 共通スタイルを適用
         contentAreaTemp.style.flex = '1 1 auto';
-        contentAreaTemp.style.marginBottom = '10px';
+        contentAreaTemp.style.marginBottom = '15px';
         textareaContainer.appendChild(contentAreaTemp);
 
         // テキストエリアの内容が変更されたときに updateTempTextareaContent を呼び出す
