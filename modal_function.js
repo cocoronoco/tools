@@ -93,7 +93,7 @@
 
         const pointLabel = document.createElement('label');
         pointLabel.textContent = 'レビュー観点:';
-        roleLabel.style.marginTop = '10px';
+        pointLabel.style.marginTop = '10px';
         pointLabel.style.fontSize = '14px'; // フォントサイズを大きく
         pointLabel.style.fontWeight = 'bold'; // 太字にする
         pointLabelContainer.appendChild(pointLabel);
@@ -101,7 +101,6 @@
         const referenceLink = document.createElement('a');
         referenceLink.href = 'https://helpdesk.aslead.cloud/wiki/pages/viewpage.action?pageId=203030616';
         referenceLink.textContent = '（💡文章のレビュー観点はこちらを参照）';
-        referenceLink.style.marginTop = '10px';
         referenceLink.style.marginLeft = '10px'; // ラベルとの間隔
         referenceLink.target = '_blank'; // 新しいタブで開く
         pointLabelContainer.appendChild(referenceLink);
