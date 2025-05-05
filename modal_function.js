@@ -77,7 +77,7 @@
         const mainTabMenu = createTabMenu([
             { name: 'documentReview', text: 'ドキュメントレビュー' },
             { name: 'answerReview', text: '回答文レビュー' }
-        ], currentTab, (tabName) => window.switchTab(tabName, 'currentTab'));
+        ], currentRoleTab, (tabName) => window.switchTab(tabName, 'currentRoleTab'));
         modal.appendChild(mainTabMenu);
 
         // テキストエリアをコンテナに追加
@@ -226,8 +226,8 @@
     };
 
     // タブボタンのスタイルを更新する関数（共通化）
-    function updateTabButtonStyle(tabButton, currentTabName, tabName) {
-        if (currentTabName === tabName) {
+    function updateTabButtonStyle(tabButton, currentRoleTabName, tabName) {
+        if (currentRoleTabName === tabName) {
             tabButton.style.backgroundColor = '#0052cc';
             tabButton.style.color = 'white';
             // テキストに "✔ " が既についていない場合のみ追加
@@ -243,7 +243,7 @@
     }
 
     // タブボタンを作成する関数（共通化）
-    function createTabButton(tabName, tabText, currentTabName, switchTabFunction) {
+    function createTabButton(tabName, tabText, currentRoleTabName, switchTabFunction) {
         const tabButton = document.createElement('button');
         tabButton.textContent = tabText;
         tabButton.className = `ai-review-tab-button aui-button aui-button-subtle`;
@@ -255,7 +255,7 @@
         tabButton.style.fontWeight = 'normal';
         tabButton.dataset.tabName = tabName; // タブ名を data-tab-name 属性に設定
 
-        updateTabButtonStyle(tabButton, currentTabName, tabName);
+        updateTabButtonStyle(tabButton, currentRoleTabName, tabName);
 
         // イベントリスナーを追加
         tabButton.addEventListener('click', function() {
@@ -271,14 +271,14 @@
     }
 
     // タブメニューを作成する関数（共通化）
-    function createTabMenu(tabs, currentTabName, switchTabFunction) {
+    function createTabMenu(tabs, currentRoleTabName, switchTabFunction) {
         const tabMenu = document.createElement('div');
         tabMenu.style.marginBottom = '0px';
         tabMenu.style.display = 'flex';
         tabMenu.style.paddingBottom = '0px';
 
         tabs.forEach(tab => {
-            const tabButton = createTabButton(tab.name, tab.text, currentTabName, switchTabFunction);
+            const tabButton = createTabButton(tab.name, tab.text, currentRoleTabName, switchTabFunction);
             tabMenu.appendChild(tabButton);
         });
 
@@ -319,21 +319,21 @@
         tabButtons.forEach(button => {
             const tabName = button.dataset.tabName; // data-tab-name 属性からタブ名を取得
             let switchTabFunction;
-            let currentTabName;
+            let currentRoleTabName;
 
             // どのタブグループに属しているかを判定
             if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="japaneseReview"], .ai-review-tab-button[data-tab-name="englishReview"]'))) {
                 switchTabFunction = window.switchTab;
-                currentTabName = currentLanguageTab;
+                currentRoleTabName = currentLanguageTab;
             } else if (button.parentElement.contains(document.querySelector('.ai-review-tab-button[data-tab-name="diffReview"], .ai-review-tab-button[data-tab-name="confluenceReview"]'))) {
                 switchTabFunction = window.switchTab;
-                currentTabName = currentMethodTab;
+                currentRoleTabName = currentMethodTab;
             } else {
                 switchTabFunction = window.switchTab;
-                currentTabName = currentTab;
+                currentRoleTabName = currentRoleTab;
             }
 
-            updateTabButtonStyle(button, currentTabName, tabName);
+            updateTabButtonStyle(button, currentRoleTabName, tabName);
         });
         console.log('[AIレビュー] タブのスタイルを更新しました。');
     };
@@ -378,9 +378,9 @@
     // タブを切り替える関数
     window.switchTab = function(tabName, storageKey) {
         console.log(`[AIレビュー] タブを切り替えます: ${tabName} (storageKey: ${storageKey})`);
-        // storageKeyに基づいてcurrentTab変数を更新
-        if (storageKey === 'currentTab') {
-            currentTab = tabName;
+        // storageKeyに基づいてcurrentRoleTab変数を更新
+        if (storageKey === 'currentRoleTab') {
+            currentRoleTab = tabName;
         } else if (storageKey === 'currentLanguageTab') {
             currentLanguageTab = tabName;
         } else if (storageKey === 'currentMethodTab') {
@@ -402,9 +402,9 @@
         const contentAreaLanguage = document.getElementById('reviewPointLanguageTextarea');
         const contentAreaMethod = document.getElementById('reviewPointMethodTextarea'); // レビュー方法のテキストエリア
 
-        if (currentTab === 'documentReview') {
+        if (currentRoleTab === 'documentReview') {
             contentAreaRole.value = tempReviewPoint_document;
-        } else if (currentTab === 'answerReview') {
+        } else if (currentRoleTab === 'answerReview') {
             contentAreaRole.value = tempReviewPoint_answer;
         }
 
@@ -441,7 +441,7 @@
 
         updateModalHeight();
 
-        currentTab = localStorage.getItem('currentTab') || 'documentReview';
+        currentRoleTab = localStorage.getItem('currentRoleTab') || 'documentReview';
         currentLanguageTab = localStorage.getItem('currentLanguageTab') || 'japaneseReview';
         currentMethodTab = localStorage.getItem('currentMethodTab') || 'diffReview';
 
@@ -498,9 +498,9 @@
     window.updateTempTextareaContent = function(textareaId, value) {
         switch (textareaId) {
             case 'reviewPointRoleTextarea':
-                if (currentTab === 'documentReview') {
+                if (currentRoleTab === 'documentReview') {
                     tempReviewPoint_document = value;
-                } else if (currentTab === 'answerReview') {
+                } else if (currentRoleTab === 'answerReview') {
                     tempReviewPoint_answer = value;
                 }
                 break;
