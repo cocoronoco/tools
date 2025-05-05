@@ -51,6 +51,7 @@
         modelSelectLabel.textContent = 'AIモデル:';
         modelSelectLabel.style.marginTop = '10px';
         modelSelectLabel.style.fontSize = '14px';
+        modelSelectLabel.style.fontWeight = 'bold';
         modal.appendChild(modelSelectLabel);
 
         // AIモデルオプションを格納するコンテナ
