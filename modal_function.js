@@ -103,7 +103,6 @@
 
         modal.appendChild(pointLabelContainer);
 
-
         // 日本語レビュー用のタブメニューを作成
         const languageReviewTabMenu = createTabMenu([
             { name: 'japaneseReview', text: '日本語のレビュー観点' },
