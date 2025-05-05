@@ -207,8 +207,6 @@
             featuresSpan.style.whiteSpace = 'nowrap';
             featuresSpan.style.overflow = 'hidden';
             featuresSpan.style.textOverflow = 'ellipsis';
-        } else {
-            featuresSpan.style.flex = '1 1 auto';
         }
 
         contentContainer.appendChild(modelNameSpan);
