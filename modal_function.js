@@ -49,7 +49,8 @@
         // AIモデルセレクトボックスのラベル
         const modelSelectLabel = document.createElement('label');
         modelSelectLabel.textContent = 'AIモデル:';
-        modelSelectLabel.style.marginBottom = '10px';
+        modelSelectLabel.style.marginTop = '10px';
+        modelSelectLabel.style.fontSize = '14px'; // フォントサイズを大きく
         modal.appendChild(modelSelectLabel);
 
         // AIモデルオプションを格納するコンテナ
