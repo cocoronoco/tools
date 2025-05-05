@@ -9,7 +9,7 @@
     },
     {
         "displayName": "Google(Gemini 2.5 Pro)",
-        "value": "Google(Gemini 2.0 Flash)",
+        "value": "Google(Gemini 2.5 Pro)",
         "accuracy": "☺️普通",
         "limitInfo": "30回/日",
         "recommended": false,
@@ -17,6 +17,7 @@
     },
     {
         "displayName": "Google(Gemini 2.0 Flash)",
+        "value": "Google(Gemini 2.0 Flash)",
         "accuracy": "😵悪い",
         "limitInfo": "100回/日",
         "recommended": false,
