@@ -225,6 +225,23 @@
         return optionLabel;
     };
 
+    // タブボタンのスタイルを更新する関数（共通化）
+    function updateTabButtonStyle(tabButton, currentTabName, tabName) {
+        if (currentTabName === tabName) {
+            tabButton.style.backgroundColor = '#0052cc';
+            tabButton.style.color = 'white';
+            // テキストに "✔ " が既についていない場合のみ追加
+            if (!tabButton.textContent.startsWith('✔ ')) {
+                tabButton.textContent = '✔ ' + tabButton.textContent;
+            }
+        } else {
+            tabButton.style.backgroundColor = '#f0f0f0';
+            tabButton.style.color = 'black';
+            // テキストから "✔ " を削除
+            tabButton.textContent = tabButton.textContent.replace('✔ ', '');
+        }
+    }
+
     // タブボタンを作成する関数（共通化）
     function createTabButton(tabName, tabText, currentTabName, switchTabFunction) {
         const tabButton = document.createElement('button');
@@ -238,19 +255,11 @@
         tabButton.style.fontWeight = 'normal';
         tabButton.dataset.tabName = tabName; // タブ名を data-tab-name 属性に設定
 
-        if (currentTabName === tabName) {
-            tabButton.style.backgroundColor = '#0052cc';
-            tabButton.style.color = 'white';
-            tabButton.textContent = '✔ ' + tabText;
-        } else {
-            tabButton.style.backgroundColor = '#f0f0f0';
-            tabButton.style.color = 'black';
-        }
+        updateTabButtonStyle(tabButton, currentTabName, tabName);
 
         // イベントリスナーを追加
         tabButton.addEventListener('click', function() {
             switchTabFunction(tabName);
-            // window.updateTextareaContent(); // ここでupdateTextareaContentを呼び出さない
             if (typeof updateTabStyles === 'function') {
                 updateTabStyles();
             } else {
@@ -324,18 +333,7 @@
                 currentTabName = currentTab;
             }
 
-            if (currentTabName === tabName) {
-                button.style.backgroundColor = '#0052cc';
-                button.style.color = 'white';
-                button.textContent = '✔ ' + button.textContent.replace('✔ ', '');
-                if (!button.textContent.startsWith('✔ ')) {
-                    button.textContent = '✔ ' + button.textContent;
-                }
-            } else {
-                button.style.backgroundColor = '#f0f0f0';
-                button.style.color = 'black';
-                button.textContent = button.textContent.replace('✔ ', '');
-            }
+            updateTabButtonStyle(button, currentTabName, tabName);
         });
         console.log('[AIレビュー] タブのスタイルを更新しました。');
     };
