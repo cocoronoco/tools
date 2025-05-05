@@ -7,56 +7,60 @@
         element.style.fontFamily = 'Meiryo, "メイリオ", sans-serif';
     }
 
+    // 要素作成関数
+    function createElement(type, options) {
+        const element = document.createElement(type);
+        Object.assign(element, options);
+        return element;
+    }
+
+    // スタイル設定関数
+    function applyStyles(element, styles) {
+        Object.assign(element.style, styles);
+    }
+
     // モーダルを作成する関数
     window.createModal = function() {
         console.log('[AIレビュー] モーダルを作成します。');
-        const modal = document.createElement('div');
-        modal.id = 'reviewPointModal';
-        modal.style.display = 'none';
-        modal.style.position = 'fixed';
-        modal.style.top = '50%';
-        modal.style.left = '50%';
-        modal.style.transform = 'translate(-50%, -50%)';
-        modal.style.backgroundColor = '#fff';
-        modal.style.border = '1px solid #ccc';
-        modal.style.padding = '20px';
-        modal.style.zIndex = '2147483647';
-        modal.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
-        modal.style.width = '1300px';
-        modal.style.maxWidth = '90%';
-        modal.style.height = '80vh';
-        modal.style.flexDirection = 'column';
-        modal.style.boxSizing = 'border-box';
+
+        const modal = createElement('div', { id: 'reviewPointModal' });
+        applyStyles(modal, {
+            display: 'none',
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: '#fff',
+            border: '1px solid #ccc',
+            padding: '20px',
+            zIndex: '2147483647',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+            width: '1300px',
+            maxWidth: '90%',
+            height: '80vh',
+            flexDirection: 'column',
+            boxSizing: 'border-box'
+        });
 
         // モーダルのタイトル
-        const modalTitle = document.createElement('h2');
-        modalTitle.textContent = 'AIレビュー設定';
-        modalTitle.style.marginTop = '0';
-        modalTitle.style.flex = '0 0 auto';
+        const modalTitle = createElement('h2', { textContent: 'AIレビュー設定' });
+        applyStyles(modalTitle, { marginTop: '0', flex: '0 0 auto' });
         modal.appendChild(modalTitle);
 
         // 閉じるボタンを作成
-        const closeModalButton = document.createElement('span');
-        closeModalButton.textContent = '✖️';
-        closeModalButton.style.cursor = 'pointer';
-        closeModalButton.style.fontSize = '20px';
-        closeModalButton.style.float = 'right';
-        closeModalButton.style.marginLeft = '10px';
-
+        const closeModalButton = createElement('span', { textContent: '✖️', style: { cursor: 'pointer', fontSize: '20px', float: 'right', marginLeft: '10px' } });
         closeModalButton.addEventListener('click', closeModal);
         modalTitle.appendChild(closeModalButton);
 
         // AIモデルセレクトボックスのラベル
-        const modelSelectLabel = document.createElement('label');
-        modelSelectLabel.textContent = 'AIモデル:';
-        modelSelectLabel.style.marginBottom = '10px';
+        const modelSelectLabel = createElement('label', { textContent: 'AIモデル:' });
+        applyStyles(modelSelectLabel, { marginBottom: '10px' });
         modal.appendChild(modelSelectLabel);
 
         // AIモデルオプションを格納するコンテナ
-        const modelOptionsContainer = document.createElement('div');
-        modelOptionsContainer.style.display = 'flex';
-        modelOptionsContainer.style.flexDirection = 'column';
-        modelOptionsContainer.style.marginBottom = '20px';
+        const modelOptionsContainer = createElement('div');
+        applyStyles(modelOptionsContainer, { display: 'flex', flexDirection: 'column', marginBottom: '20px' });
+
         if (Array.isArray(AI_MODELS)) { // AI_MODELS が配列であることを確認
             AI_MODELS.forEach(model => {
                 const optionLabel = window.createAIModelOption(model);
@@ -68,9 +72,8 @@
         modal.appendChild(modelOptionsContainer);
 
         // レビュー役割のラベル
-        const roleLabel = document.createElement('label');
-        roleLabel.textContent = 'レビュー役割:';
-        roleLabel.style.marginBottom = '5px';
+        const roleLabel = createElement('label', { textContent: 'レビュー役割:' });
+        applyStyles(roleLabel, { marginBottom: '5px' });
         modal.appendChild(roleLabel);
 
         // メインのタブメニューを作成
@@ -85,20 +88,14 @@
         modal.appendChild(textareaContainer);
 
         // レビュー観点テキストエリアのラベル
-        const pointLabelContainer = document.createElement('div');
-        pointLabelContainer.style.display = 'flex';
-        pointLabelContainer.style.alignItems = 'center';
-        pointLabelContainer.style.marginBottom = '5px';
+        const pointLabelContainer = createElement('div');
+        applyStyles(pointLabelContainer, { display: 'flex', alignItems: 'center', marginBottom: '5px' });
 
-        const pointLabel = document.createElement('label');
-        pointLabel.textContent = 'レビュー観点:';
+        const pointLabel = createElement('label', { textContent: 'レビュー観点:' });
         pointLabelContainer.appendChild(pointLabel);
 
-        const referenceLink = document.createElement('a');
-        referenceLink.href = 'https://helpdesk.aslead.cloud/wiki/pages/viewpage.action?pageId=203030616';
-        referenceLink.textContent = '（💡文章のレビュー観点はこちらを参照）';
-        referenceLink.target = '_blank'; // 新しいタブで開く
-        referenceLink.style.marginLeft = '5px'; // ラベルとの間隔
+        const referenceLink = createElement('a', { href: 'https://helpdesk.aslead.cloud/wiki/pages/viewpage.action?pageId=203030616', textContent: '（💡文章のレビュー観点はこちらを参照）', target: '_blank' });
+        applyStyles(referenceLink, { marginLeft: '5px' });
         pointLabelContainer.appendChild(referenceLink);
 
         modal.appendChild(pointLabelContainer);
@@ -115,9 +112,8 @@
         modal.appendChild(textareaLanguageContainer);
 
         // レビュー方法のラベル
-        const methodLabel = document.createElement('label');
-        methodLabel.textContent = 'レビュー方法:';
-        methodLabel.style.marginBottom = '5px';
+        const methodLabel = createElement('label', { textContent: 'レビュー方法:' });
+        applyStyles(methodLabel, { marginBottom: '5px' });
         modal.appendChild(methodLabel);
 
         // レビュー方法のタブメニューを作成
@@ -146,78 +142,59 @@
 
     // AIモデルのオプションを作成する関数
     window.createAIModelOption = function(model) {
-        const optionLabel = document.createElement('label');
-        optionLabel.style.display = 'flex';
-        optionLabel.style.alignItems = 'center';
-        optionLabel.style.padding = '5px';
-        optionLabel.style.cursor = 'pointer';
-        optionLabel.style.borderBottom = '1px solid #ccc';
+        const optionLabel = createElement('label');
+        applyStyles(optionLabel, {
+            display: 'flex',
+            alignItems: 'center',
+            padding: '5px',
+            cursor: 'pointer',
+            borderBottom: '1px solid #ccc'
+        });
 
-        const radioInput = document.createElement('input');
-        radioInput.type = 'radio';
-        radioInput.name = 'aiModel';
-        radioInput.value = model.value;
-        radioInput.style.marginRight = '10px';
-        radioInput.checked = (selectedAIModel === model.value);
+        const radioInput = createElement('input', {
+            type: 'radio',
+            name: 'aiModel',
+            value: model.value,
+            style: { marginRight: '10px' },
+            checked: (selectedAIModel === model.value)
+        });
 
         radioInput.addEventListener('change', () => {
             selectedAIModel = model.value;
             console.log(`[AIレビュー] 選択されたAIモデルが変更されました: '${selectedAIModel}'`);
         });
 
-        const contentContainer = document.createElement('div');
-        contentContainer.style.display = 'flex';
-        contentContainer.style.alignItems = 'center';
-        contentContainer.style.width = '100%';
+        const contentContainer = createElement('div');
+        applyStyles(contentContainer, { display: 'flex', alignItems: 'center', width: '100%' });
 
-        const modelNameSpan = document.createElement('span');
-        modelNameSpan.textContent = model.displayName;
-        modelNameSpan.style.flex = '0 0 250px';
-        modelNameSpan.style.whiteSpace = 'nowrap';
-        modelNameSpan.style.overflow = 'hidden';
-        modelNameSpan.style.textOverflow = 'ellipsis';
+        const modelNameSpan = createElement('span', { textContent: model.displayName });
+        applyStyles(modelNameSpan, { flex: '0 0 250px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' });
 
-        const accuracySpan = document.createElement('span');
-        accuracySpan.textContent = model.accuracy;
-        accuracySpan.style.marginLeft = '10px';
-        accuracySpan.style.flex = '0 0 80px';
+        const accuracySpan = createElement('span', { textContent: model.accuracy });
+        applyStyles(accuracySpan, { marginLeft: '10px', flex: '0 0 80px' });
 
-        const limitInfoSpan = document.createElement('span');
+        let limitInfoSpan;
         if (model.limitInfo) {
-            limitInfoSpan.textContent = 'ℹ️ 上限：' + model.limitInfo;
-            limitInfoSpan.style.marginLeft = '10px';
-            limitInfoSpan.style.flex = '0 0 150px';
-            limitInfoSpan.style.whiteSpace = 'nowrap';
+            limitInfoSpan = createElement('span', { textContent: 'ℹ️ 上限：' + model.limitInfo });
+            applyStyles(limitInfoSpan, { marginLeft: '10px', flex: '0 0 150px', whiteSpace: 'nowrap' });
         }
 
-        const recommendedSpan = document.createElement('span');
+        let recommendedSpan;
         if (model.recommended) {
-            recommendedSpan.textContent = '【💡おすすめ】';
-            recommendedSpan.style.color = '#d9534f';
-            recommendedSpan.style.fontWeight = 'bold';
-            recommendedSpan.style.marginLeft = '10px';
-            recommendedSpan.style.flex = '0 0 auto';
+            recommendedSpan = createElement('span', { textContent: '【💡おすすめ】' });
+            applyStyles(recommendedSpan, { color: '#d9534f', fontWeight: 'bold', marginLeft: '10px', flex: '0 0 auto' });
         }
 
-        const featuresSpan = document.createElement('span');
+        const featuresSpan = createElement('span', { textContent: model.features });
         if (model.features) {
-            featuresSpan.textContent = model.features;
-            featuresSpan.style.marginLeft = '10px';
-            featuresSpan.style.flex = '1 1 auto';
-            featuresSpan.style.whiteSpace = 'nowrap';
-            featuresSpan.style.overflow = 'hidden';
-            featuresSpan.style.textOverflow = 'ellipsis';
+            applyStyles(featuresSpan, { marginLeft: '10px', flex: '1 1 auto', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' });
         }
 
         contentContainer.appendChild(modelNameSpan);
         contentContainer.appendChild(accuracySpan);
-        contentContainer.appendChild(limitInfoSpan);
-        if (model.recommended) {
-            contentContainer.appendChild(recommendedSpan);
-        }
-        if (model.features) {
-            contentContainer.appendChild(featuresSpan);
-        }
+        if (limitInfoSpan) contentContainer.appendChild(limitInfoSpan);
+        if (recommendedSpan) contentContainer.appendChild(recommendedSpan);
+        if (model.features) contentContainer.appendChild(featuresSpan);
 
         optionLabel.appendChild(radioInput);
         optionLabel.appendChild(contentContainer);
@@ -228,32 +205,20 @@
     // タブボタンのスタイルを更新する関数（共通化）
     function updateTabButtonStyle(tabButton, currentTabName, tabName) {
         if (currentTabName === tabName) {
-            tabButton.style.backgroundColor = '#0052cc';
-            tabButton.style.color = 'white';
-            // テキストに "✔ " が既についていない場合のみ追加
+            applyStyles(tabButton, { backgroundColor: '#0052cc', color: 'white' });
             if (!tabButton.textContent.startsWith('✔ ')) {
                 tabButton.textContent = '✔ ' + tabButton.textContent;
             }
         } else {
-            tabButton.style.backgroundColor = '#f0f0f0';
-            tabButton.style.color = 'black';
-            // テキストから "✔ " を削除
+            applyStyles(tabButton, { backgroundColor: '#f0f0f0', color: 'black' });
             tabButton.textContent = tabButton.textContent.replace('✔ ', '');
         }
     }
 
     // タブボタンを作成する関数（共通化）
     function createTabButton(tabName, tabText, currentTabName, switchTabFunction) {
-        const tabButton = document.createElement('button');
-        tabButton.textContent = tabText;
-        tabButton.className = `ai-review-tab-button aui-button aui-button-subtle`;
-        tabButton.style.marginRight = '10px';
-        tabButton.style.border = 'none';
-        tabButton.style.padding = '5px 10px';
-        tabButton.style.cursor = 'pointer';
-        tabButton.style.fontSize = '14px';
-        tabButton.style.fontWeight = 'normal';
-        tabButton.dataset.tabName = tabName; // タブ名を data-tab-name 属性に設定
+        const tabButton = createElement('button', { textContent: tabText, className: `ai-review-tab-button aui-button aui-button-subtle`, dataset: { tabName: tabName } });
+        applyStyles(tabButton, { marginRight: '10px', border: 'none', padding: '5px 10px', cursor: 'pointer', fontSize: '14px', fontWeight: 'normal' });
 
         updateTabButtonStyle(tabButton, currentTabName, tabName);
 
@@ -272,10 +237,8 @@
 
     // タブメニューを作成する関数（共通化）
     function createTabMenu(tabs, currentTabName, switchTabFunction) {
-        const tabMenu = document.createElement('div');
-        tabMenu.style.marginBottom = '0px';
-        tabMenu.style.display = 'flex';
-        tabMenu.style.paddingBottom = '0px';
+        const tabMenu = createElement('div');
+        applyStyles(tabMenu, { marginBottom: '0px', display: 'flex', paddingBottom: '0px' });
 
         tabs.forEach(tab => {
             const tabButton = createTabButton(tab.name, tab.text, currentTabName, switchTabFunction);
@@ -287,21 +250,13 @@
 
     // テキストエリアコンテナを作成する関数
     window.createTextareaContainer = function(id) {
-        const textareaContainer = document.createElement('div');
-        textareaContainer.style.flex = '1 1 auto';
-        textareaContainer.style.display = 'flex';
-        textareaContainer.style.flexDirection = 'column';
+        const textareaContainer = createElement('div');
+        applyStyles(textareaContainer, { flex: '1 1 auto', display: 'flex', flexDirection: 'column' });
 
-        const contentAreaTemp = document.createElement('textarea');
-        contentAreaTemp.id = id;
-        contentAreaTemp.rows = 5;
-        contentAreaTemp.cols = 40;
-        contentAreaTemp.style.border = '2px solid #ccc';
-        contentAreaTemp.style.resize = 'none';
-        contentAreaTemp.style.width = '100%';
+        const contentAreaTemp = createElement('textarea', { id: id, rows: 5, cols: 40 });
+        applyStyles(contentAreaTemp, { border: '2px solid #ccc', resize: 'none', width: '100%', flex: '1 1 auto', marginBottom: '10px' });
         applyCommonStyles(contentAreaTemp); // 共通スタイルを適用
-        contentAreaTemp.style.flex = '1 1 auto';
-        contentAreaTemp.style.marginBottom = '10px';
+
         textareaContainer.appendChild(contentAreaTemp);
 
         // テキストエリアの内容が変更されたときに updateTempTextareaContent を呼び出す
@@ -340,32 +295,19 @@
 
     // ボタンコンテナを作成する関数
     window.createButtonContainer = function() {
-        const buttonContainer = document.createElement('div');
-        buttonContainer.style.display = 'flex';
-        buttonContainer.style.marginTop = 'auto';
-        buttonContainer.style.flex = '0 0 auto';
+        const buttonContainer = createElement('div');
+        applyStyles(buttonContainer, { display: 'flex', marginTop: 'auto', flex: '0 0 auto' });
 
-        const saveButton = document.createElement('button');
-        saveButton.textContent = '保存';
-        saveButton.className = 'aui-button aui-button-primary';
-        saveButton.style.flex = '1';
-        saveButton.style.fontSize = '18px';
-        saveButton.style.marginRight = '10px';
+        const saveButton = createElement('button', { textContent: '保存', className: 'aui-button aui-button-primary' });
+        applyStyles(saveButton, { flex: '1', fontSize: '18px', marginRight: '10px' });
         saveButton.addEventListener('click', saveSettings);
 
-        const resetButton = document.createElement('button');
-        resetButton.textContent = 'デフォルトに戻す';
-        resetButton.className = 'aui-button';
-        resetButton.style.flex = '1';
-        resetButton.style.fontSize = '18px';
-        resetButton.style.marginRight = '10px';
+        const resetButton = createElement('button', { textContent: 'デフォルトに戻す', className: 'aui-button' });
+        applyStyles(resetButton, { flex: '1', fontSize: '18px', marginRight: '10px' });
         resetButton.addEventListener('click', resetSettings);
 
-        const closeButton = document.createElement('button');
-        closeButton.textContent = '閉じる';
-        closeButton.className = 'aui-button';
-        closeButton.style.flex = '1';
-        closeButton.style.fontSize = '18px';
+        const closeButton = createElement('button', { textContent: '閉じる', className: 'aui-button' });
+        applyStyles(closeButton, { flex: '1', fontSize: '18px' });
         closeButton.addEventListener('click', closeModal);
 
         buttonContainer.appendChild(saveButton);
@@ -400,12 +342,14 @@
         console.log('[AIレビュー] テキストエリアの内容を更新します。');
         const contentAreaRole = document.getElementById('reviewPointRoleTextarea');
         const contentAreaLanguage = document.getElementById('reviewPointLanguageTextarea');
-        const contentAreaMethod = document.getElementById('reviewPointMethodTextarea'); // レビュー方法のテキストエリア
+        const contentAreaMethod = document.getElementById('reviewPointMethodTextarea');
 
-        if (currentTab === 'documentReview') {
-            contentAreaRole.value = tempReviewPoint_document;
-        } else if (currentTab === 'answerReview') {
-            contentAreaRole.value = tempReviewPoint_answer;
+        if (contentAreaRole) {
+            if (currentTab === 'documentReview') {
+                contentAreaRole.value = tempReviewPoint_document;
+            } else if (currentTab === 'answerReview') {
+                contentAreaRole.value = tempReviewPoint_answer;
+            }
         }
 
         if (contentAreaLanguage) {
