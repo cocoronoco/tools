@@ -22,7 +22,7 @@
         modal.style.padding = '20px';
         modal.style.zIndex = '2147483647';
         modal.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
-        modal.style.width = '1100px';
+        modal.style.width = '1300px';
         modal.style.maxWidth = '90%';
         modal.style.height = '80vh';
         modal.style.flexDirection = 'column';
