@@ -71,7 +71,7 @@
         const roleLabel = document.createElement('label');
         roleLabel.textContent = 'レビュー役割:';
         roleLabel.style.marginBottom = '5px';
-        roleLabel.style.fontSize = '16px'; // フォントサイズを大きく
+        roleLabel.style.fontSize = '14px'; // フォントサイズを大きく
         roleLabel.style.fontWeight = 'bold'; // 太字にする
         modal.appendChild(roleLabel);
 
@@ -94,7 +94,7 @@
 
         const pointLabel = document.createElement('label');
         pointLabel.textContent = 'レビュー観点:';
-        pointLabel.style.fontSize = '16px'; // フォントサイズを大きく
+        pointLabel.style.fontSize = '14px'; // フォントサイズを大きく
         pointLabel.style.fontWeight = 'bold'; // 太字にする
         pointLabelContainer.appendChild(pointLabel);
 
@@ -122,7 +122,7 @@
         const methodLabel = document.createElement('label');
         methodLabel.textContent = 'レビュー方法:';
         methodLabel.style.marginBottom = '5px';
-        methodLabel.style.fontSize = '16px'; // フォントサイズを大きく
+        methodLabel.style.fontSize = '14px'; // フォントサイズを大きく
         methodLabel.style.fontWeight = 'bold'; // 太字にする
         modal.appendChild(methodLabel);
 
