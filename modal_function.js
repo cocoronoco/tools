@@ -50,7 +50,7 @@
         const modelSelectLabel = document.createElement('label');
         modelSelectLabel.textContent = 'AIモデル:';
         modelSelectLabel.style.marginTop = '10px';
-        modelSelectLabel.style.fontSize = '14px'; // フォントサイズを大きく
+        modelSelectLabel.style.fontSize = '14px';
         modal.appendChild(modelSelectLabel);
 
         // AIモデルオプションを格納するコンテナ
@@ -72,8 +72,8 @@
         const roleLabel = document.createElement('label');
         roleLabel.textContent = 'レビュー役割:';
         roleLabel.style.marginTop = '10px';
-        roleLabel.style.fontSize = '14px'; // フォントサイズを大きく
-        roleLabel.style.fontWeight = 'bold'; // 太字にする
+        roleLabel.style.fontSize = '14px';
+        roleLabel.style.fontWeight = 'bold';
         modal.appendChild(roleLabel);
 
         // メインのタブメニューを作成
@@ -95,14 +95,15 @@
         const pointLabel = document.createElement('label');
         pointLabel.textContent = 'レビュー観点:';
         pointLabel.style.marginTop = '10px';
-        pointLabel.style.fontSize = '14px'; // フォントサイズを大きく
-        pointLabel.style.fontWeight = 'bold'; // 太字にする
+        pointLabel.style.fontSize = '14px';
+        pointLabel.style.fontWeight = 'bold';
         pointLabelContainer.appendChild(pointLabel);
 
         const referenceLink = document.createElement('a');
         referenceLink.href = 'https://helpdesk.aslead.cloud/wiki/pages/viewpage.action?pageId=203030616';
         referenceLink.textContent = '（💡文章のレビュー観点はこちらを参照）';
         referenceLink.style.marginLeft = '10px'; // ラベルとの間隔
+        referenceLink.style.fontSize = '12px';
         referenceLink.target = '_blank'; // 新しいタブで開く
         pointLabelContainer.appendChild(referenceLink);
 
@@ -123,8 +124,8 @@
         const methodLabel = document.createElement('label');
         methodLabel.textContent = 'レビュー方法:';
         methodLabel.style.marginTop = '10px';
-        methodLabel.style.fontSize = '14px'; // フォントサイズを大きく
-        methodLabel.style.fontWeight = 'bold'; // 太字にする
+        methodLabel.style.fontSize = '14px';
+        methodLabel.style.fontWeight = 'bold';
         modal.appendChild(methodLabel);
 
         // レビュー方法のタブメニューを作成
