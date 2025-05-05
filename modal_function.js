@@ -70,7 +70,7 @@
         // レビュー役割のラベル
         const roleLabel = document.createElement('label');
         roleLabel.textContent = 'レビュー役割:';
-        roleLabel.style.marginBottom = '5px';
+        roleLabel.style.marginTop = '10px';
         roleLabel.style.fontSize = '14px'; // フォントサイズを大きく
         roleLabel.style.fontWeight = 'bold'; // 太字にする
         modal.appendChild(roleLabel);
@@ -94,6 +94,7 @@
 
         const pointLabel = document.createElement('label');
         pointLabel.textContent = 'レビュー観点:';
+        roleLabel.style.marginTop = '10px';
         pointLabel.style.fontSize = '14px'; // フォントサイズを大きく
         pointLabel.style.fontWeight = 'bold'; // 太字にする
         pointLabelContainer.appendChild(pointLabel);
@@ -101,8 +102,9 @@
         const referenceLink = document.createElement('a');
         referenceLink.href = 'https://helpdesk.aslead.cloud/wiki/pages/viewpage.action?pageId=203030616';
         referenceLink.textContent = '（💡文章のレビュー観点はこちらを参照）';
+        roleLabel.style.marginTop = '10px';
+        referenceLink.style.marginLeft = '10px'; // ラベルとの間隔
         referenceLink.target = '_blank'; // 新しいタブで開く
-        referenceLink.style.marginLeft = '5px'; // ラベルとの間隔
         pointLabelContainer.appendChild(referenceLink);
 
         modal.appendChild(pointLabelContainer);
@@ -121,7 +123,7 @@
         // レビュー方法のラベル
         const methodLabel = document.createElement('label');
         methodLabel.textContent = 'レビュー方法:';
-        methodLabel.style.marginBottom = '5px';
+        roleLabel.style.marginTop = '10px';
         methodLabel.style.fontSize = '14px'; // フォントサイズを大きく
         methodLabel.style.fontWeight = 'bold'; // 太字にする
         modal.appendChild(methodLabel);
