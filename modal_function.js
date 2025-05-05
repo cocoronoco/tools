@@ -90,7 +90,6 @@
         const pointLabelContainer = document.createElement('div');
         pointLabelContainer.style.display = 'flex';
         pointLabelContainer.style.alignItems = 'center';
-        pointLabelContainer.style.marginBottom = '5px';
 
         const pointLabel = document.createElement('label');
         pointLabel.textContent = 'レビュー観点:';
