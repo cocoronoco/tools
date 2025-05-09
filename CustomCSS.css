@@ -88,29 +88,23 @@
     overflow: hidden; /* コンテナ自体のスクロールは不要 */
     position: relative;
 }
-/* Mergely差分表示エリア */
-.diffs {
+/* Mergelyエディタ全体 */
+.mergely-editor {
     height: 100%;
     overflow: hidden;
 }
-/* Mergelyエディタ全体 */
-.demo-editor {
-    height: 100%;
-    overflow: hidden;
-    position: relative;
+/* Mergelyヘッダー */
+.mergely-editor header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0px;
 }
 /* ラベル（左右ペインのタイトル） */
-.labels {
+.mergely-labels {
     display: flex;
     justify-content: space-around;
     margin-bottom: 0px;
     font-size: 20px;
-}
-/* Mergelyヘッダー */
-.diffs header {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 0px;
 }
 /* Mergely初期表示のスプラッシュを非表示 */
 .mergely-splash {
