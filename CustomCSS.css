@@ -138,5 +138,5 @@
 /* --- ConfluenceのためのカスタムCSS --- */
 /* Confluenceの編集画面にある「<> source editor」のために定義 */
 .CodeMirror {
-    overlay: visible !important; /* Mergelyで使われている「CodeMirror」エディターが、Confluenceの編集画面にある「<> source editor」で使われている「CodeMirror」エディターのクラスと衝突する問題の対応 */
+    overflow: visible !important; /* Mergelyで使われている「CodeMirror」エディターが、Confluenceの編集画面にある「<> source editor」で使われている「CodeMirror」エディターのクラスと衝突する問題の対応 */
 }
