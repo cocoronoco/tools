@@ -107,21 +107,21 @@
     font-size: 20px;
 }
 /* Mergely初期表示のスプラッシュを非表示 */
-.mergely-splash {
+.mergely-editor .mergely-splash {
     display: none !important;
 }
 /* CodeMirror行番号を中央揃え */
-.CodeMirror-linenumber {
+.mergely-editor .CodeMirror-linenumber {
     text-align: center !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
 }
 /* CodeMirrorスクロール領域の高さを調整 */
-.CodeMirror-scroll {
+.mergely-editor .CodeMirror-scroll {
     height: 100% !important; /* モーダル画面の高さに揃える */
 }
 /* CodeMirror行の左パディング（行番号と重ならないように） */
-.CodeMirror-line {
+.mergely-editor .CodeMirror-line {
     padding-left: 30px !important; /* テキストが隠れないようにpaddingを追加 */
 }
