@@ -5,7 +5,20 @@
 
         const modalHtml = `
             <div id="mergelyModal" title="AIレビューの結果確認">
-                ${mergelyModalHtmlContent}
+                <div class="mergely-editor">
+                    <header>
+                        <div class="mergely-labels">
+                            <span>選択した文字列</span>
+                            <span>AIレビュー結果</span>
+                        </div>
+                    </header>
+                    <div class="compare-container">
+                        <div id="mergely"></div>
+                        <div id="loadingAnimation" class="loading-container" style="display:none;">
+                            <svg class="loading-svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/></svg>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
         $('body').append(modalHtml);
