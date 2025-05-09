@@ -92,7 +92,6 @@
 .mergely-editor {
     height: 100%;
     overflow: hidden;
-    position: relative;
 }
 /* Mergelyヘッダー */
 .mergely-editor header {
