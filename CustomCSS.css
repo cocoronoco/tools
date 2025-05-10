@@ -125,18 +125,3 @@
 .mergely-editor .CodeMirror-line {
     padding-left: 30px !important; /* テキストが隠れないようにpaddingを追加 */
 }
-/* Mergelyの差分表示の強調(左) */
-.mergely-editor .mergely.ch.ind.lhs {
-    font-weight: bold !important;
-}
-/* Mergelyの差分表示の強調(右) */
-.mergely-editor .mergely.ch.ina.rhs {
-    font-weight: bold !important;
-    color: #00ff00 !important;
-}
-
-/* --- ConfluenceのためのカスタムCSS --- */
-/* Confluenceの編集画面にある「<> source editor」のために定義 */
-.CodeMirror {
-    overflow: visible !important; /* Mergelyで使われている「CodeMirror」エディターが、Confluenceの編集画面にある「<> source editor」で使われている「CodeMirror」エディターのクラスと衝突する問題の対応 */
-}
