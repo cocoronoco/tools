@@ -24,7 +24,7 @@
         "features": "処理が高速！精度は低い"
     },
     {
-        "displayName": "Azure(GPT4o-mini)",
+        "displayName": "Azure(GPT4.1-mini)",
         "value": "Azure(GPT4o-mini)",
         "accuracy": "😵悪い",
         "limitInfo": "なし",
