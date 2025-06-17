@@ -1,5 +1,7 @@
-#Review point
+## Review point
+
 When reviewing, please keep the following in mind.
+
 - Correct typos, misconversions, and misuse.
 - Avoid colloquial language and write in literary language.
 - Correct abbreviations and words without the "ra" sound.
