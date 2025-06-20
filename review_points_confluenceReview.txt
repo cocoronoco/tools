@@ -11,7 +11,7 @@
 - アウトプットのレビュー結果は必ず日本語で出力してください。
 - 表形式で、列名は「番号」「Before」「After」「修正観点」「修正の優先度」としてください。
 - 「Before」と「After」には明確に差分のある文字のみを**太文字**で強調してください。
-- 「Before」と「After」には**HTMLタグを含めず**、spanなどのタグは必ず排除し、テキストのみを記載してください。
+- 「Before」と「After」には**HTMLタグを含めず、spanなどのタグは必ず排除し、テキストのみを記載してください**。
 - 「Before」と「After」は単語単位ではなく文章として記載し、「After」が不自然な日本語の場合は修正してください。
 - 「修正観点」には修正が必要な理由を端的に記載してください。
 - 「修正の優先度」はドキュメントへの影響度に応じて「必須」「任意」の2つに区分してください。
@@ -20,6 +20,6 @@
 
 制約条件
 
-- インプットにHTMLが含まれていますが、アウトプットにはHTMLを含まずに出力してください。
-(インプット) <h2 id="id-レビュー対象のデモドキュメント_10-概要">概要</h2><p>このドキュメント<strong><span class="inline-comment-marker" data-ref="1b762beb-7cdd-4a13-87d7-2057e5fccb5b">はは</span></strong><span class="inline-comment-marker valid" data-ref="d0988134-218e-408a-8eb6-b9f52f541b7b">ドキュメント</span>レビュー向けの<span style="color: rgb(255,0,0);">デモページ</span>です。<br><br></p>
-(アウトプット) 概要　このドキュメントははドキュメントレビュー向けのデモページです。
+- インプットはHTMLが含んでいますが、アウトプットはHTMLを含まずに出力してください。
+(インプットの例) <h2 id="id-レビュー対象のデモドキュメント_10-概要">概要</h2><p>このドキュメント<strong><span class="inline-comment-marker" data-ref="1b762beb-7cdd-4a13-87d7-2057e5fccb5b">はは</span></strong><span class="inline-comment-marker valid" data-ref="d0988134-218e-408a-8eb6-b9f52f541b7b">ドキュメント</span>レビュー向けの<span style="color: rgb(255,0,0);">デモページ</span>です。<br><br></p>
+(アウトプットの例) 概要　このドキュメントははドキュメントレビュー向けのデモページです。
