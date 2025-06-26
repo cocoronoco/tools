@@ -1,9 +1,9 @@
 [
     {
-        "displayName": "AWS(Claude 3.7 Sonnet)",
-        "value": "AWS(Claude 3.7 Sonnet)",
+        "displayName": "AWS(Claude 4 Sonnet)",
+        "value": "AWS(Claude 4 Sonnet)",
         "accuracy": "😍良い",
-        "limitInfo": "30回/日",
+        "limitInfo": "50回/日",
         "recommended": true,
         "features": "文書生成が強力！処理が早い"
     },
