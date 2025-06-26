@@ -26,18 +26,18 @@
     {
         "displayName": "Azure(o3)",
         "value": "Azure(o3)",
-        "accuracy": "😵悪い",
+        "accuracy": "☺️普通",
         "limitInfo": "なし",
         "recommended": false,
-        "features": "検証中！"
+        "features": "処理が少し遅い"
     },
     {
         "displayName": "Azure(o4-mini)",
         "value": "Azure(o4-mini)",
-        "accuracy": "😵悪い",
+        "accuracy": "☺️普通",
         "limitInfo": "なし",
         "recommended": false,
-        "features": "検証中！"
+        "features": "処理が少し遅い"
     },
     {
         "displayName": "Azure(GPT-4.1)",
