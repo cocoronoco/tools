@@ -24,20 +24,20 @@
         "features": "処理が高速！精度は低い"
     },
     {
-        "displayName": "Azure(o3)",
-        "value": "Azure(o3)",
-        "accuracy": "☺️普通",
-        "limitInfo": "15回/日",
-        "recommended": false,
-        "features": "処理が少し遅い"
-    },
-    {
         "displayName": "Azure(o4-mini)",
         "value": "Azure(o4-mini)",
         "accuracy": "☺️普通",
         "limitInfo": "30回/日",
         "recommended": false,
         "features": "処理が少し遅いが、精度は良い"
+    },
+    {
+        "displayName": "Azure(o3)",
+        "value": "Azure(o3)",
+        "accuracy": "☺️普通",
+        "limitInfo": "15回/日",
+        "recommended": false,
+        "features": "処理が遅いが、精度は良い"
     },
     {
         "displayName": "最後に選択したAIモデルを利用する",
