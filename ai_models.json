@@ -40,22 +40,6 @@
         "features": "処理が少し遅い"
     },
     {
-        "displayName": "Azure(GPT-4.1)",
-        "value": "Azure(GPT-4.1)",
-        "accuracy": "😵悪い",
-        "limitInfo": "100回/日",
-        "recommended": false,
-        "features": "検証中！"
-    },
-    {
-        "displayName": "Azure(GPT-4.1-mini)",
-        "value": "Azure(GPT-4.1-mini)",
-        "accuracy": "😵悪い",
-        "limitInfo": "なし",
-        "recommended": false,
-        "features": "指示を無視されることが多い（動作確認用）"
-    },
-    {
         "displayName": "最後に選択したAIモデルを利用する",
         "value": "LastSelected",
         "limitInfo": "",
