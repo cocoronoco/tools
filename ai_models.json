@@ -16,8 +16,8 @@
         "features": "処理に時間が掛かる"
     },
     {
-        "displayName": "Google(Gemini 2.0 Flash)",
-        "value": "Google(Gemini 2.0 Flash)",
+        "displayName": "Google(Gemini 2.5 Flash)",
+        "value": "Google(Gemini 2.5 Flash)",
         "accuracy": "😵悪い",
         "limitInfo": "100回/日",
         "recommended": false,
@@ -27,7 +27,7 @@
         "displayName": "Azure(o3)",
         "value": "Azure(o3)",
         "accuracy": "☺️普通",
-        "limitInfo": "なし",
+        "limitInfo": "15回/日",
         "recommended": false,
         "features": "処理が少し遅い"
     },
@@ -35,7 +35,7 @@
         "displayName": "Azure(o4-mini)",
         "value": "Azure(o4-mini)",
         "accuracy": "☺️普通",
-        "limitInfo": "なし",
+        "limitInfo": "30回/日",
         "recommended": false,
         "features": "処理が少し遅い"
     },
@@ -43,7 +43,7 @@
         "displayName": "Azure(GPT-4.1)",
         "value": "Azure(GPT-4.1)",
         "accuracy": "😵悪い",
-        "limitInfo": "なし",
+        "limitInfo": "70回/日",
         "recommended": false,
         "features": "検証中！"
     },
