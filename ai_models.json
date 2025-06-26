@@ -34,7 +34,7 @@
     {
         "displayName": "Azure(GPT-4.1-mini)",
         "value": "Azure(GPT-4.1-mini)",
-        "accuracy": "😵普通",
+        "accuracy": "😵悪い",
         "limitInfo": "なし",
         "recommended": false,
         "features": "指示を無視されることが多い。（例：>の引用句も対象にしてしまう。）"
