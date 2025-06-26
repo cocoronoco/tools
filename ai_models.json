@@ -13,7 +13,7 @@
         "accuracy": "☺️普通",
         "limitInfo": "100回/日",
         "recommended": false,
-        "features": "渡せる文字数が多いが、精度は少し低い"
+        "features": "渡せる文字数が多いが、出力結果の表が崩れることがある"
     },
     {
         "displayName": "Azure(o4-mini)",
