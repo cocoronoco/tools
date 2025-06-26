@@ -13,7 +13,7 @@
         "accuracy": "☺️普通",
         "limitInfo": "30回/日",
         "recommended": false,
-        "features": "処理に時間が掛かるが、より詳細なレビューが可能"
+        "features": "処理に時間が掛かる"
     },
     {
         "displayName": "Google(Gemini 2.0 Flash)",
