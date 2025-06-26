@@ -24,24 +24,24 @@
         "features": "処理が高速！精度は低い"
     },
     {
-        "displayName": "Azure(o3)  ",
-        "value": "Azure(o3)  ",
+        "displayName": "Azure(o3)",
+        "value": "Azure(o3)",
         "accuracy": "😵悪い",
         "limitInfo": "なし",
         "recommended": false,
         "features": "検証中！"
     },
     {
-        "displayName": "Azure(o4-mini) ",
-        "value": "Azure(o4-mini) ",
+        "displayName": "Azure(o4-mini)",
+        "value": "Azure(o4-mini)",
         "accuracy": "😵悪い",
         "limitInfo": "なし",
         "recommended": false,
         "features": "検証中！"
     },
     {
-        "displayName": "Azure(GPT-4.1) ",
-        "value": "Azure(GPT-4.1) ",
+        "displayName": "Azure(GPT-4.1)",
+        "value": "Azure(GPT-4.1)",
         "accuracy": "😵悪い",
         "limitInfo": "なし",
         "recommended": false,
