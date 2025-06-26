@@ -43,7 +43,7 @@
         "displayName": "Azure(GPT-4.1)",
         "value": "Azure(GPT-4.1)",
         "accuracy": "😵悪い",
-        "limitInfo": "70回/日",
+        "limitInfo": "100回/日",
         "recommended": false,
         "features": "検証中！"
     },
