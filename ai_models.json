@@ -16,14 +16,6 @@
         "features": "渡せる文字数が多いが、出力結果の表が崩れることがある"
     },
     {
-        "displayName": "Azure(o4-mini)",
-        "value": "Azure(o4-mini)",
-        "accuracy": "☺️普通",
-        "limitInfo": "30回/日",
-        "recommended": false,
-        "features": "精度は良いが、処理が少し遅い（約60秒ほど）"
-    },
-    {
         "displayName": "Azure(GPT-4.1-mini)",
         "value": "Azure(GPT-4.1-mini)",
         "accuracy": "😵悪い",
