@@ -8,6 +8,14 @@
         "features": "文書生成が強力！処理が早い（約20秒ほど）"
     },
     {
+        "displayName": "Google(Gemini 2.5 Flash)",
+        "value": "Google(Gemini 2.5 Flash)",
+        "accuracy": "☺️普通",
+        "limitInfo": "100回/日",
+        "recommended": false,
+        "features": "渡せる文字数が多いが、精度は少し低い"
+    },
+    {
         "displayName": "Azure(o4-mini)",
         "value": "Azure(o4-mini)",
         "accuracy": "☺️普通",
